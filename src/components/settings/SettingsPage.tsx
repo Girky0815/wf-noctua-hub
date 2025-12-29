@@ -18,11 +18,29 @@ export const SettingsPage: React.FC = () => {
   };
 
   // APIステータスの判定
-  const apiStatus = isError ? 'エラー' : isLoading && !worldState ? '読み込み中...' : '正常';
-  const apiTimestamp = worldState?.timestamp ? new Date(worldState.timestamp).toLocaleString() : '-';
   const timeDiff = worldState?.timestamp
     ? Math.floor((Date.now() - new Date(worldState.timestamp).getTime()) / 60000)
     : 0; // 分単位の差分
+
+  const isStale = timeDiff > 30; // 30分以上で遅延とみなす
+
+  let apiStatus = '正常';
+  let badgeText = '接続中';
+  let badgeClass = 'bg-primary-container text-on-primary-container';
+
+  if (isError) {
+    apiStatus = 'エラー';
+    badgeText = '失敗';
+    badgeClass = 'bg-error text-on-error';
+  } else if (isLoading && !worldState) {
+    apiStatus = '読み込み中...';
+  } else if (isStale) {
+    apiStatus = '接続OK (最新データ利用不可)';
+    badgeText = '遅延';
+    badgeClass = 'bg-error-container text-on-error-container';
+  }
+
+  const apiTimestamp = worldState?.timestamp ? new Date(worldState.timestamp).toLocaleString() : '-';
 
   return (
     <div className="flex flex-col pb-24 pt-4">
@@ -93,9 +111,8 @@ export const SettingsPage: React.FC = () => {
             title="ステータス"
             subtitle={apiStatus}
             trailing={
-              <span className={`text-xs font-bold px-2 py-1 rounded-md ${isError ? 'bg-error text-on-error' : 'bg-primary-container text-on-primary-container'
-                }`}>
-                {isError ? '失敗' : '接続中'}
+              <span className={`text-xs font-bold px-2 py-1 rounded-md ${badgeClass}`}>
+                {badgeText}
               </span>
             }
           />
