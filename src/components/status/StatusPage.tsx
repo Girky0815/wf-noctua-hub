@@ -62,9 +62,9 @@ export const StatusPage: React.FC = () => {
         <div className="mx-4 flex items-start gap-3 rounded-2xl bg-error-container p-4 text-on-error-container">
           <span className="material-symbols-rounded mt-0.5">warning</span>
           <div className="flex flex-col text-sm">
-            <span className="font-bold">APIデータが更新されていません</span>
+            <span className="rounded-full font-bold text-lg">APIデータが更新されていません</span>
             <span className="opacity-90">
-              Warframe Status API からの情報が {Math.floor((Date.now() - new Date(worldState.timestamp).getTime()) / (1000 * 60))} 分以上遅れています。アラート等は更新時点の情報で現在利用可能なものが表示されます。ワールドステータスは正常に表示されません。
+              Warframe Status API からの情報が <strong>{Math.floor((Date.now() - new Date(worldState.timestamp).getTime()) / (1000 * 60))} 分</strong>以上遅れています。<br></br>アラート等は更新時点の情報で現在利用可能なものが表示されます。<br></br>APIが正常に利用できるまで、ワールドステータスは正常に表示されません。
             </span>
           </div>
         </div>

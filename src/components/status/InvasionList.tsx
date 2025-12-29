@@ -56,7 +56,7 @@ const InvasionItem: React.FC<{ invasion: Invasion }> = ({ invasion }) => {
       </div>
 
       {/* Progress Bar (Mock visual) */}
-      <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-surface-container-highest">
+      <div className="mt-3 h-3 w-full overflow-hidden rounded-full bg-surface-container-highest">
         {/* If we strictly parsed completion we could show a bar. For now, static base is fine or we parse later. */}
         <div
           className="h-full bg-primary transition-all duration-500"

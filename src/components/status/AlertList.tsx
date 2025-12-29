@@ -84,7 +84,18 @@ const AlertItem: React.FC<{ alert: Alert }> = ({ alert }) => {
 };
 
 export const AlertList: React.FC<AlertListProps> = ({ alerts }) => {
-  if (!alerts || alerts.length === 0) return null;
+  if (!alerts || alerts.length === 0) {
+    return (
+      <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+        <div className="bg-surface-bright p-6 text-center text-on-surface-variant">
+          <div className="mb-2">
+            <span className="material-symbols-rounded text-3xl opacity-50">notifications_off</span>
+          </div>
+          <p className="text-sm">アラートミッションなし</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
