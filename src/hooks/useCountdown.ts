@@ -25,16 +25,25 @@ export const useCountdown = (targetDate?: string | Date) => {
         return;
       }
 
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-      const parts = [];
-      if (hours > 0) parts.push(`${hours}h`);
-      if (minutes > 0 || hours > 0) parts.push(`${minutes}m`);
-      parts.push(`${seconds}s`);
+      // 1日以上: "1d 2h" (秒は表示しない)
+      if (days > 0) {
+        setTimeLeft(`${days}d ${hours}h`);
+        return;
+      }
 
-      setTimeLeft(parts.join(' '));
+      // 1時間以上: "1時間23分" (秒を省略して表示ブレを防ぐ)
+      if (hours > 0) {
+        setTimeLeft(`${hours}時間${minutes.toString().padStart(2, '0')}分`);
+        return;
+      }
+
+      // 1時間未満: "05分30秒" (パディングありで固定幅)
+      setTimeLeft(`${minutes.toString().padStart(2, '0')}分${seconds.toString().padStart(2, '0')}秒`);
     };
 
     calculate(); // 初回実行
