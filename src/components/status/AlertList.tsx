@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Alert } from '../../types/warframe';
-import { translateMissionType } from '../../utils/translations';
+import { translateMissionType, translateResource } from '../../utils/translations';
 import { formatTime } from '../../utils/time';
 import { useCountdown } from '../../hooks/useCountdown';
 
@@ -12,6 +12,38 @@ interface AlertListProps {
 const AlertItem: React.FC<{ alert: Alert; roundedClass: string }> = ({ alert, roundedClass }) => {
   const timeLeft = useCountdown(alert.expiry);
   const formattedTime = `残り ${timeLeft || '--'} (${formatTime(alert.expiry)} 終了)`;
+
+  // 報酬表示の構築
+  const reward = alert.mission?.reward;
+  const rewardText = React.useMemo(() => {
+    if (!reward) return '報酬情報なし';
+
+    const parts: string[] = [];
+
+    // クレジット
+    if (reward.credits) {
+      parts.push(`${reward.credits.toLocaleString()}cr`);
+    }
+
+    // 通常アイテム
+    if (reward.items && reward.items.length > 0) {
+      reward.items.forEach(item => parts.push(translateResource(item)));
+    }
+
+    // 個数付きアイテム (countedItems)
+    if (reward.countedItems && reward.countedItems.length > 0) {
+      reward.countedItems.forEach(item => {
+        parts.push(`${translateResource(item.type)} x${item.count}`);
+      });
+    }
+
+    // 何も情報がない場合のフォールバック (asStringを使うが、asString自体が空のこともある)
+    if (parts.length === 0) {
+      return reward.asString || '不明な報酬';
+    }
+
+    return parts.join(' + ');
+  }, [reward]);
 
   return (
     <div className={`bg-surface-container p-4 ${roundedClass}`}>
@@ -26,7 +58,7 @@ const AlertItem: React.FC<{ alert: Alert; roundedClass: string }> = ({ alert, ro
         <div className="flex items-center gap-2">
           <span className="material-symbols-rounded text-lg text-secondary">redeem</span>
           <span className="text-sm font-medium text-on-surface">
-            {alert.mission?.reward?.asString || '報酬情報なし'}
+            {rewardText}
           </span>
         </div>
         <div className="flex items-center gap-2 text-xs text-on-surface-variant">

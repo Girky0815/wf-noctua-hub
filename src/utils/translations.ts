@@ -37,10 +37,23 @@ export const missionTypes: Record<string, string> = {
   'Mirror Defense': 'ミラー防衛',
   'Conjunction Survival': '結合耐久',
   'Void Flood': 'Void フラッド',
-  'Void Cascade': 'Void カスケード',
   'Void Armageddon': 'Void アルマゲドン',
+};
+
+export const resourceTypes: Record<string, string> = {
+  'Marks of Valiance': '剛勇の証',
+  'Nitain Extract': 'ニタン抽出物',
+  'Orokin Catalyst': 'オロキンカタリスト',
+  'Orokin Reactor': 'オロキンリアクター',
+  'Exilus Adapter': 'エクシラスアダプター',
+  'Forma': 'フォーマ',
+  // 必要に応じて追加
 };
 
 export const translateMissionType = (type: string): string => {
   return missionTypes[type] || type;
+};
+
+export const translateResource = (type: string): string => {
+  return resourceTypes[type] || type;
 };
