@@ -93,6 +93,13 @@ export const planetNames: Record<string, string> = {
   'Zariman': 'Zariman',
 };
 
+export const invasionDescriptions: Record<string, string> = {
+  'Grineer Offensive': 'グリニア 侵攻',
+  'Corpus Siege': 'コーパス 進撃',
+  'Infested Outbreak': '感染拡大',
+  'Phorid Manifestation': 'Phorid 出現',
+};
+
 export const translateMissionType = (type: string): string => {
   return missionTypes[type] || type;
 };
@@ -119,4 +126,8 @@ export const translateNode = (node: string): string => {
     return `${name} (${translatedPlanet})`;
   }
   return node;
+};
+
+export const translateInvasionDesc = (desc: string): string => {
+  return invasionDescriptions[desc] || desc;
 };

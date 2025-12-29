@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Invasion } from '../../types/warframe';
-import { translateResource, translateNode, translateFaction } from '../../utils/translations';
+import { translateResource, translateNode, translateFaction, translateInvasionDesc } from '../../utils/translations';
 import { useCountdown } from '../../hooks/useCountdown';
 
 interface InvasionListProps {
@@ -8,7 +8,6 @@ interface InvasionListProps {
 }
 
 const InvasionItem: React.FC<{ invasion: Invasion }> = ({ invasion }) => {
-  // invasion.completion (float -100 to 100 usually, or 0 to 100)
   // invasion.completion (float -100 to 100 usually, or 0 to 100)
   // warframestat.us: completion: 55.5 (meaning 55.5% usually towards attacker?) 
   // construction progress etc varies.
@@ -33,7 +32,7 @@ const InvasionItem: React.FC<{ invasion: Invasion }> = ({ invasion }) => {
     <div className="bg-surface-bright p-4">
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs font-bold text-on-surface-variant font-display">{translateNode(invasion.node)}</span>
-        <span className="text-xs text-on-surface-variant">{invasion.desc}</span>
+        <span className="text-xs text-on-surface-variant">{translateInvasionDesc(invasion.desc)}</span>
       </div>
 
       <div className="flex items-center justify-between gap-4">

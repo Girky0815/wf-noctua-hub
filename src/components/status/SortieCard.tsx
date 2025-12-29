@@ -6,7 +6,7 @@ interface SortieCardProps {
   sortie?: Sortie;
 }
 
-const STAGE_NUMBERS = ['①', '②', '③'];
+const STAGE_NUMBERS = ['1', '2', '3'];
 
 export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
   if (!sortie) return <div className="h-40 animate-pulse rounded-3xl bg-surface-container-high" />;
