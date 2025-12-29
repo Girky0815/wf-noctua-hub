@@ -29,16 +29,16 @@ export const StatusPage: React.FC = () => {
     <div className="grid gap-4 pb-20">
       {/* Cycles Row */}
       <div className="grid grid-cols-3 gap-2">
-        <CycleCard name="地球" cycle={worldState.cetusCycle} />
-        <CycleCard name="金星" cycle={worldState.vallisCycle} />
-        <CycleCard name="ダイモス" cycle={worldState.cambionCycle} />
+        <CycleCard name="エイドロンの草原" cycle={worldState.cetusCycle} />
+        <CycleCard name="オーブ峡谷" cycle={worldState.vallisCycle} />
+        <CycleCard name="カンビオン荒地" cycle={worldState.cambionCycle} />
       </div>
 
       {/* Special Events / Prioritized Info */}
       <VoidTraderCard voidTrader={worldState.voidTrader} />
 
       {/* Alerts */}
-      <AlertList alerts={worldState.alerts} />
+      <AlertList alerts={worldState.alerts.filter(a => !a.expired && new Date(a.expiry).getTime() > Date.now())} />
 
       {/* Sortie */}
       <SortieCard sortie={worldState.sorties?.[0]} />

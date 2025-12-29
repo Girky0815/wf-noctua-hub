@@ -3,6 +3,8 @@ import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { StatusPage } from './components/status/StatusPage';
+import { Clock } from './components/Clock';
+import { SettingsPage } from './components/settings/SettingsPage';
 
 const NavBar = () => {
   const getLinkClass = ({ isActive }: { isActive: boolean }) => `
@@ -64,16 +66,17 @@ const AppContent = () => {
 
   return (
     <BrowserRouter basename="/wf-noctua-hub">
-      <div className="min-h-screen bg-background text-on-background pb-20">
-        <header className="sticky top-0 z-10 bg-surface-container/80 p-4 shadow-sm backdrop-blur-md">
-          <h1 className="text-xl font-display font-medium text-on-surface">Noctua Hub</h1>
+      <div className="min-h-screen bg-surface-container text-on-background pb-20">
+        <header className="sticky top-0 z-10 flex items-center justify-between bg-secondary-container p-4 shadow-sm">
+          <h1 className="text-xl font-display font-medium text-on-secondary-container">Noctua Hub</h1>
+          <Clock />
         </header>
         <main className="mx-auto max-w-2xl p-4">
           <Routes>
             <Route path="/" element={<StatusPage />} />
             <Route path="/fissures" element={<div className="p-4">亀裂画面 (実装中)</div>} />
             <Route path="/relics" element={<div className="p-4">レリックシミュレーター (実装中)</div>} />
-            <Route path="/settings" element={<div className="p-4">設定画面 (実装中)</div>} />
+            <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>
         <NavBar />

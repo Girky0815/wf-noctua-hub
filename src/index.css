@@ -1,9 +1,9 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,GRAD,ROND@6..144,-10..0,25..151,1..1000,0..100,0..100&family=Noto+Sans+JP:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,GRAD,ROND@6..144,-10..0,25..151,1..1000,0..100,0..100&family=Noto+Sans+JP:wght@100..900&display=swap');
 
 /* Local Font: GenJyuuGothicX (Subset) - Fallback for ROND 100 */
 @font-face {
@@ -13,6 +13,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'GenJyuuGothicX';
   src: url('./assets/fonts/GenJyuuGothicX-Bold.ttf') format('truetype');
@@ -20,6 +21,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: 'GenJyuuGothicX';
   src: url('./assets/fonts/GenJyuuGothicX-Medium.ttf') format('truetype');
@@ -35,22 +37,18 @@
   --primary-container: #AEF0D7;
   --on-primary-container: #175C49;
   --inverse-primary: #B9FCE2;
-
   --secondary: #4C645A;
   --on-secondary: #E4FFF2;
   --secondary-container: #CEE9DC;
   --on-secondary-container: #3F574D;
-
   --tertiary: #2E6771;
   --on-tertiary: #EDFBFF;
   --tertiary-container: #B7EFFB;
   --on-tertiary-container: #215B65;
-
   --error: #A83836;
   --on-error: #FFF7F6;
   --error-container: #FA746F;
   --on-error-container: #6E0A12;
-
   --background: #F6FAF6;
   --on-background: #2B3530;
   --surface: #F6FAF6;
@@ -59,7 +57,6 @@
   --on-surface-variant: #57615C;
   --inverse-surface: #0B0F0D;
   --inverse-on-surface: #999E9B;
-
   --surface-container-lowest: #FFFFFF;
   --surface-container-low: #EFF5F0;
   --surface-container: #E8F0EA;
@@ -67,7 +64,6 @@
   --surface-container-highest: #DAE5DF;
   --surface-dim: #D2DDD6;
   --surface-bright: #F6FAF6;
-
   --outline: #737D78;
   --outline-variant: #AAB4AE;
   --scrim: #000000;
@@ -80,32 +76,27 @@
   --primary-container: #2C5B4B;
   --on-primary-container: #BCEED9;
   --inverse-primary: #396858;
-
   --secondary: #B2CCC0;
   --on-secondary: #2E453C;
   --secondary-container: #294037;
   --on-secondary-container: #ABC5B9;
-
   --tertiary: #DDF9FF;
   --on-tertiary: #2B636E;
   --tertiary-container: #B7EFFB;
   --on-tertiary-container: #205B65;
-
   --error: #FA746F;
   --on-error: #490006;
   --error-container: #871F21;
   --on-error-container: #FF9993;
-
   --background: #0B0F0D;
   --on-background: #DDE8E1;
   --surface: #0B0F0D;
   --on-surface: #DDE8E1;
   /* --surface-variant: #1E2824;  Modified for better visibility if needed */
-  --surface-variant: #404A45; 
+  --surface-variant: #404A45;
   --on-surface-variant: #A3AEA8;
   --inverse-surface: #F6FAF6;
   --inverse-on-surface: #515653;
-
   --surface-container-lowest: #000000;
   --surface-container-low: #0E1512;
   --surface-container: #141B18;
@@ -113,7 +104,6 @@
   --surface-container-highest: #1E2824;
   --surface-dim: #0B0F0D;
   --surface-bright: #242E2A;
-
   --outline: #6D7872;
   --outline-variant: #404A45;
   --scrim: #000000;
@@ -136,29 +126,24 @@
   --primary-container: #2C5B4B;
   --on-primary-container: #BCEED9;
   --inverse-primary: #396858;
-
   --secondary: #B2CCC0;
   --on-secondary: #2E453C;
   --secondary-container: #294037;
   --on-secondary-container: #ABC5B9;
-
   --tertiary: #DDF9FF;
   --on-tertiary: #2B636E;
   --tertiary-container: #B7EFFB;
   --on-tertiary-container: #205B65;
-
   --error: #FA746F;
   --on-error: #490006;
   --error-container: #871F21;
   --on-error-container: #FF9993;
-
   --on-background: #DDE8E1;
   --on-surface: #DDE8E1;
   --surface-variant: #404A45;
   --on-surface-variant: #A3AEA8;
   --inverse-surface: #F6FAF6;
   --inverse-on-surface: #515653;
-
   --outline: #6D7872;
   --outline-variant: #404A45;
   --scrim: #000000;
@@ -167,5 +152,11 @@
 @layer base {
   body {
     @apply bg-background text-on-background font-sans antialiased;
+  }
+
+  /* Apply ROND 100 and GenJyuuGothicX for bold text/headings */
+  h1, h2, h3, h4, h5, h6, .font-bold, strong, b {
+    font-family: 'Google Sans Flex', 'GenJyuuGothicX', 'Noto Sans JP', sans-serif;
+    font-variation-settings: 'ROND' 100;
   }
 }
