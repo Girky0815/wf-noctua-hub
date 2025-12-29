@@ -52,61 +52,50 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
   }, [sortie, hasVariants, hasMissions, isArchon]);
 
 
+  // レンダリング
   return (
-    <div className="rounded-3xl bg-surface-bright p-5">
-      <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-bold text-on-surface font-display">{title}</h3>
-        <div className="flex items-center gap-2 rounded-full bg-secondary-container px-3 py-1 text-xs font-bold text-on-secondary-container">
-          <span>{sortie.boss}</span>
-          <span>•</span>
-          <span>{translateFaction(sortie.faction)}</span>
-          <span className="text-on-secondary-container/70 font-display">({sortie.eta})</span>
+    <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+      {items.length === 0 ? (
+        <div className="bg-surface-bright px-4 py-8 text-center text-sm text-on-surface-variant">
+          ミッション情報がありません
         </div>
-      </div>
+      ) : (
+        items.map((item, index) => {
+          return (
+            <div
+              key={`${sortie.id}-${index}`}
+              className="flex items-center gap-3 bg-surface-bright p-4"
+            >
+              {/* ステージ番号 */}
+              <div className="text-lg font-bold text-primary opacity-80 font-display">
+                {STAGE_NUMBERS[index] || (index + 1)}
+              </div>
 
-      <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
-        {items.length === 0 ? (
-          <div className="bg-surface-bright px-4 py-8 text-center text-sm text-on-surface-variant">
-            ミッション情報がありません
-          </div>
-        ) : (
-          items.map((item, index) => {
-            return (
-              <div
-                key={`${sortie.id}-${index}`}
-                className="flex items-center gap-3 bg-surface-bright p-4"
-              >
-                {/* ステージ番号 */}
-                <div className="text-lg font-bold text-primary opacity-80 font-display">
-                  {STAGE_NUMBERS[index] || (index + 1)}
+              <div className="flex flex-1 flex-col gap-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-on-surface">
+                    {item.isTranslated ? item.missionType : translateMissionType(item.missionType)}
+                  </span>
+                  <span className="text-xs text-on-surface-variant font-display">{translateNode(item.node)}</span>
                 </div>
-
-                <div className="flex flex-1 flex-col gap-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-on-surface">
-                      {item.isTranslated ? item.missionType : translateMissionType(item.missionType)}
+                <div className="text-sm text-on-surface-variant">
+                  {hasVariants ? (
+                    // ソーティ: 条件などを表示
+                    <>
+                      <span className="font-bold text-error">{item.badge}</span>: {item.description.split(': ')[1]}
+                    </>
+                  ) : (
+                    // アルコン: レベルを表示
+                    <span className="flex items-center gap-1">
+                      <span className="material-symbols-rounded text-base">swords</span>
+                      {item.description}
                     </span>
-                    <span className="text-xs text-on-surface-variant font-display">{translateNode(item.node)}</span>
-                  </div>
-                  <div className="text-sm text-on-surface-variant">
-                    {hasVariants ? (
-                      // ソーティ: 条件などを表示
-                      <>
-                        <span className="font-bold text-error">{item.badge}</span>: {item.description.split(': ')[1]}
-                      </>
-                    ) : (
-                      // アルコン: レベルを表示
-                      <span className="flex items-center gap-1">
-                        <span className="material-symbols-rounded text-base">swords</span>
-                        {item.description}
-                      </span>
-                    )}
-                  </div>
+                  )}
                 </div>
               </div>
-            );
-          }))}
-      </div>
+            </div>
+          );
+        }))}
     </div>
   );
 };

@@ -30,7 +30,7 @@ const InvasionItem: React.FC<{ invasion: Invasion }> = ({ invasion }) => {
   const defenderFaction = translateFaction(invasion.defender.faction);
 
   return (
-    <div className="bg-surface-bright p-4 first:rounded-t-3xl last:rounded-b-3xl">
+    <div className="bg-surface-bright p-4">
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs font-bold text-on-surface-variant font-display">{translateNode(invasion.node)}</span>
         <span className="text-xs text-on-surface-variant">{invasion.desc}</span>
@@ -74,13 +74,10 @@ export const InvasionList: React.FC<InvasionListProps> = ({ invasions }) => {
   if (!activeInvasions || activeInvasions.length === 0) return null;
 
   return (
-    <div className="rounded-3xl bg-surface-bright p-5">
-      <h3 className="mb-4 text-lg font-bold text-on-surface font-display">侵略ミッション</h3>
-      <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
-        {activeInvasions.map(invasion => (
-          <InvasionItem key={invasion.id} invasion={invasion} />
-        ))}
-      </div>
+    <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+      {activeInvasions.map(invasion => (
+        <InvasionItem key={invasion.id} invasion={invasion} />
+      ))}
     </div>
   );
 };

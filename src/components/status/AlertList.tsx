@@ -9,7 +9,7 @@ interface AlertListProps {
 }
 
 // 個別の Alert 項目コンポーネント (Hooks を使うため分離)
-const AlertItem: React.FC<{ alert: Alert; roundedClass: string }> = ({ alert, roundedClass }) => {
+const AlertItem: React.FC<{ alert: Alert }> = ({ alert }) => {
   const timeLeft = useCountdown(alert.expiry);
   const formattedTime = `残り ${timeLeft || '--'} (${formatTime(alert.expiry)} 終了)`;
 
@@ -46,7 +46,7 @@ const AlertItem: React.FC<{ alert: Alert; roundedClass: string }> = ({ alert, ro
   }, [reward]);
 
   return (
-    <div className={`bg-surface-container p-4 ${roundedClass}`}>
+    <div className="bg-surface-bright p-4">
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="font-bold text-on-surface">{translateMissionType(alert.mission.type)}</span>
@@ -87,21 +87,12 @@ export const AlertList: React.FC<AlertListProps> = ({ alerts }) => {
   if (!alerts || alerts.length === 0) return null;
 
   return (
-    <div className="rounded-3xl bg-surface-bright p-5">
-      <h3 className="mb-4 text-lg font-bold text-on-surface font-display">アラート</h3>
-      <div className="flex flex-col gap-[2px]">
-        {alerts.map((alert, index) => {
-          const isFirst = index === 0;
-          const isLast = index === alerts.length - 1;
-          const roundedClass =
-            alerts.length === 1 ? 'rounded-3xl' :
-              isFirst ? 'rounded-t-3xl' :
-                isLast ? 'rounded-b-3xl' :
-                  'rounded-sm';
-
-          return <AlertItem key={alert.id} alert={alert} roundedClass={roundedClass} />;
-        })}
-      </div>
+    <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+      {alerts.map((alert, index) => {
+        // 設定画面と同様にリストアイテム自体には角丸クラスをつけない（SettingsGroupがoverflow-hiddenで処理するため）
+        // ただし各アイテムの背景色などは維持
+        return <AlertItem key={alert.id} alert={alert} roundedClass="" />;
+      })}
     </div>
   );
 };
