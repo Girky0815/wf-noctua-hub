@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Alert } from '../../types/warframe';
-import { translateMissionType, translateResource } from '../../utils/translations';
+import { translateMissionType, translateResource, translateFaction } from '../../utils/translations';
 import { formatTime } from '../../utils/time';
 import { useCountdown } from '../../hooks/useCountdown';
 
@@ -55,6 +55,14 @@ const AlertItem: React.FC<{ alert: Alert; roundedClass: string }> = ({ alert, ro
       </div>
 
       <div className="flex flex-col gap-1">
+        {/* 敵情報: 勢力 レベル範囲 */}
+        <div className="flex items-center gap-2 text-sm text-on-surface-variant">
+          <span className="material-symbols-rounded text-lg">swords</span> {/* または sports_kabaddi, combat */}
+          <span>
+            {translateFaction(alert.mission.faction)} <span className="text-xs opacity-80">{alert.mission.minEnemyLevel}-{alert.mission.maxEnemyLevel}</span>
+          </span>
+        </div>
+
         <div className="flex items-center gap-2">
           <span className="material-symbols-rounded text-lg text-secondary">redeem</span>
           <span className="text-sm font-medium text-on-surface">

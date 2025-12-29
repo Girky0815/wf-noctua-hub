@@ -2,6 +2,7 @@ import React from 'react';
 import { useWarframeData } from '../../hooks/useWarframeData';
 import { CycleCard } from './CycleCard';
 import { AlertList } from './AlertList';
+import { InvasionList } from './InvasionList';
 import { SortieCard } from './SortieCard';
 import { VoidTraderCard } from './VoidTraderCard';
 
@@ -61,6 +62,9 @@ export const StatusPage: React.FC = () => {
 
       {/* Alerts */}
       <AlertList alerts={worldState.alerts.filter(a => !a.expired && new Date(a.expiry).getTime() > Date.now())} />
+
+      {/* Invasions */}
+      <InvasionList invasions={worldState.invasions} />
 
       {/* Sortie */}
       <SortieCard sortie={worldState.sorties?.[0]} />

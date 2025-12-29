@@ -60,6 +60,8 @@ export interface Invasion {
   eta: string;
   completed: boolean;
   vsInfestation: boolean;
+  completion: number;
+  msg?: string; // e.g. "Outbreak"
 }
 
 export interface InvasionFactionInfo {
@@ -123,6 +125,7 @@ export interface Sortie {
   active: boolean;
   rewardPool: string;
   variants: SortieVariant[];
+  missions?: SortieMission[];
   boss: string;
   faction: string;
   expired: boolean;
@@ -134,4 +137,12 @@ export interface SortieVariant {
   modifier: string;
   modifierDescription: string;
   node: string;
+}
+
+export interface SortieMission {
+  node: string;
+  type: string;
+  nightmare: boolean;
+  archwingRequired: boolean;
+  isSharkwing: boolean;
 }

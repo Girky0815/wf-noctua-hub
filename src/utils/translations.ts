@@ -47,7 +47,50 @@ export const resourceTypes: Record<string, string> = {
   'Orokin Reactor': 'オロキンリアクター',
   'Exilus Adapter': 'エクシラスアダプター',
   'Forma': 'フォーマ',
+  'Detonite Injector': 'デトナイトインジェクター',
+  'Fieldron': 'フィールドロン',
+  'Mutagen Mass': 'ミュータジェンマス',
+  'Alad V Nav Coordinate': 'Alad V ナビ座標',
+  'Synthula': 'シンシュラ',
+  'Kavat Genetic Code': 'キャバット遺伝子コード',
+  'Void Traces': 'Void トレース',
+  'Kuva': 'クバ',
+  'Endo': 'Endo',
+  'Credits': 'クレジット',
   // 必要に応じて追加
+};
+
+export const factionTypes: Record<string, string> = {
+  'Orokin': 'オロキン',
+  'Grineer': 'グリニア',
+  'Corpus': 'コーパス',
+  'Infested': '感染体',
+  'Narmer': 'ナルメル',
+  'Sentient': 'センティエント',
+  'Corrupted': 'コラプト',
+  'Infestation': '感染体',
+};
+
+export const planetNames: Record<string, string> = {
+  'Mercury': '水星',
+  'Venus': '金星',
+  'Earth': '地球',
+  'Lua': 'ルア',
+  'Mars': '火星',
+  'Phobos': 'フォボス',
+  'Ceres': 'ケレス',
+  'Jupiter': '木星',
+  'Europa': 'エウロパ',
+  'Saturn': '土星',
+  'Uranus': '天王星',
+  'Neptune': '海王星',
+  'Pluto': '冥王星',
+  'Sedna': 'セドナ',
+  'Eris': 'エリス',
+  'Void': 'Void',
+  'Kuva Fortress': 'クバ要塞', // または "Kuva 要塞"
+  'Deimos': 'ダイモス', // 旧 Derelict
+  'Zariman': 'Zariman',
 };
 
 export const translateMissionType = (type: string): string => {
@@ -56,4 +99,24 @@ export const translateMissionType = (type: string): string => {
 
 export const translateResource = (type: string): string => {
   return resourceTypes[type] || type;
+};
+
+export const translateFaction = (type: string): string => {
+  return factionTypes[type] || type;
+};
+
+/**
+ * ノード名 ("Gut (Saturn)" など) を翻訳する
+ * 惑星部分のみ翻訳して "Gut (土星)" のように返す
+ */
+export const translateNode = (node: string): string => {
+  if (!node) return '';
+  // "NodeName (Planet)" の形式を想定
+  const match = node.match(/^(.+)\s\((.+)\)$/);
+  if (match) {
+    const [_, name, planet] = match;
+    const translatedPlanet = planetNames[planet] || planet;
+    return `${name} (${translatedPlanet})`;
+  }
+  return node;
 };
