@@ -4,7 +4,10 @@ import React, { type ReactNode } from 'react';
 export const SettingsSection: React.FC<{ title?: string; children: ReactNode }> = ({ title, children }) => (
   <div className="mb-6">
     {title && (
-      <h3 className="mb-2 ml-4 text-sm font-bold text-primary font-display">
+      <h3
+        className="mb-2 ml-4 text-sm font-bold text-primary font-display"
+        style={{ fontVariationSettings: "'ROND' 100" }}
+      >
         {title}
       </h3>
     )}
@@ -53,7 +56,10 @@ export const SettingsTile: React.FC<SettingsTileProps> = ({
           </span>
         )}
         <div className="flex flex-col overflow-hidden">
-          <span className="truncate font-medium text-base font-display">
+          <span
+            className="truncate font-medium text-base font-display"
+            style={{ fontVariationSettings: "'ROND' 100" }}
+          >
             {title}
           </span>
           {subtitle && (
