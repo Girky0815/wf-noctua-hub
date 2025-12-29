@@ -1,7 +1,10 @@
+// APIの値を日本語に翻訳するための定数
+
+// ミッションの日本語訳
 export const missionTypes: Record<string, string> = {
   // Basic Mission Types
-  'Assassination': '暗殺',
-  'Assault': '強襲',
+  'Assassination': '抹殺',
+  'Assault': '突撃',
   'Capture': '確保',
   'Defection': '脱出',
   'Defense': '防衛',
@@ -19,27 +22,28 @@ export const missionTypes: Record<string, string> = {
   'Survival': '耐久',
   'Archwing': 'アークウイング',
   'Arena': 'アリーナ',
-  'Skirmish': '深宇宙', // Railjack
-  'Volatile': 'オルフィクス', // Railjack/Event? Check Wiki
+  'Skirmish': '小戦', // Railjack
+  'Volatile': '揮発',
   'Orphix': 'オルフィクス',
 
   // Open World / Bounty related
   'Bounty': '依頼',
-  'Free Roam': '探検',
+  'Free Roam': '自由行動',
 
   // Duviri / New Types
   'The Circuit': 'サーキット',
-  'Lone Story': 'ストーリーのみ',
+  'Lone Story': 'ローン・ストーリー',
   'The Duviri Experience': 'デュヴィリ・エクスペリエンス',
   'Alchemy': '錬金術',
   'Netracells': 'ネットセル',
   'Deep Archimedea': '深延アルキメデア',
   'Mirror Defense': 'ミラー防衛',
   'Conjunction Survival': '結合耐久',
-  'Void Flood': 'Void フラッド',
-  'Void Armageddon': 'Void アルマゲドン',
+  'Void Flood': 'フラッド',
+  'Void Armageddon': 'アルマゲドン',
 };
 
+// リソースアイテムの日本語訳
 export const resourceTypes: Record<string, string> = {
   'Marks of Valiance': '剛勇の証',
   'Nitain Extract': 'ニタン抽出物',
@@ -51,7 +55,7 @@ export const resourceTypes: Record<string, string> = {
   'Fieldron': 'フィールドロン',
   'Mutagen Mass': 'ミュータジェンマス',
   'Alad V Nav Coordinate': 'Alad V ナビ座標',
-  'Synthula': 'シンシュラ',
+  'Synthula': 'シンスラ',
   'Kavat Genetic Code': 'キャバット遺伝子コード',
   'Void Traces': 'Void トレース',
   'Kuva': 'クバ',
@@ -60,6 +64,7 @@ export const resourceTypes: Record<string, string> = {
   // 必要に応じて追加
 };
 
+// 敵勢力の日本語訳
 export const factionTypes: Record<string, string> = {
   'Orokin': 'オロキン',
   'Grineer': 'グリニア',
@@ -69,8 +74,12 @@ export const factionTypes: Record<string, string> = {
   'Sentient': 'センティエント',
   'Corrupted': 'コラプト',
   'Infestation': '感染体',
+  'Scaldra': 'スカルドラ',
+  'Techrot': 'テックロット',
+  'Anarch': 'アナーク'
 };
 
+// 惑星の日本語訳
 export const planetNames: Record<string, string> = {
   'Mercury': '水星',
   'Venus': '金星',
@@ -93,6 +102,7 @@ export const planetNames: Record<string, string> = {
   'Zariman': 'Zariman',
 };
 
+// 侵略ミッション種別
 export const invasionDescriptions: Record<string, string> = {
   'Grineer Offensive': 'グリニア 侵攻',
   'Corpus Siege': 'コーパス 進撃',
