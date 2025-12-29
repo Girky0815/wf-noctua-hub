@@ -52,24 +52,16 @@ npm version 0.2.0-beta
 ```
 
 ### 手順 2: GitHubへ反映してデプロイ開始
-バージョン変更をコミットし、タグを作成してプッシュします。
+`npm version` コマンドを実行すると、自動的に git commit と git tag の作成が行われます。
+あとは以下のコマンドでGitHubにプッシュするだけでデプロイが開始されます。
 
 ```bash
-# 変更をステージング
-git add .
-
-# メッセージを付けてコミット
-git commit -m "chore: アプリバージョンアップ"
-
-# バージョンタグを作成 (例: v0.1.1)
-# ※ package.json のバージョンと合わせる必要があります
-git tag v0.1.1
-
-# GitHubへプッシュ (デプロイが自動開始されます)
+# 作成されたタグとコミットをプッシュ
 git push origin main --tags
 ```
+
 > **Note:**
-> `npm version` コマンドはデフォルトで git commit と git tag を自動作成しますが、現在の設定では `--no-git-tag-version` オプションなどは付けていないため、標準挙動に従います。もし `npm version` だけで完結させたい場合は、設定調整も可能です。現状は手動コミットも考慮した手順を記載しています。
+> もし `npm version` で作成されたコミットを取り消したい場合は `git reset --soft HEAD~1` 、タグを消したい場合は `git tag -d v0.1.0` (バージョンは適宜変更) を使用します。
 
 ---
 ## 3. GitHub Pages 設定確認
