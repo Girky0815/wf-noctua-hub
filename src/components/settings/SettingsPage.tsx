@@ -56,53 +56,6 @@ export const SettingsPage: React.FC = () => {
         </SettingsGroup>
       </SettingsSection>
 
-      {/* 概要 */}
-      <SettingsSection title="概要">
-        <SettingsGroup>
-          <SettingsTile
-            icon="info"
-            title="Noctua Hub"
-            subtitle="v0.1.0 (Alpha)"
-            onClick={() => {/* 将来的に詳細画面へ */ }}
-          />
-          <SettingsTile
-            icon="description"
-            title="クレジット & ライセンス"
-            subtitle="利用しているオープンソースライブラリなど"
-            trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
-            onClick={() => setShowCredits(!showCredits)}
-          />
-        </SettingsGroup>
-      </SettingsSection>
-
-      {/* クレジット詳細表示エリア (簡易的展開) */}
-      {showCredits && (
-        <div className="mb-6 animate-fade-in px-4">
-          <div className="rounded-3xl bg-surface-container-high p-5 text-sm">
-            <div className="space-y-4">
-              <div>
-                <div className="mb-1 text-xs font-bold text-primary">Data Source</div>
-                <ul className="pl-2 text-on-surface-variant">
-                  <li><a href="https://warframestat.us/" target="_blank" rel="noreferrer" className="underline decoration-dotted">Warframe Status API</a></li>
-                </ul>
-              </div>
-              <div>
-                <div className="mb-1 text-xs font-bold text-primary">Libraries</div>
-                <div className="text-on-surface-variant">React, Vite, Tailwind CSS, SWR, React Router</div>
-              </div>
-              <div>
-                <div className="mb-1 text-xs font-bold text-primary">Fonts</div>
-                <ul className="space-y-1 pl-2 text-on-surface-variant text-xs">
-                  <li>GenJyuuGothicX (SIL OFL 1.1)</li>
-                  <li>Google Sans Flex (Google)</li>
-                  <li>Noto Sans JP (Google)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* API情報 */}
       <SettingsSection title="API情報">
         <SettingsGroup>
@@ -118,7 +71,7 @@ export const SettingsPage: React.FC = () => {
           />
           <SettingsTile
             icon="schedule"
-            title="データ更新日時"
+            title="API データ最終更新日時"
             subtitle={
               <span>
                 {apiTimestamp}
@@ -132,9 +85,9 @@ export const SettingsPage: React.FC = () => {
           />
           <SettingsTile
             icon="code"
-            title="JSONレスポンス"
-            subtitle="取得した生データを確認"
-            trailing={<span className="material-symbols-rounded text-on-surface-variant">terminal</span>}
+            title="API レスポンス(JSON)"
+            subtitle="APIから取得した生データを見る"
+            trailing={<span className="material-symbols-rounded text-on-surface-variant">terminal chevron_right</span>}
             onClick={() => setShowRawData(true)}
           />
         </SettingsGroup>
@@ -144,9 +97,9 @@ export const SettingsPage: React.FC = () => {
       {
         showRawData && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-fade-in">
-            <div className="flex max-h-[80vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-surface-container-high shadow-xl">
+            <div className="flex max-h-[80vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-secondary-container shadow-xl">
               <div className="flex items-center justify-between border-b border-outline-variant p-4">
-                <h3 className="font-display font-bold text-on-surface">API Response (WorldState)</h3>
+                <h3 className="font-display font-bold text-on-surface">API レスポンス (WorldState)</h3>
                 <button
                   onClick={() => setShowRawData(false)}
                   className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-on-surface/10"
@@ -154,7 +107,7 @@ export const SettingsPage: React.FC = () => {
                   <span className="material-symbols-rounded">close</span>
                 </button>
               </div>
-              <div className="flex-1 overflow-auto bg-surface-container-lowest p-4 font-mono text-xs text-on-surface">
+              <div className="flex-1 overflow-auto bg-surface-container p-4 font-mono text-xs text-on-surface">
                 <pre>
                   {worldState ? JSON.stringify(worldState, null, 2) : 'No Data'}
                 </pre>
@@ -184,6 +137,55 @@ export const SettingsPage: React.FC = () => {
           />
         </SettingsGroup>
       </SettingsSection>
+
+      {/* 概要 */}
+      <SettingsSection title="概要">
+        <SettingsGroup>
+          <SettingsTile
+            icon="info"
+            title="Noctua Hub"
+            subtitle="v0.1.0 (Alpha)"
+            onClick={() => {/* 将来的に詳細画面へ */ }}
+          />
+          <SettingsTile
+            icon="description"
+            title="クレジット & ライセンス"
+            subtitle="利用しているオープンソースライブラリなど"
+            trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+            onClick={() => setShowCredits(!showCredits)}
+          />
+        </SettingsGroup>
+      </SettingsSection>
+
+      {/* クレジット詳細表示エリア (簡易的展開) */}
+      {showCredits && (
+        <div className="mb-6 animate-fade-in px-4">
+          <div className="rounded-3xl bg-secondary-container p-5 text-sm">
+            <div className="space-y-4">
+              <div>
+                <div className="mb-1 text-xs font-bold text-primary">情報源</div>
+                <ul className="pl-2 text-on-surface-variant">
+                  <li><a href="https://warframestat.us/" target="_blank" rel="noreferrer" className="underline decoration-dotted">Warframe Status API</a></li>
+                </ul>
+              </div>
+              <div>
+                <div className="mb-1 text-xs font-bold text-primary">ライブラリ</div>
+                <ul className="pl-2 text-on-surface-variant">
+                  <li>React, Vite, Tailwind CSS, SWR, React Router</li>
+                </ul>
+              </div>
+              <div>
+                <div className="mb-1 text-xs font-bold text-primary">フォント</div>
+                <ul className="space-y-1 pl-2 text-on-surface-variant text-xs">
+                  <li>源柔ゴシックX (SIL OFL 1.1)</li>
+                  <li>Google Sans Flex (Google)</li>
+                  <li>Noto Sans JP (Google)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="px-4 text-center text-xs text-on-surface-variant opacity-60">
         <p>© 2025 Noctua Hub</p>

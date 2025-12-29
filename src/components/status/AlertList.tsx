@@ -88,10 +88,10 @@ export const AlertList: React.FC<AlertListProps> = ({ alerts }) => {
 
   return (
     <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
-      {alerts.map((alert, index) => {
+      {alerts.map((alert) => {
         // 設定画面と同様にリストアイテム自体には角丸クラスをつけない（SettingsGroupがoverflow-hiddenで処理するため）
         // ただし各アイテムの背景色などは維持
-        return <AlertItem key={alert.id} alert={alert} roundedClass="" />;
+        return <AlertItem key={alert.id} alert={alert} />;
       })}
     </div>
   );

@@ -65,7 +65,7 @@ const AppContent = () => {
   }
 
   return (
-    <BrowserRouter basename="/wf-noctua-hub">
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div className="min-h-screen bg-surface-container text-on-background pb-20">
         <header className="sticky top-0 z-10 flex items-center justify-between bg-secondary-container p-4 shadow-sm">
           <h1 className="text-xl font-display font-medium text-on-secondary-container">Noctua Hub</h1>
