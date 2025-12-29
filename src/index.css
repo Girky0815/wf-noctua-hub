@@ -47,7 +47,7 @@
   --on-tertiary-container: #215B65;
   --error: #A83836;
   --on-error: #FFF7F6;
-  --error-container: #FA746F;
+  --error-container: #ffdad6;
   --on-error-container: #6E0A12;
   --background: #F6FAF6;
   --on-background: #2B3530;
@@ -86,7 +86,7 @@
   --on-tertiary-container: #205B65;
   --error: #FA746F;
   --on-error: #490006;
-  --error-container: #871F21;
+  --error-container: #93000a;
   --on-error-container: #FF9993;
   --background: #0B0F0D;
   --on-background: #DDE8E1;
