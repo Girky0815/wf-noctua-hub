@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSettings } from '../../contexts/SettingsContext';
 import { ThemeSelector } from '../ThemeSelector';
+import { SettingsSection, SettingsGroup, SettingsTile } from './SettingsCommon';
 
 export const SettingsPage: React.FC = () => {
   const { resetSettings } = useSettings();
+  const [showCredits, setShowCredits] = useState(false);
 
   const handleReset = () => {
     if (window.confirm('すべての設定をリセットして初期状態に戻しますか？')) {
@@ -13,53 +15,83 @@ export const SettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4 pb-20">
-      {/* テーマ設定 */}
-      <section className="rounded-3xl bg-surface-bright p-5">
-        <h3 className="mb-4 text-lg font-bold text-on-surface font-display">
-          外観
-        </h3>
-        <ThemeSelector />
-      </section>
+    <div className="flex flex-col pb-24 pt-4">
+      {/* 外観 */}
+      <SettingsSection title="外観">
+        <SettingsGroup>
+          <SettingsTile
+            icon="palette"
+            title="テーマ"
+            subtitle="アプリの配色を変更します"
+            trailing={<ThemeSelector />}
+          />
+        </SettingsGroup>
+      </SettingsSection>
 
-      {/* アプリ情報 */}
-      <section className="rounded-3xl bg-surface-bright p-5">
-        <h3 className="mb-4 text-lg font-bold text-on-surface font-display">
-          アプリについて
-        </h3>
-        <div className="space-y-3 text-sm text-on-surface-variant">
-          <div className="flex justify-between">
-            <span>バージョン</span>
-            <span className="font-display">v0.1.0 (Alpha)</span>
+      {/* 概要 */}
+      <SettingsSection title="概要">
+        <SettingsGroup>
+          <SettingsTile
+            icon="info"
+            title="Noctua Hub"
+            subtitle="v0.1.0 (Alpha)"
+            onClick={() => {/* 将来的に詳細画面へ */ }}
+          />
+          <SettingsTile
+            icon="description"
+            title="クレジット & ライセンス"
+            subtitle="利用しているオープンソースライブラリなど"
+            trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+            onClick={() => setShowCredits(!showCredits)}
+          />
+        </SettingsGroup>
+      </SettingsSection>
+
+      {/* クレジット詳細表示エリア (簡易的展開) */}
+      {showCredits && (
+        <div className="mb-6 animate-fade-in px-4">
+          <div className="rounded-3xl bg-surface-container-high p-5 text-sm">
+            <div className="space-y-4">
+              <div>
+                <div className="mb-1 text-xs font-bold text-primary">Data Source</div>
+                <ul className="pl-2 text-on-surface-variant">
+                  <li><a href="https://warframestat.us/" target="_blank" rel="noreferrer" className="underline decoration-dotted">Warframe Status API</a></li>
+                </ul>
+              </div>
+              <div>
+                <div className="mb-1 text-xs font-bold text-primary">Libraries</div>
+                <div className="text-on-surface-variant">React, Vite, Tailwind CSS, SWR, React Router</div>
+              </div>
+              <div>
+                <div className="mb-1 text-xs font-bold text-primary">Fonts</div>
+                <ul className="space-y-1 pl-2 text-on-surface-variant text-xs">
+                  <li>GenJyuuGothicX (SIL OFL 1.1)</li>
+                  <li>Google Sans Flex (Google)</li>
+                  <li>Noto Sans JP (Google)</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <span>開発</span>
-            <span>Gemini 3 Pro + Antigravity</span>
-          </div>
-          <p className="mt-4 pt-4 border-t border-outline-variant text-xs leading-relaxed">
-            Noctua Hub は Warframe の非公式ファンメイドアプリです。
-            Digital Extremes Ltd. とは提携していません。
-            ゲーム内のデータは Warframe の利用規約に従って使用されています。
-          </p>
         </div>
-      </section>
+      )}
 
       {/* データ管理 */}
-      <section className="rounded-3xl bg-surface-bright p-5">
-        <h3 className="mb-4 text-lg font-bold text-on-surface font-display">
-          データ管理
-        </h3>
-        <button
-          onClick={handleReset}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-error-container p-4 text-on-error-container transition-colors hover:bg-opacity-80 active:bg-opacity-60"
-        >
-          <span className="material-symbols-rounded">delete_forever</span>
-          <span className="font-bold">設定をリセット</span>
-        </button>
-        <p className="mt-2 text-center text-xs text-on-surface-variant">
-          ※ オンボーディング（初回ガイド）も再表示されます
-        </p>
-      </section>
+      <SettingsSection title="データ管理">
+        <SettingsGroup>
+          <SettingsTile
+            icon="delete_forever"
+            title="設定をリセット"
+            subtitle="テーマ設定や初回完了状態を初期化します"
+            destructive
+            onClick={handleReset}
+          />
+        </SettingsGroup>
+      </SettingsSection>
+
+      <div className="px-4 text-center text-xs text-on-surface-variant opacity-60">
+        <p>Noctua Hub is a fan-made app.</p>
+        <p>Not affiliated with Digital Extremes Ltd.</p>
+      </div>
     </div>
   );
 };
