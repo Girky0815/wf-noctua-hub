@@ -169,6 +169,9 @@ export const SettingsPage: React.FC = () => {
       </SettingsSection>
 
       <div className="px-4 text-center text-xs text-on-surface-variant opacity-60">
+        <p>© 2025 Noctua Hub</p>
+        <p>Noctua Hub はファンメイドのアプリです。</p>
+        <p>Digital Extremes Ltd.とは全く関係ありません。</p>
         <p>Noctua Hub is a fan-made app.</p>
         <p>Not affiliated with Digital Extremes Ltd.</p>
       </div>
