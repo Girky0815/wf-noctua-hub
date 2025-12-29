@@ -144,7 +144,7 @@ export const SettingsPage: React.FC = () => {
           <SettingsTile
             icon="info"
             title="Noctua Hub"
-            subtitle="v0.1.0 (Alpha)"
+            subtitle={`v${__APP_VERSION__}`}
             onClick={() => {/* 将来的に詳細画面へ */ }}
           />
           <SettingsTile
