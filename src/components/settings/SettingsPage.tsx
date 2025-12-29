@@ -18,7 +18,7 @@ export const SettingsPage: React.FC = () => {
   };
 
   // APIステータスの判定
-  const apiStatus = isError ? 'Error' : isLoading && !worldState ? 'Loading...' : 'OK';
+  const apiStatus = isError ? 'エラー' : isLoading && !worldState ? '読み込み中...' : '正常';
   const apiTimestamp = worldState?.timestamp ? new Date(worldState.timestamp).toLocaleString() : '-';
   const timeDiff = worldState?.timestamp
     ? Math.floor((Date.now() - new Date(worldState.timestamp).getTime()) / 60000)
@@ -90,24 +90,24 @@ export const SettingsPage: React.FC = () => {
         <SettingsGroup>
           <SettingsTile
             icon="api"
-            title="Status"
+            title="ステータス"
             subtitle={apiStatus}
             trailing={
               <span className={`text-xs font-bold px-2 py-1 rounded-md ${isError ? 'bg-error text-on-error' : 'bg-primary-container text-on-primary-container'
                 }`}>
-                {isError ? 'FAILED' : 'CONNECTED'}
+                {isError ? '失敗' : '接続中'}
               </span>
             }
           />
           <SettingsTile
             icon="schedule"
-            title="Data Timestamp"
+            title="データ更新日時"
             subtitle={
               <span>
                 {apiTimestamp}
                 {worldState?.timestamp && (
                   <span className={`ml-2 text-xs ${timeDiff > 30 ? 'text-error font-bold' : 'opacity-70'}`}>
-                    ({timeDiff} min ago)
+                    ({timeDiff} 分前)
                   </span>
                 )}
               </span>
@@ -115,8 +115,8 @@ export const SettingsPage: React.FC = () => {
           />
           <SettingsTile
             icon="code"
-            title="Raw Response"
-            subtitle="取得したJSON生データを確認"
+            title="JSONレスポンス"
+            subtitle="取得した生データを確認"
             trailing={<span className="material-symbols-rounded text-on-surface-variant">terminal</span>}
             onClick={() => setShowRawData(true)}
           />
