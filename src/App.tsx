@@ -1,35 +1,95 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { SettingsProvider, useSettings } from './contexts/SettingsContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { OnboardingPage } from './pages/OnboardingPage';
+import { StatusPage } from './components/status/StatusPage';
 
-function App() {
-  const [count, setCount] = useState(0)
+const NavBar = () => {
+  const getLinkClass = ({ isActive }: { isActive: boolean }) => `
+    flex flex-1 flex-col items-center justify-center py-2 transition-colors
+    ${isActive ? 'text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'}
+  `;
+
+  const getIconClass = ({ isActive }: { isActive: boolean }) => `
+    material-symbols-rounded mb-1 text-2xl px-5 py-1 rounded-full transition-colors
+    ${isActive ? 'bg-secondary-container text-on-secondary-container' : ''}
+  `;
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <nav className="fixed bottom-0 left-0 right-0 border-t border-outline-variant bg-surface-container-low pb-safe">
+      <div className="flex h-16 max-w-2xl mx-auto">
+        <NavLink to="/" className={getLinkClass}>
+          {({ isActive }) => (
+            <>
+              <span className={getIconClass({ isActive })}>dashboard</span>
+              <span className="text-xs font-medium">ステータス</span>
+            </>
+          )}
+        </NavLink>
+        <NavLink to="/fissures" className={getLinkClass}>
+          {({ isActive }) => (
+            <>
+              <span className={getIconClass({ isActive })}>filter_drama</span>
+              <span className="text-xs font-medium">亀裂</span>
+            </>
+          )}
+        </NavLink>
+        <NavLink to="/relics" className={getLinkClass}>
+          {({ isActive }) => (
+            <>
+              <span className={getIconClass({ isActive })}>change_history</span>
+              <span className="text-xs font-medium">レリック</span>
+            </>
+          )}
+        </NavLink>
+        <NavLink to="/settings" className={getLinkClass}>
+          {({ isActive }) => (
+            <>
+              <span className={getIconClass({ isActive })}>settings</span>
+              <span className="text-xs font-medium">設定</span>
+            </>
+          )}
+        </NavLink>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+    </nav>
+  );
+};
+
+const AppContent = () => {
+  const { isFirstVisit } = useSettings();
+
+  if (isFirstVisit) {
+    return <OnboardingPage />;
+  }
+
+  return (
+    <BrowserRouter basename="/wf-noctua-hub">
+      <div className="min-h-screen bg-background text-on-background pb-20">
+        <header className="sticky top-0 z-10 bg-surface-container/80 p-4 shadow-sm backdrop-blur-md">
+          <h1 className="text-xl font-display font-medium text-on-surface">Noctua Hub</h1>
+        </header>
+        <main className="mx-auto max-w-2xl p-4">
+          <Routes>
+            <Route path="/" element={<StatusPage />} />
+            <Route path="/fissures" element={<div className="p-4">亀裂画面 (実装中)</div>} />
+            <Route path="/relics" element={<div className="p-4">レリックシミュレーター (実装中)</div>} />
+            <Route path="/settings" element={<div className="p-4">設定画面 (実装中)</div>} />
+          </Routes>
+        </main>
+        <NavBar />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </BrowserRouter>
+  );
+};
+
+function App() {
+  return (
+    <SettingsProvider>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </SettingsProvider>
+  );
 }
 
-export default App
+export default App;

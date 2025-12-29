@@ -24,7 +24,7 @@ Warframe のプレイヤー（テンノ）が、ゲームを起動しなくて�
    - Google Sans Flex + Noto Sans JP: `@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,GRAD,ROND@6..144,-10..0,25..151,1..1000,0..100,0..100&family=Noto+Sans+JP:wght@100..900&display=swap');`
    - 英数字: Google Sans Flex (ROND 100 を強調箇所に使用)
    - 日本語: Noto Sans JP (フォールバック)、および 源柔ゴシックX
-     - 源柔ゴシックXはGoogle Sans FlexでROND 100を設定した箇所のフォールバックとして使用する。ttf をプロジェクト内のどこに配置すればよいかを提示すること
+     - 源柔ゴシックXはGoogle Sans FlexでROND 100を設定した箇所のフォールバックとして使用する。~~ttf をプロジェクト内のどこに配置すればよいかを提示すること~~src/assets/fonts/に配置済
    - アイコン: Material Symbols Rounded (Fill/Non-fill を使い分け)
 3. カラースキーム
    - アプリの背景色は`Surface Container High`を使用する。

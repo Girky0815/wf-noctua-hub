@@ -1,0 +1,64 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: 'var(--primary)',
+        'on-primary': 'var(--on-primary)',
+        'primary-container': 'var(--primary-container)',
+        'on-primary-container': 'var(--on-primary-container)',
+        'inverse-primary': 'var(--inverse-primary)',
+        
+        secondary: 'var(--secondary)',
+        'on-secondary': 'var(--on-secondary)',
+        'secondary-container': 'var(--secondary-container)',
+        'on-secondary-container': 'var(--on-secondary-container)',
+        
+        tertiary: 'var(--tertiary)',
+        'on-tertiary': 'var(--on-tertiary)',
+        'tertiary-container': 'var(--tertiary-container)',
+        'on-tertiary-container': 'var(--on-tertiary-container)',
+        
+        error: 'var(--error)',
+        'on-error': 'var(--on-error)',
+        'error-container': 'var(--error-container)',
+        'on-error-container': 'var(--on-error-container)',
+        
+        background: 'var(--background)',
+        'on-background': 'var(--on-background)',
+        surface: 'var(--surface)',
+        'on-surface': 'var(--on-surface)',
+        'surface-variant': 'var(--surface-variant)',
+        'on-surface-variant': 'var(--on-surface-variant)',
+        'inverse-surface': 'var(--inverse-surface)',
+        'inverse-on-surface': 'var(--inverse-on-surface)',
+        
+        // Surface Containers (M3E)
+        'surface-container-lowest': 'var(--surface-container-lowest)',
+        'surface-container-low': 'var(--surface-container-low)',
+        'surface-container': 'var(--surface-container)',
+        'surface-container-high': 'var(--surface-container-high)',
+        'surface-container-highest': 'var(--surface-container-highest)',
+        'surface-dim': 'var(--surface-dim)',
+        'surface-bright': 'var(--surface-bright)',
+        
+        outline: 'var(--outline)',
+        'outline-variant': 'var(--outline-variant)',
+        scrim: 'var(--scrim)',
+      },
+      fontFamily: {
+        sans: ['Google Sans Flex', 'Noto Sans JP', 'GenJyuuGothicX', 'sans-serif'],
+        display: ['Google Sans Flex', 'sans-serif'],
+        'jp-fallback': ['Noto Sans JP', 'sans-serif'],
+      },
+      borderRadius: {
+        '3xl': '28px',
+      }
+    },
+  },
+  plugins: [],
+}
