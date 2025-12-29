@@ -2,6 +2,12 @@
 
 Warframe のワールドステート（ミッション情報やイベント状況）などをリアルタイムで(かつゲームプレイ中などにでも)確認できる、シンプルでモダンな Web アプリケーションです。
 
+アプリ: https://girky0815.github.io/wf-noctua-hub/
+
+稼働状況(アプリ): https://stats.uptimerobot.com/zJmojr8khv
+
+稼働状況(API)  : https://stats.uptimerobot.com/q7g2Yckvl/778652720
+
 ## 概要
 Noctua Hub は、Warframe の公開 API を利用して、現在発生しているアラート、侵略、ソーティミッションなどの情報を可視化します。
 インストール不要で、PC・スマホのブラウザからすぐにアクセスできます。
