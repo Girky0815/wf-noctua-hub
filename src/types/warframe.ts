@@ -11,7 +11,27 @@ export interface WorldState {
   cambionCycle: Cycle;
   sorties: Sortie[];
   archonHunt: Sortie;
-  // 必要に応じて追加
+  vaultTrader: VaultTrader;
+}
+
+export interface VaultTrader {
+  id: string;
+  activation: string;
+  expiry: string;
+  active?: boolean;
+  startString: string;
+  eta: string;
+  inventory: VaultTraderInventoryItem[];
+  character?: string; // "Varzia"
+}
+
+export interface VaultTraderInventoryItem {
+  item: string;
+  type?: string;
+  cost?: number; // Crystal/Aya cost
+  attributes?: {
+    itemType?: string;
+  };
 }
 
 export interface Alert {

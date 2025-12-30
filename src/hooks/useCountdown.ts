@@ -25,24 +25,31 @@ export const useCountdown = (targetDate?: string | Date) => {
         return;
       }
 
+      const totalHours = Math.floor(difference / (1000 * 60 * 60));
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
       const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-      // 1日以上: "1d 2h" (秒は表示しない)
-      if (days > 0) {
-        setTimeLeft(`${days}d ${hours}h`);
+      // 72時間以上: 日数だけ (d日)
+      if (totalHours >= 72) {
+        setTimeLeft(`${days}日`);
         return;
       }
 
-      // 1時間以上: "1時間23分" (秒を省略して表示ブレを防ぐ)
-      if (hours > 0) {
-        setTimeLeft(`${hours}時間${minutes.toString().padStart(2, '0')}分`);
+      // 24時間以上 72時間未満: 時間だけ (hh時間)
+      if (totalHours >= 24) {
+        setTimeLeft(`${totalHours}時間`);
         return;
       }
 
-      // 1時間未満: "05分30秒" (パディングありで固定幅)
+      // 1時間以上 24時間未満: 時間と分 (hh時間mm分)
+      if (totalHours >= 1) {
+        setTimeLeft(`${totalHours}時間${minutes.toString().padStart(2, '0')}分`);
+        return;
+      }
+
+      // 1時間未満: 分と秒 (mm分ss秒)
       setTimeLeft(`${minutes.toString().padStart(2, '0')}分${seconds.toString().padStart(2, '0')}秒`);
     };
 
