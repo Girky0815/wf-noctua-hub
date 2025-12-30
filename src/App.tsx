@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { HashRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { OnboardingPage } from './pages/OnboardingPage';
@@ -65,7 +65,7 @@ const AppContent = () => {
   }
 
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <HashRouter>
       <div className="min-h-screen bg-surface-container text-on-background pb-20">
         <header className="sticky top-0 z-10 flex items-center justify-between bg-secondary-container p-4 shadow-sm">
           <h1 className="text-xl font-display font-medium text-on-secondary-container">Noctua Hub</h1>
@@ -81,7 +81,7 @@ const AppContent = () => {
         </main>
         <NavBar />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
