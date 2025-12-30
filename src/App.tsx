@@ -5,6 +5,7 @@ import { OnboardingPage } from './pages/OnboardingPage';
 import { StatusPage } from './components/status/StatusPage';
 import { Clock } from './components/Clock';
 import { SettingsPage } from './components/settings/SettingsPage';
+import { ScrollToTop } from './components/ScrollToTop';
 
 const NavBar = () => {
   const getLinkClass = ({ isActive }: { isActive: boolean }) => `
@@ -66,6 +67,7 @@ const AppContent = () => {
 
   return (
     <HashRouter>
+      <ScrollToTop />
       <div className="min-h-screen bg-surface-container text-on-background pb-20">
         <header className="sticky top-0 z-10 flex items-center justify-between bg-secondary-container p-4 shadow-sm">
           <h1 className="text-xl font-display font-medium text-on-secondary-container">Noctua Hub</h1>
