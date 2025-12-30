@@ -20,7 +20,7 @@ const FissureItem: React.FC<{ fissure: Fissure }> = ({ fissure }) => {
     <div className="flex items-center justify-between bg-surface-bright p-4 text-on-surface">
       <div className="flex flex-col gap-1 overflow-hidden">
         <div className="flex items-center gap-2">
-          <span className="font-medium font-display text-base">
+          <span className="font-medium font-display text-base" style={{ fontVariationSettings: "'ROND' 100" }}>
             {translateNode(fissure.node)}
           </span>
           {fissure.isHard && <span className="material-symbols-rounded text-sm text-error" title="Steel Path">mode_standby</span>}
@@ -28,7 +28,7 @@ const FissureItem: React.FC<{ fissure: Fissure }> = ({ fissure }) => {
         </div>
 
         <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-          <span className="font-display rounded bg-surface-container-highest px-1.5 py-0.5 text-xs font-medium">
+          <span className="font-display rounded bg-secondary-container px-1.5 py-0.5 text-xs font-medium text-on-secondary-container">
             {translateMissionType(fissure.missionType)}
           </span>
           <span>•</span>

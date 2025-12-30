@@ -5,6 +5,15 @@ import { FissureList } from '../components/fissures/FissureList';
 export const FissuresPage: React.FC = () => {
   const { worldState, isLoading, isError } = useWarframeData();
   const [filterMode, setFilterMode] = React.useState<'normal' | 'hard' | 'storm'>('normal');
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   if (isError) {
     return (
@@ -39,42 +48,54 @@ export const FissuresPage: React.FC = () => {
 
   return (
     <div className="animate-fade-in pb-24">
-      <div className="mb-4 flex items-center justify-between px-2">
-        <h2 className="text-xl font-display font-bold text-on-surface">亀裂ミッション</h2>
+      {/* Fixed Header */}
+      <div className={`fixed top-[60px] left-0 right-0 z-10 border-b transition-colors duration-300 shadow-sm
+        ${isScrolled ? 'bg-surface-container-highest border-surface-container-highest' : 'bg-transparent border-transparent'}
+      `}>
+        <div className="mx-auto flex max-w-2xl items-center justify-between px-6 py-3">
+          <h2 className="text-xl font-display font-bold text-on-surface">亀裂ミッション</h2>
 
-        {/* Filter Toggles */}
-        <div className="flex gap-2">
-          <button
-            onClick={() => toggleFilter('hard')}
-            className={`
+          {/* Filter Toggles */}
+          <div className="flex gap-2">
+            <button
+              onClick={() => toggleFilter('hard')}
+              className={`
               flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors border
               ${filterMode === 'hard'
-                ? 'bg-secondary-container text-on-secondary-container border-secondary-container'
-                : 'bg-transparent text-on-surface-variant border-outline hover:bg-surface-container-high'
-              }
+                  ? 'bg-primary-container text-on-primary-container border-primary'
+                  : 'bg-transparent text-on-surface-variant border-outline hover:bg-surface-container-high'
+                }
             `}
-          >
-            <span className="material-symbols-rounded text-[18px]">mode_standby</span>
-            鋼の道のり
-          </button>
+            >
+              <span className="material-symbols-rounded text-[18px]">mode_standby</span>
+              鋼の道のり
+            </button>
 
-          <button
-            onClick={() => toggleFilter('storm')}
-            className={`
+            <button
+              onClick={() => toggleFilter('storm')}
+              className={`
               flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors border
               ${filterMode === 'storm'
-                ? 'bg-secondary-container text-on-secondary-container border-secondary-container'
-                : 'bg-transparent text-on-surface-variant border-outline hover:bg-surface-container-high'
-              }
+                  ? 'bg-primary-container text-on-primary-container border-primary'
+                  : 'bg-transparent text-on-surface-variant border-outline hover:bg-surface-container-high'
+                }
             `}
-          >
-            <span className="material-symbols-rounded text-[18px]">rocket_launch</span>
-            Void嵐
-          </button>
+            >
+              <span className="material-symbols-rounded text-[18px]">rocket_launch</span>
+              Void嵐
+            </button>
+          </div>
         </div>
       </div>
 
-      <FissureList fissures={filteredFissures} />
+      {/* Spacer for fixed header */}
+      <div className="pt-14">
+        <FissureList fissures={filteredFissures} />
+      </div>
+
+      <p className="mt-4 px-2 text-center text-xs text-on-surface-variant opacity-70">
+        ※ APIの仕様上、敵レベルなどの詳細情報は取得できないため表示していません。
+      </p>
     </div>
   );
 };
