@@ -32,7 +32,7 @@ const FissureItem: React.FC<{ fissure: Fissure }> = ({ fissure }) => {
             {translateMissionType(fissure.missionType)}
           </span>
           <span>•</span>
-          <span>{translateFaction(fissure.enemy)}</span>
+          <span>{translateFaction(fissure.enemy, fissure.node)}</span>
         </div>
       </div>
 

@@ -40,6 +40,8 @@ export const missionTypes: Record<string, string> = {
   'Mirror Defense': 'ミラー防衛',
   'Conjunction Survival': '結合耐久',
   'Void Flood': 'フラッド',
+  'Corruption': 'フラッド', // 亀裂用
+  'Void Cascade': 'カスケード',
   'Void Armageddon': 'アルマゲドン',
 };
 
@@ -128,8 +130,17 @@ export const translateResource = (type: string): string => {
   return resourceTypes[type] || type;
 };
 
-export const translateFaction = (type: string): string => {
-  return factionTypes[type] || type;
+export const translateFaction = (faction: string, node?: string): string => {
+  // 特殊な勢力名の上書き
+  if (node) {
+    if (faction === 'Corpus' && node.includes('Jupiter')) {
+      return 'コーパスアマルガム';
+    }
+    if (faction === 'Grineer' && node.includes('Kuva Fortress')) {
+      return 'クバグリニア';
+    }
+  }
+  return factionTypes[faction] || faction;
 };
 
 /**
