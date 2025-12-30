@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { OnboardingPage } from './pages/OnboardingPage';
@@ -67,7 +67,7 @@ const AppContent = () => {
   }
 
   return (
-    <HashRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <div className="min-h-screen bg-surface-container text-on-background pb-20">
         <header className="sticky top-0 z-10 flex items-center justify-between bg-secondary-container p-4 shadow-sm">
@@ -84,7 +84,7 @@ const AppContent = () => {
         </main>
         <NavBar />
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 
