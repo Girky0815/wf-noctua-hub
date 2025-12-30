@@ -1,4 +1,4 @@
-export type ResurgenceCategory = 'Warframe' | 'Primary' | 'Secondary' | 'Melee' | 'Companion' | 'Archwing' | 'Unknown';
+export type ResurgenceCategory = 'Warframe' | 'Primary' | 'Secondary' | 'Melee' | 'Companion' | 'Archwing' | 'Relic' | 'Unknown';
 
 interface ResurgenceItemDef {
   name: string;
@@ -7,10 +7,6 @@ interface ResurgenceItemDef {
 
 // APIから返ってくる「生のアイテム名（小文字、パーツ名除去済み）」をキーにします。
 // 値には、表示したい「正しい名前」と「カテゴリ」を指定します。
-// カテゴリ: 'Warframe' | 'Primary' | 'Secondary' | 'Melee' | 'Companion' | 'Archwing' | 'Unknown'
-// 
-// 例: APIが "prime panthera" を返すが、表示は "Panthera Prime" (Primary) にしたい場合:
-// 'prime panthera': { name: 'Panthera Prime', category: 'Primary' },
 const RESURGENCE_FIXES: Record<string, ResurgenceItemDef> = {
 
   // 書き方
@@ -61,12 +57,12 @@ const RESURGENCE_FIXES: Record<string, ResurgenceItemDef> = {
   'reaper prime': { name: 'Reaper Prime', category: 'Melee' },
   'redeemer prime wep': { name: 'Redeemer Prime', category: 'Melee' },
 
-
   // --- Companion / Others ---
   'carrier prime': { name: 'Carrier Prime', category: 'Companion' },
   'wyrm prime': { name: 'Wyrm Prime', category: 'Companion' },
 };
 
+// 表示を正規化
 export const normalizeResurgenceItem = (rawName: string): ResurgenceItemDef => {
   const lowerName = rawName.toLowerCase()
     .replace(' blueprint', '')
@@ -93,10 +89,26 @@ export const normalizeResurgenceItem = (rawName: string): ResurgenceItemDef => {
     return RESURGENCE_FIXES[lowerName];
   }
 
-  // 2. Heuristic Guessing
+  // Vanguard Relic replacement (Specific mappings requested by user)
+  if (lowerName.includes('vanguard vault')) {
+    const parts = lowerName.split(' ');
+    const code = parts[3]?.toLowerCase() || ''; // "a", "b", "c", "d"
 
-  // Convert "Prime Name" -> "Name Prime" if it looks inverted
-  // e.g. "Prime Somati" -> "Somati Prime"
+    const vaultMap: Record<string, string> = {
+      'a': 'C1',
+      'b': 'P1',
+      'c': 'M1',
+      'd': 'E1'
+    };
+    const suffix = vaultMap[code] || '??';
+
+    return {
+      name: `バンガード ${suffix} レリック`,
+      category: 'Relic'
+    };
+  }
+
+  // 2. Heuristic Guessing
   let correctedName = rawName.replace(' Blueprint', '').replace(' レリック', '').trim();
   if (correctedName.toLowerCase().startsWith('prime ') && !correctedName.toLowerCase().includes('pack')) {
     const parts = correctedName.split(' ');
@@ -116,7 +128,6 @@ export const normalizeResurgenceItem = (rawName: string): ResurgenceItemDef => {
   return { name: correctedName, category };
 };
 
-// Simple list of known Warframes to help heuristic categorization
 const WARFRAMES = [
   'ash', 'atlas', 'banshee', 'baruuk', 'chroma', 'ember', 'equinox', 'excalibur', 'frost', 'gara', 'garuda',
   'gauss', 'grendel', 'harrow', 'hildryn', 'hydroid', 'inaros', 'ivara', 'khora', 'limbo', 'loki', 'mag',

@@ -14,6 +14,7 @@ const getCategoryIcon = (category: ResurgenceCategory): string => {
     case 'Melee': return 'swords';
     case 'Companion': return 'drone';
     case 'Archwing': return 'flight';
+    case 'Relic': return 'diamond';
     default: return 'change_history';
   }
 };
@@ -30,7 +31,7 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
 
         // Basic Keep Logic
         let keep = false;
-        if (type.includes('warframe') || type.includes('weapon')) keep = true;
+        if (type.includes('warframe') || type.includes('weapon') || name.includes('vanguard vault')) keep = true;
 
         // Name-based inclusion/exclusion
         if (name.includes('prime')) keep = true;
@@ -71,7 +72,7 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
       return true;
     }).sort((a, b) => {
       // Sort by Category order then Name
-      const order = ['Warframe', 'Primary', 'Secondary', 'Melee', 'Companion', 'Archwing', 'Unknown'];
+      const order = ['Warframe', 'Primary', 'Secondary', 'Melee', 'Companion', 'Archwing', 'Relic', 'Unknown'];
       const catDiff = order.indexOf(a.category) - order.indexOf(b.category);
       if (catDiff !== 0) return catDiff;
       return a.displayName.localeCompare(b.displayName);
