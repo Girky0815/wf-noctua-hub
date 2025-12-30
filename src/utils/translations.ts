@@ -110,6 +110,16 @@ export const invasionDescriptions: Record<string, string> = {
   'Phorid Manifestation': 'Phorid 出現',
 };
 
+// レリックのティア
+export const relicTiers: Record<string, string> = {
+  'Lith': 'Lith',
+  'Meso': 'Meso',
+  'Neo': 'Neo',
+  'Axi': 'Axi',
+  'Requiem': 'Requiem',
+  'Omnia': 'オムニア',
+};
+
 export const translateMissionType = (type: string): string => {
   return missionTypes[type] || type;
 };
@@ -140,4 +150,8 @@ export const translateNode = (node: string): string => {
 
 export const translateInvasionDesc = (desc: string): string => {
   return invasionDescriptions[desc] || desc;
+};
+
+export const translateTier = (tier: string): string => {
+  return relicTiers[tier] || tier;
 };

@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { OnboardingPage } from './pages/OnboardingPage';
+import { FissuresPage } from './pages/FissuresPage';
 import { StatusPage } from './components/status/StatusPage';
 import { Clock } from './components/Clock';
 import { SettingsPage } from './components/settings/SettingsPage';
@@ -76,7 +77,7 @@ const AppContent = () => {
         <main className="mx-auto max-w-2xl p-4">
           <Routes>
             <Route path="/" element={<StatusPage />} />
-            <Route path="/fissures" element={<div className="p-4">亀裂画面 (実装中)</div>} />
+            <Route path="/fissures" element={<FissuresPage />} />
             <Route path="/relics" element={<div className="p-4">レリックシミュレーター (実装中)</div>} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
