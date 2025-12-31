@@ -166,3 +166,34 @@ export interface SortieMission {
   archwingRequired: boolean;
   isSharkwing: boolean;
 }
+
+export interface RelicItem {
+  uniqueName: string;
+  name: string;
+  category: string;
+  imageName: string;
+  drops?: RelicDrop[]; // Activeな場合は存在、Vaultedの場合はundefined/null/空
+  vaulted?: boolean; // APIが返す場合がある
+  masterable: boolean;
+  tradable: boolean;
+  type: string;
+}
+
+export interface RelicDrop {
+  location: string;
+  type: string; // アイテム名 (e.g. "Volt Prime Blueprint")
+  rarity: 'Common' | 'Uncommon' | 'Rare';
+  chance: number; // 0.0 ~ 1.0 (あるいは % か要確認。API結果の例では 0.2533 とかなので 0.0-1.0)
+}
+
+// レリックの状態定義
+export type RelicState = 'Active' | 'Vaulted' | 'Resurgence' | 'Unknown';
+
+// 精錬度
+export type RelicRefinement = 'Intact' | 'Exceptional' | 'Flawless' | 'Radiant';
+
+export interface RelicReward {
+  itemName: string;
+  rarity: 'Common' | 'Uncommon' | 'Rare';
+  chance: number;
+}

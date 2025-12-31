@@ -3,6 +3,7 @@ import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { FissuresPage } from './pages/FissuresPage';
+import { RelicSimulatorPage } from './pages/RelicSimulatorPage';
 import { StatusPage } from './components/status/StatusPage';
 import { Clock } from './components/Clock';
 import { SettingsPage } from './components/settings/SettingsPage';
@@ -78,7 +79,7 @@ const AppContent = () => {
           <Routes>
             <Route path="/" element={<StatusPage />} />
             <Route path="/fissures" element={<FissuresPage />} />
-            <Route path="/relics" element={<div className="p-4">レリックシミュレーター (実装中)</div>} />
+            <Route path="/relics" element={<RelicSimulatorPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>
