@@ -7,6 +7,7 @@ import { SortieCard } from './SortieCard';
 import { VoidTraderCard } from './VoidTraderCard';
 import { ResurgenceCard } from './ResurgenceCard';
 import { useCountdown } from '../../hooks/useCountdown';
+import { getEffectiveCycle } from '../../utils/cycleCalculator';
 
 // セクションタイトルのコンポーネント
 const SectionTitle: React.FC<{ title: string; trailing?: React.ReactNode }> = ({ title, trailing }) => (
@@ -103,11 +104,12 @@ export const StatusPage: React.FC = () => {
 
       {/* World Cycles */}
       <div>
+
         <SectionTitle title="ワールドサイクル" />
         <div className="grid grid-cols-2 gap-4">
-          <CycleCard name="エイドロンの草原" cycle={worldState.cetusCycle} />
-          <CycleCard name="オーブ峡谷" cycle={worldState.vallisCycle} />
-          <CycleCard name="カンビオン荒地" cycle={worldState.cambionCycle} />
+          <CycleCard name="エイドロンの草原" cycle={getEffectiveCycle(worldState.cetusCycle, 'cetus')} />
+          <CycleCard name="オーブ峡谷" cycle={getEffectiveCycle(worldState.vallisCycle, 'vallis')} />
+          <CycleCard name="カンビオン荒地" cycle={getEffectiveCycle(worldState.cambionCycle, 'cambion')} />
         </div>
       </div>
 
