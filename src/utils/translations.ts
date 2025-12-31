@@ -76,9 +76,10 @@ export const factionTypes: Record<string, string> = {
   'Sentient': 'センティエント',
   'Corrupted': 'コラプト',
   'Infestation': '感染体',
+  'The Murmur': 'ササヤキ',
   'Scaldra': 'スカルドラ',
   'Techrot': 'テックロット',
-  'Anarch': 'アナーク'
+  'Anarch': 'アナーク',
 };
 
 // 惑星の日本語訳
