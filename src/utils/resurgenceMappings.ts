@@ -62,7 +62,7 @@ const RESURGENCE_FIXES: Record<string, ResurgenceItemDef> = {
   'wyrm prime': { name: 'Wyrm Prime', category: 'Companion' },
 };
 
-// 表示を正規化
+// 設計図やパーツ名、その他アイテムを除外
 export const normalizeResurgenceItem = (rawName: string): ResurgenceItemDef => {
   const lowerName = rawName.toLowerCase()
     .replace(' blueprint', '')
@@ -139,3 +139,34 @@ const WARFRAMES = [
 function itemIsWarframe(name: string): boolean {
   return WARFRAMES.some(wf => name.toLowerCase().includes(wf));
 }
+
+export const getWikiUrl = (name: string, category: ResurgenceCategory): string | null => {
+  // Exclude categories that don't have good standalone pages or logic is unclear
+  if (category === 'Companion' || category === 'Archwing' || category === 'Relic' || category === 'Unknown') {
+    return null;
+  }
+
+  const upperName = name.toUpperCase();
+
+  if (category === 'Warframe') {
+    // e.g. "ASH PRIME" -> "ASH" (remove " PRIME") -> "ASH#prime"
+    const baseName = upperName.replace(' PRIME', '');
+    const encodedName = encodeURIComponent(baseName);
+    return `https://wikiwiki.jp/warframe/${encodedName}#prime`;
+  }
+
+  if (category === 'Primary' || category === 'Secondary' || category === 'Melee') {
+    // Rule: <WEAPON NAME PRIME IN CAPS>
+    let targetName = upperName;
+
+    // "COBRA & CRANE PRIME" -> "COBRA ＆ CRANE PRIME"
+    targetName = targetName.replace(/&/g, '＆');
+
+    // Wikiwiki uses %20 for spaces. encodeURIComponent handles this.
+    // %EF%BC%86 is UTF-8 for '＆'.
+    const encoded = encodeURIComponent(targetName);
+    return `https://wikiwiki.jp/warframe/${encoded}`;
+  }
+
+  return null;
+};

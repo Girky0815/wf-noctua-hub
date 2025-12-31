@@ -1,6 +1,6 @@
 import React from 'react';
 import type { VaultTrader } from '../../types/warframe';
-import { normalizeResurgenceItem, type ResurgenceCategory } from '../../utils/resurgenceMappings';
+import { normalizeResurgenceItem, type ResurgenceCategory, getWikiUrl } from '../../utils/resurgenceMappings';
 
 interface ResurgenceCardProps {
   trader?: VaultTrader;
@@ -54,11 +54,13 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
       })
       .map(item => {
         const { name, category } = normalizeResurgenceItem(item.item);
+        const wikiUrl = getWikiUrl(name, category);
         return {
           originalItem: item,
           displayName: name,
           category,
-          cost: item.cost
+          cost: item.cost,
+          wikiUrl
         };
       });
   }, [trader.inventory]);
@@ -84,7 +86,17 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
     <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
       {uniqueItems.length > 0 ? (
         uniqueItems.map((item, index) => (
-          <div key={`${item.displayName}-${index}`} className="bg-surface-bright p-4 flex items-center justify-between">
+          <div
+            key={`${item.displayName}-${index}`}
+            className={`bg-surface-bright p-4 flex items-center justify-between transition-colors
+              ${item.wikiUrl ? 'cursor-pointer hover:bg-surface-container-high' : ''}
+            `}
+            onClick={() => {
+              if (item.wikiUrl) {
+                window.open(item.wikiUrl, '_blank');
+              }
+            }}
+          >
             <div className="flex items-center gap-3">
               <span className={`material-symbols-rounded text-primary 
                 ${item.category === 'Warframe' ? 'text-[24px]' : 'text-[20px]'}
@@ -95,12 +107,20 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
                 {item.displayName}
               </span>
             </div>
-            {item.cost && (
-              <div className="flex items-center gap-1 text-sm bg-surface-container-high px-2 py-1 rounded-full text-on-surface-variant">
-                <span className="font-bold">{item.cost}</span>
-                <span className="text-xs">Aya</span>
-              </div>
-            )}
+
+            <div className="flex items-center gap-4">
+              {item.cost && (
+                <div className="flex items-center gap-1 text-sm bg-surface-container-high px-2 py-1 rounded-full text-on-surface-variant">
+                  <span className="font-bold">{item.cost}</span>
+                  <span className="text-xs">Aya</span>
+                </div>
+              )}
+              {item.wikiUrl && (
+                <span className="material-symbols-rounded text-on-surface-variant/50 text-[20px]">
+                  chevron_right
+                </span>
+              )}
+            </div>
           </div>
         ))
       ) : (
