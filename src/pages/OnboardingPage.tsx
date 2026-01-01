@@ -17,17 +17,21 @@ export const OnboardingPage: React.FC = () => {
 
         {step === 1 && (
           <div className="animate-fade-in">
-            <h1 className="mb-6 text-center font-display text-2xl font-bold text-on-surface">
-              ようこそ Noctua Hub へ
+            <h1 className="mb-6 text-center font-display text-3xl font-bold text-on-surface">
+              Noctua Hub へようこそ
             </h1>
+            <p className="mb-8 text-center text-sm text-on-surface">
+              テンノのテンノによるテンノのための Warframe 情報アプリ
+            </p>
 
-            <div className="mb-8 space-y-4 rounded-xl bg-surface-container-high p-6 text-sm text-on-surface-variant">
-              <p className="font-bold text-error">【免責事項】</p>
+            <div className="mb-8 space-y-4 rounded-xl bg-surface-container-high p-6 text-sm text-on-surface">
+              <p className="font-bold text-xl text-error">【免責事項】</p>
               <ul className="list-disc space-y-2 pl-4">
-                <li>本アプリは Warframe 公式アプリではありません。</li>
-                <li>API の状況により、機能が一時的に利用できなくなる可能性があります。</li>
+                <li><span className="text-error">本アプリは Warframe 公式アプリではありません</span>。Digital Extremes Ltd. とは提携・関係していません。</li>
+                <li>本アプリは完全無料・広告無しでご利用いただけます。</li>
+                <li>利用しているAPI の状況により、機能が一時的に利用できなくなる可能性があります<span className="text-error">(APIがダウンすると機能が使えません)</span>。</li>
                 <li>本アプリの使用によって生じたいかなる損害についても、作者は責任を負いません。</li>
-                <li>Gemini 3 Pro を用いて開発されており、予期せぬバグが含まれる可能性があります。</li>
+                <li>本アプリの開発は Gemini 3 Pro + Google Antigravity を用いて開発しています。<br />アプリの動作は作者も一通り確認していますが、予期せぬバグが含まれる可能性があります。</li>
               </ul>
             </div>
 
@@ -67,7 +71,7 @@ export const OnboardingPage: React.FC = () => {
                 onClick={completeOnboarding}
                 className="flex items-center gap-2 rounded-full bg-primary px-8 py-3 font-bold text-on-primary transition-colors hover:bg-primary/90 shadow-md"
               >
-                始める
+                スタート
                 <span className="material-symbols-rounded">check</span>
               </button>
             </div>
