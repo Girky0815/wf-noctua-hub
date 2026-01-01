@@ -1,6 +1,8 @@
 import React from 'react';
 import { useWarframeData } from '../../hooks/useWarframeData';
 import { CycleCard } from './CycleCard';
+import { ZarimanCycleCard } from './ZarimanCycleCard';
+import { DuviriCycleCard } from './DuviriCycleCard';
 import { AlertList } from './AlertList';
 import { InvasionList } from './InvasionList';
 import { SortieCard } from './SortieCard';
@@ -117,13 +119,16 @@ export const StatusPage: React.FC = () => {
       )}
 
       {/* World Cycles */}
+      {/* World Cycles */}
       <div>
-
         <SectionTitle title="ワールドサイクル" />
         <div className="grid grid-cols-2 gap-4">
+          <CycleCard name="地球 (森林)" cycle={worldState.earthCycle} />
           <CycleCard name="エイドロンの草原" cycle={getEffectiveCycle(worldState.cetusCycle, 'cetus')} />
           <CycleCard name="オーブ峡谷" cycle={getEffectiveCycle(worldState.vallisCycle, 'vallis')} />
           <CycleCard name="カンビオン荒地" cycle={getEffectiveCycle(worldState.cambionCycle, 'cambion')} />
+          <DuviriCycleCard cycle={worldState.duviriCycle} />
+          <ZarimanCycleCard cycle={worldState.zarimanCycle} />
         </div>
       </div>
 

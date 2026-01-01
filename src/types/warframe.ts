@@ -9,9 +9,34 @@ export interface WorldState {
   cetusCycle: Cycle;
   vallisCycle: Cycle;
   cambionCycle: Cycle;
+  earthCycle: Cycle;
+  zarimanCycle: ZarimanCycle;
+  duviriCycle: DuviriCycle;
   sorties: Sortie[];
   archonHunt: Sortie;
   vaultTrader: VaultTrader;
+}
+
+export interface ZarimanCycle {
+  id: string;
+  activation: string;
+  expiry: string;
+  isCorpus: boolean;
+  state: string;
+  timeLeft: string;
+  shortString: string;
+}
+
+export interface DuviriCycle {
+  id: string;
+  activation: string;
+  expiry: string;
+  state: string;
+  choices: {
+    category: string;
+    categoryKey: string;
+    choices: string[];
+  }[];
 }
 
 export interface VaultTrader {
