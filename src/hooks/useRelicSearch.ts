@@ -19,7 +19,7 @@ export const useRelicSearch = () => {
   const [results, setResults] = useState<RelicSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { worldState } = useWarframeData();
+  const { worldState, isError: isWorldStateError } = useWarframeData();
   const vaultTrader = worldState?.vaultTrader;
 
   const searchRelics = useCallback(async (query: string) => {
@@ -147,5 +147,5 @@ export const useRelicSearch = () => {
     }
   }, [vaultTrader]);
 
-  return { searchRelics, results, loading, error };
+  return { searchRelics, results, loading, error, isWorldStateError };
 };

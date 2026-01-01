@@ -4,7 +4,7 @@ import { RelicCard } from '../components/relics/RelicCard';
 import { useRelicSearch } from '../hooks/useRelicSearch';
 
 export const RelicSimulatorPage: React.FC = () => {
-  const { searchRelics, results, loading, error } = useRelicSearch();
+  const { searchRelics, results, loading, error, isWorldStateError } = useRelicSearch();
   // 検索実行ごとの結果表示用ラッパーRefが必要かどうかだが、hook内でstate管理されているので不要。
 
   const handleSearch = (query: string) => {
@@ -26,8 +26,34 @@ export const RelicSimulatorPage: React.FC = () => {
       <RelicSearchInput onSearch={handleSearch} isLoading={loading} />
 
       {error && (
-        <div className="text-center p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-200 max-w-xl mx-auto">
-          {error}
+        <div className="max-w-xl mx-auto mb-8">
+          <div className="flex items-start gap-3 rounded-2xl bg-error-container p-4 text-on-error-container">
+            <span className="material-symbols-rounded mt-0.5">error</span>
+            <div className="flex flex-col text-sm">
+              <span className="font-bold text-lg mb-1">API 接続エラー</span>
+              <span className="opacity-90">
+                データの取得に失敗しました。<br />
+                APIサーバーがダウンしている可能性があります。
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* WorldState API Error Warning (Partial Outage) */}
+      {!error && isWorldStateError && (
+        <div className="max-w-xl mx-auto mb-8 animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-start gap-3 rounded-2xl bg-tertiary-container p-4 text-on-tertiary-container">
+            <span className="material-symbols-rounded mt-0.5">warning</span>
+            <div className="flex flex-col text-sm">
+              <span className="font-bold text-lg mb-1">一部データ取得不可</span>
+              <span className="opacity-90">
+                ワールドステータスAPIへの接続に失敗しました。<br />
+                検索機能は利用可能ですが、<strong>Prime Resurgence (Varzia) の在庫状況が反映されない</strong>ため、
+                実際には入手可能なレリックが「Vault保管中」と表示される場合があります。
+              </span>
+            </div>
+          </div>
         </div>
       )}
 
