@@ -72,7 +72,7 @@ export const StatusPage: React.FC = () => {
         <div className="flex items-start gap-3 rounded-2xl bg-error-container p-6 text-on-error-container max-w-2xl w-full">
           <span className="material-symbols-rounded mt-1 text-2xl">error</span>
           <div className="flex flex-col">
-            <span className="font-bold text-xl mb-2">API 接続エラー</span>
+            <span className="font-bold text-xl mb-2">API がダウンしています!</span>
             <span className="opacity-90 leading-relaxed">
               Warframe Status API (<code>api.warframestat.us</code>) との通信に失敗しました。<br />
               現在 API サーバーがダウンしているか、メンテナンス中の可能性があります。<br />
@@ -80,7 +80,7 @@ export const StatusPage: React.FC = () => {
               <strong>対応策:</strong>
               <ul className="list-disc list-inside ml-2 mt-1">
                 <li>しばらく時間を置いてからページを再読み込みしてください</li>
-                <li>公式のサーバーステータスを確認してください</li>
+                <li>APIのサーバーステータスを確認してください</li>
               </ul>
             </span>
           </div>
