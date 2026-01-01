@@ -4,7 +4,10 @@ import { ThemeSelector } from '../ThemeSelector';
 import { useWarframeData } from '../../hooks/useWarframeData';
 import { SettingsSection, SettingsGroup, SettingsTile } from './SettingsCommon';
 
+import { useNavigate } from 'react-router-dom';
+
 export const SettingsPage: React.FC = () => {
+  const navigate = useNavigate();
   const { resetSettings } = useSettings();
   const [showCredits, setShowCredits] = useState(false);
   const [showRawData, setShowRawData] = useState(false);
@@ -150,9 +153,9 @@ export const SettingsPage: React.FC = () => {
           <SettingsTile
             icon="description"
             title="クレジット & ライセンス"
-            subtitle="利用しているオープンソースライブラリなど"
+            subtitle="利用しているAPIやオープンソースライブラリ"
             trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
-            onClick={() => setShowCredits(!showCredits)}
+            onClick={() => navigate('/credits')}
           />
         </SettingsGroup>
       </SettingsSection>

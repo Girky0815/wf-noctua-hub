@@ -7,6 +7,7 @@ import { RelicSimulatorPage } from './pages/RelicSimulatorPage';
 import { StatusPage } from './components/status/StatusPage';
 import { Clock } from './components/Clock';
 import { SettingsPage } from './components/settings/SettingsPage';
+import { CreditsPage } from './components/CreditsPage';
 import { ScrollToTop } from './components/ScrollToTop';
 
 const NavBar = () => {
@@ -81,6 +82,7 @@ const AppContent = () => {
             <Route path="/fissures" element={<FissuresPage />} />
             <Route path="/relics" element={<RelicSimulatorPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/credits" element={<CreditsPage />} />
           </Routes>
         </main>
         <NavBar />
