@@ -151,6 +151,20 @@ export const SettingsPage: React.FC = () => {
             onClick={() => {/* 将来的に詳細画面へ */ }}
           />
           <SettingsTile
+            icon="code"
+            title="GitHub リポジトリ"
+            subtitle="アプリの情報やソースコードを確認する"
+            trailing={<span className="material-symbols-rounded text-on-surface-variant">open_in_new</span>}
+            onClick={() => window.open('https://github.com/Girky0815/wf-noctua-hub', '_blank')}
+          />
+          <SettingsTile
+            icon="help"
+            title="ヘルプ (GitHub Wiki)"
+            subtitle="使い方の確認・トラブルシューティング"
+            trailing={<span className="material-symbols-rounded text-on-surface-variant">open_in_new</span>}
+            onClick={() => window.open('https://github.com/Girky0815/wf-noctua-hub/wiki', '_blank')}
+          />
+          <SettingsTile
             icon="description"
             title="クレジット & ライセンス"
             subtitle="利用しているAPIやオープンソースライブラリ"
