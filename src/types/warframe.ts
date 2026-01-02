@@ -13,6 +13,7 @@ export interface WorldState {
   zarimanCycle: ZarimanCycle;
   duviriCycle: DuviriCycle;
   sorties: Sortie[];
+  sortie?: Sortie; // Fallback for singular
   archonHunt: Sortie;
   vaultTrader: VaultTrader;
 }

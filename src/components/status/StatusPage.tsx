@@ -89,7 +89,7 @@ export const StatusPage: React.FC = () => {
   }
 
   // ソーティ/アルコン情報の準備
-  const sortie = worldState.sorties?.[0];
+  const sortie = worldState.sorties?.[0] || worldState.sortie;
   const archonHunt = worldState.archonHunt;
 
   // ウィジェットのレンダリング関数
