@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Sortie } from '../../types/warframe';
 import { translateMissionType, translateNode, translateFaction } from '../../utils/translations';
+import { ListGroup, ListItem } from '../ui/List';
 
 interface SortieCardProps {
   sortie?: Sortie;
@@ -54,17 +55,17 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
 
   // レンダリング
   return (
-    <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+    <ListGroup>
       {items.length === 0 ? (
-        <div className="bg-surface-bright px-4 py-8 text-center text-sm text-on-surface-variant">
+        <ListItem className="px-4 py-8 text-center text-sm text-on-surface-variant">
           ミッション情報がありません
-        </div>
+        </ListItem>
       ) : (
         items.map((item, index) => {
           return (
-            <div
+            <ListItem
               key={`${sortie.id}-${index}`}
-              className="flex items-center gap-3 bg-surface-bright p-4"
+              className="flex items-center gap-3 p-4"
             >
               {/* ステージ番号 */}
               <div className="text-lg font-bold text-primary opacity-80 font-display">
@@ -93,9 +94,9 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
                   )}
                 </div>
               </div>
-            </div>
+            </ListItem>
           );
         }))}
-    </div>
+    </ListGroup>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { RelicItem, RelicReward, RelicState, RelicRefinement } from '../../types/warframe';
 import { calculateDropRate, simulateOpen, translateItemName } from '../../utils/relicUtils';
+import { ListGroup, ListItem } from '../ui/List';
 
 interface ExtendedRelicItem extends RelicItem {
   state: RelicState;
@@ -42,10 +43,10 @@ export const RelicCard: React.FC<RelicCardProps> = ({ relic }) => {
   };
 
   return (
-    <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container transition-all duration-300">
+    <ListGroup className="transition-all duration-300">
       {/* Header */}
-      <div
-        className="flex items-center justify-between bg-surface-bright px-4 py-4 cursor-pointer hover:bg-surface-container-high transition-colors text-on-surface"
+      <ListItem
+        className="flex items-center justify-between px-4 py-4"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center gap-4">
@@ -68,11 +69,11 @@ export const RelicCard: React.FC<RelicCardProps> = ({ relic }) => {
         <div className={`transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
           <span className="material-symbols-rounded text-on-surface-variant">expand_more</span>
         </div>
-      </div>
+      </ListItem>
 
       {/* Expanded Content */}
       {isOpen && (
-        <div className="p-4 bg-surface-bright animate-fade-in">
+        <div className="bg-surface-bright animate-fade-in p-4 first:rounded-t-3xl last:rounded-b-3xl">
           {/* Refinement Selector */}
           <div className="mb-6">
             <div className="flex flex-wrap gap-2 p-1 bg-surface-container rounded-full w-fit">
@@ -204,7 +205,7 @@ export const RelicCard: React.FC<RelicCardProps> = ({ relic }) => {
           </div>
         </div>
       )}
-    </div>
+    </ListGroup>
   );
 };
 

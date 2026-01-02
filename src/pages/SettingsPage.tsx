@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useSettings } from '../../contexts/SettingsContext';
-import { ThemeSelector } from '../ThemeSelector';
-import { useWarframeData } from '../../hooks/useWarframeData';
-import { SettingsSection, SettingsGroup, SettingsTile } from './SettingsCommon';
-
 import { useNavigate } from 'react-router-dom';
+import { useSettings } from '../contexts/SettingsContext';
+import { useWarframeData } from '../hooks/useWarframeData';
+import { ThemeSelector } from '../components/ThemeSelector';
+import { SectionTitle } from '../components/ui/SectionTitle';
+import { ListGroup, ListTile } from '../components/ui/List';
 
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -48,21 +48,23 @@ export const SettingsPage: React.FC = () => {
   return (
     <div className="flex flex-col pb-24 pt-4">
       {/* 外観 */}
-      <SettingsSection title="外観">
-        <SettingsGroup>
-          <SettingsTile
+      <div className="mb-6">
+        <SectionTitle title="外観" />
+        <ListGroup>
+          <ListTile
             icon="palette"
             title="テーマ"
             subtitle="アプリの配色を変更します"
             trailing={<ThemeSelector />}
           />
-        </SettingsGroup>
-      </SettingsSection>
+        </ListGroup>
+      </div>
 
       {/* API情報 */}
-      <SettingsSection title="API情報">
-        <SettingsGroup>
-          <SettingsTile
+      <div className="mb-6">
+        <SectionTitle title="API情報" />
+        <ListGroup>
+          <ListTile
             icon="api"
             title="ステータス"
             subtitle={apiStatus}
@@ -72,7 +74,7 @@ export const SettingsPage: React.FC = () => {
               </span>
             }
           />
-          <SettingsTile
+          <ListTile
             icon="schedule"
             title="API データ最終更新日時"
             subtitle={
@@ -86,15 +88,15 @@ export const SettingsPage: React.FC = () => {
               </span>
             }
           />
-          <SettingsTile
+          <ListTile
             icon="code"
             title="API レスポンス(JSON)"
             subtitle="APIから取得した生データを見る"
             trailing={<span className="material-symbols-rounded text-on-surface-variant">terminal chevron_right</span>}
             onClick={() => setShowRawData(true)}
           />
-        </SettingsGroup>
-      </SettingsSection>
+        </ListGroup>
+      </div>
 
       {/* Raw Data Modal */}
       {
@@ -129,50 +131,52 @@ export const SettingsPage: React.FC = () => {
       }
 
       {/* データ管理 */}
-      <SettingsSection title="データ管理">
-        <SettingsGroup>
-          <SettingsTile
+      <div className="mb-6">
+        <SectionTitle title="データ管理" />
+        <ListGroup>
+          <ListTile
             icon="delete_forever"
             title="設定をリセット"
             subtitle="テーマ設定や初回完了状態を初期化します"
             destructive
             onClick={handleReset}
           />
-        </SettingsGroup>
-      </SettingsSection>
+        </ListGroup>
+      </div>
 
       {/* 概要 */}
-      <SettingsSection title="概要">
-        <SettingsGroup>
-          <SettingsTile
+      <div className="mb-6">
+        <SectionTitle title="概要" />
+        <ListGroup>
+          <ListTile
             icon="info"
             title="Noctua Hub"
             subtitle={`v${__APP_VERSION__}`}
             onClick={() => {/* 将来的に詳細画面へ */ }}
           />
-          <SettingsTile
+          <ListTile
             icon="code"
             title="GitHub リポジトリ"
             subtitle="アプリの情報やソースコードを確認する"
             trailing={<span className="material-symbols-rounded text-on-surface-variant">open_in_new</span>}
             onClick={() => window.open('https://github.com/Girky0815/wf-noctua-hub', '_blank')}
           />
-          <SettingsTile
+          <ListTile
             icon="help"
             title="ヘルプ (GitHub Wiki)"
             subtitle="使い方の確認・トラブルシューティング"
             trailing={<span className="material-symbols-rounded text-on-surface-variant">open_in_new</span>}
             onClick={() => window.open('https://github.com/Girky0815/wf-noctua-hub/wiki', '_blank')}
           />
-          <SettingsTile
+          <ListTile
             icon="description"
             title="クレジット & ライセンス"
             subtitle="利用しているAPIやオープンソースライブラリ"
             trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
             onClick={() => navigate('/credits')}
           />
-        </SettingsGroup>
-      </SettingsSection>
+        </ListGroup>
+      </div>
 
       {/* クレジット詳細表示エリア (簡易的展開) */}
       {showCredits && (

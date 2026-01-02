@@ -1,14 +1,16 @@
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { FissuresPage } from './pages/FissuresPage';
 import { RelicSimulatorPage } from './pages/RelicSimulatorPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { StatusPage } from './components/status/StatusPage';
 import { Clock } from './components/Clock';
-import { SettingsPage } from './components/settings/SettingsPage';
 import { CreditsPage } from './components/CreditsPage';
 import { ScrollToTop } from './components/ScrollToTop';
+import { SideMenu } from './components/navigation/SideMenu'; // Import SideMenu component
 
 const NavBar = () => {
   const getLinkClass = ({ isActive }: { isActive: boolean }) => `
@@ -22,7 +24,7 @@ const NavBar = () => {
   `;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 border-t border-outline-variant bg-surface-container-low pb-safe">
+    <nav className="fixed bottom-0 left-0 right-0 border-t border-outline-variant bg-surface-container-low pb-safe z-20">
       <div className="flex h-16 max-w-2xl mx-auto">
         <NavLink to="/" className={getLinkClass}>
           {({ isActive }) => (
@@ -61,8 +63,25 @@ const NavBar = () => {
   );
 };
 
+// Hamburger Menu Button Component
+// メニューが開いているときは 'menu_open' (閉じるようなアイコン)、閉じているときは 'menu' を表示
+const HeaderMenuButton: React.FC<{ isOpen: boolean; toggle: () => void }> = ({ isOpen, toggle }) => {
+  return (
+    <button
+      onClick={toggle}
+      className="p-2 -ml-2 rounded-full hover:bg-on-surface/10 transition-colors text-on-secondary-container z-50 relative" // z-50 to ensure clickable over drawer if needed (though drawer covers header usually, but button logic might vary)
+      aria-label={isOpen ? "メニューを閉じる" : "メニューを開く"}
+    >
+      <span className="material-symbols-rounded text-2xl">
+        {isOpen ? 'menu_open' : 'menu'}
+      </span>
+    </button>
+  );
+};
+
 const AppContent = () => {
   const { isFirstVisit } = useSettings();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   if (isFirstVisit) {
     return <OnboardingPage />;
@@ -71,9 +90,14 @@ const AppContent = () => {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
+      <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
       <div className="min-h-screen bg-surface-container text-on-background pb-20">
         <header className="sticky top-0 z-10 flex items-center justify-between bg-secondary-container p-4 shadow-sm">
-          <h1 className="text-xl font-display font-medium text-on-secondary-container">Noctua Hub</h1>
+          <div className="flex items-center gap-2">
+            <HeaderMenuButton isOpen={isMenuOpen} toggle={() => setIsMenuOpen(!isMenuOpen)} />
+            <h1 className="text-xl font-display font-medium text-on-secondary-container">Noctua Hub</h1>
+          </div>
           <Clock />
         </header>
         <main className="mx-auto max-w-2xl p-4">
@@ -81,6 +105,7 @@ const AppContent = () => {
             <Route path="/" element={<StatusPage />} />
             <Route path="/fissures" element={<FissuresPage />} />
             <Route path="/relics" element={<RelicSimulatorPage />} />
+            {/* /menu route removed */}
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/credits" element={<CreditsPage />} />
           </Routes>

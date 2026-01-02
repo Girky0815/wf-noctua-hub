@@ -3,21 +3,12 @@ import type { Fissure } from '../../types/warframe';
 import { translateMissionType, translateFaction, translateNode, translateTier } from '../../utils/translations';
 import { formatTime } from '../../utils/time';
 import { useCountdown } from '../../hooks/useCountdown';
-import { SettingsSection, SettingsGroup } from '../settings/SettingsCommon';
-
-interface FissureListProps {
-  fissures?: Fissure[];
-}
-
-// ティアの表示順序
-const TIER_ORDER = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem', 'Omnia'];
-
+import { SectionTitle } from '../ui/SectionTitle';
 const FissureItem: React.FC<{ fissure: Fissure }> = ({ fissure }) => {
   const timeLeft = useCountdown(fissure.expiry);
-  const formattedTime = `あと ${timeLeft || '--'} (${formatTime(fissure.expiry)} 終了)`;
 
   return (
-    <div className="flex items-center justify-between bg-surface-bright p-4 text-on-surface">
+    <ListItem className="flex items-center justify-between p-4 text-on-surface">
       <div className="flex flex-col gap-1 overflow-hidden">
         <div className="flex items-center gap-2">
           <span className="font-medium font-display text-base" style={{ fontVariationSettings: "'ROND' 100" }}>
@@ -41,7 +32,7 @@ const FissureItem: React.FC<{ fissure: Fissure }> = ({ fissure }) => {
           {timeLeft || '--'}
         </span>
       </div>
-    </div>
+    </ListItem>
   );
 };
 
@@ -76,15 +67,16 @@ export const FissureList: React.FC<FissureListProps> = ({ fissures }) => {
   return (
     <div className="pb-20">
       {sortedTiers.map(tier => (
-        <SettingsSection key={tier} title={translateTier(tier)}>
-          <SettingsGroup>
+        <div key={tier} className="mb-6">
+          <SectionTitle title={translateTier(tier)} />
+          <ListGroup>
             {groupedFissures[tier]
               .sort((a, b) => a.node.localeCompare(b.node))
               .map(f => (
                 <FissureItem key={f.id} fissure={f} />
               ))}
-          </SettingsGroup>
-        </SettingsSection>
+          </ListGroup>
+        </div>
       ))}
     </div>
   );

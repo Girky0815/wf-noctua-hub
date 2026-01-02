@@ -1,6 +1,7 @@
 import React from 'react';
 import type { VaultTrader } from '../../types/warframe';
 import { normalizeResurgenceItem, type ResurgenceCategory, getWikiUrl } from '../../utils/resurgenceMappings';
+import { ListGroup, ListItem } from '../ui/List';
 
 interface ResurgenceCardProps {
   trader?: VaultTrader;
@@ -83,14 +84,12 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
 
 
   return (
-    <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+    <ListGroup>
       {uniqueItems.length > 0 ? (
         uniqueItems.map((item, index) => (
-          <div
+          <ListItem
             key={`${item.displayName}-${index}`}
-            className={`bg-surface-bright p-4 flex items-center justify-between transition-colors
-              ${item.wikiUrl ? 'cursor-pointer hover:bg-surface-container-high' : ''}
-            `}
+            className="flex items-center justify-between p-4"
             onClick={() => {
               if (item.wikiUrl) {
                 window.open(item.wikiUrl, '_blank');
@@ -121,13 +120,13 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
                 </span>
               )}
             </div>
-          </div>
+          </ListItem>
         ))
       ) : (
-        <div className="bg-surface-bright p-6 text-center text-on-surface-variant">
+        <ListItem className="p-6 text-center text-on-surface-variant">
           <p className="text-sm">表示可能なPrimeアイテムがありません</p>
-        </div>
+        </ListItem>
       )}
-    </div>
+    </ListGroup>
   );
 };

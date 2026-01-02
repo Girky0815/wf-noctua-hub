@@ -1,52 +1,63 @@
 import React, { type ReactNode } from 'react';
 
-// セクション（見出し + 設定グループ）
-export const SettingsSection: React.FC<{ title?: string; children: ReactNode }> = ({ title, children }) => (
-  <div className="mb-6">
-    {title && (
-      <h3
-        className="mb-2 ml-4 text-sm font-bold text-primary font-display"
-        style={{ fontVariationSettings: "'ROND' 100" }}
-      >
-        {title}
-      </h3>
-    )}
+// List Container
+// 枠線なし、背景色（Gapの色）、要素間隔（2px）を持つコンテナ
+export const ListGroup: React.FC<{ children: ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <div className={`flex flex-col gap-[2px] bg-surface-container ${className}`}>
     {children}
   </div>
 );
 
-// 設定グループ（角丸のコンテナ、要素間2px）
-export const SettingsGroup: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+interface ListItemProps {
+  children: ReactNode;
+  className?: string; // 追加のスタイル用
+  onClick?: () => void;
+}
+
+// Generic List Item
+// 自由なコンテンツを持つリストアイテム。角丸ロジックのみ適用。
+export const ListItem: React.FC<ListItemProps> = ({ children, className = '', onClick }) => (
+  <div
+    onClick={onClick}
+    className={`
+      bg-surface-bright transition-colors
+      rounded-[4px] first:rounded-t-3xl last:rounded-b-3xl
+      ${onClick ? 'cursor-pointer hover:bg-surface-container-high' : ''}
+      ${className}
+    `}
+  >
     {children}
   </div>
 );
 
-interface SettingsTileProps {
+interface ListTileProps {
   icon?: string;
   title: string;
   subtitle?: ReactNode;
   trailing?: ReactNode;
   onClick?: () => void;
   destructive?: boolean;
+  className?: string; // 追加のスタイル用
 }
 
-// 設定項目（リストタイル）
-export const SettingsTile: React.FC<SettingsTileProps> = ({
+// List Item
+// CSS擬似クラスを使用して角丸ロジックを自動適用
+export const ListTile: React.FC<ListTileProps> = ({
   icon,
   title,
   subtitle,
   trailing,
   onClick,
-  destructive = false
+  destructive = false,
+  className = ''
 }) => {
   return (
-    <div
+    <ListItem
       onClick={onClick}
       className={`
-        flex items-center justify-between bg-surface-bright px-4 py-4 transition-colors
-        ${onClick ? 'cursor-pointer hover:bg-surface-container-high' : ''}
+        flex items-center justify-between px-4 py-4
         ${destructive ? 'text-error' : 'text-on-surface'}
+        ${className}
       `}
     >
       <div className="flex items-center gap-4 overflow-hidden">
@@ -75,6 +86,6 @@ export const SettingsTile: React.FC<SettingsTileProps> = ({
           {trailing}
         </div>
       )}
-    </div>
+    </ListItem>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Invasion } from '../../types/warframe';
 import { translateResource, translateNode, translateFaction, translateInvasionDesc } from '../../utils/translations';
-import { useCountdown } from '../../hooks/useCountdown';
+import { ListGroup, ListItem } from '../ui/List';
 
 interface InvasionListProps {
   invasions?: Invasion[];
@@ -29,7 +29,7 @@ const InvasionItem: React.FC<{ invasion: Invasion }> = ({ invasion }) => {
   const defenderFaction = translateFaction(invasion.defender.faction);
 
   return (
-    <div className="bg-surface-bright p-4">
+    <ListItem className="p-4">
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs font-bold text-on-surface-variant font-display">{translateNode(invasion.node)}</span>
         <span className="text-xs text-on-surface-variant">{translateInvasionDesc(invasion.desc)}</span>
@@ -62,7 +62,7 @@ const InvasionItem: React.FC<{ invasion: Invasion }> = ({ invasion }) => {
           style={{ width: `${Math.max(0, Math.min(100, invasion.completion))}%` }}
         />
       </div>
-    </div>
+    </ListItem>
   );
 };
 
@@ -73,10 +73,10 @@ export const InvasionList: React.FC<InvasionListProps> = ({ invasions }) => {
   if (!activeInvasions || activeInvasions.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+    <ListGroup>
       {activeInvasions.map(invasion => (
         <InvasionItem key={invasion.id} invasion={invasion} />
       ))}
-    </div>
+    </ListGroup>
   );
 };

@@ -3,6 +3,7 @@ import type { Alert } from '../../types/warframe';
 import { translateMissionType, translateResource, translateFaction } from '../../utils/translations';
 import { formatTime } from '../../utils/time';
 import { useCountdown } from '../../hooks/useCountdown';
+import { ListGroup, ListItem } from '../ui/List';
 
 interface AlertListProps {
   alerts?: Alert[];
@@ -46,7 +47,7 @@ const AlertItem: React.FC<{ alert: Alert }> = ({ alert }) => {
   }, [reward]);
 
   return (
-    <div className="bg-surface-bright p-4">
+    <ListItem className="p-4">
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="font-bold text-on-surface">{translateMissionType(alert.mission.type)}</span>
@@ -79,31 +80,32 @@ const AlertItem: React.FC<{ alert: Alert }> = ({ alert }) => {
           </span>
         </div>
       </div>
-    </div>
+    </ListItem>
   );
 };
 
 export const AlertList: React.FC<AlertListProps> = ({ alerts }) => {
   if (!alerts || alerts.length === 0) {
     return (
-      <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
-        <div className="bg-surface-bright p-6 text-center text-on-surface-variant">
+      <ListGroup>
+        <ListItem className="p-6 text-center text-on-surface-variant">
           <div className="mb-2">
             <span className="material-symbols-rounded text-3xl opacity-50">notifications_off</span>
           </div>
           <p className="text-sm">アラートミッションなし</p>
-        </div>
-      </div>
+        </ListItem>
+      </ListGroup>
     );
   }
 
   return (
-    <div className="flex flex-col gap-[2px] overflow-hidden rounded-3xl border-[2px] border-surface-container bg-surface-container">
+    <ListGroup>
       {alerts.map((alert) => {
         // 設定画面と同様にリストアイテム自体には角丸クラスをつけない（SettingsGroupがoverflow-hiddenで処理するため）
         // ただし各アイテムの背景色などは維持
+        // -> ListItem を使うことで自動的に角丸処理が行われる
         return <AlertItem key={alert.id} alert={alert} />;
       })}
-    </div>
+    </ListGroup>
   );
 };
