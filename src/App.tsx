@@ -15,47 +15,61 @@ import { SideMenu } from './components/navigation/SideMenu'; // Import SideMenu 
 
 const NavBar = () => {
   const getLinkClass = ({ isActive }: { isActive: boolean }) => `
-    flex flex-1 flex-col items-center justify-center py-2 transition-colors
-    ${isActive ? 'text-primary' : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'}
+    flex flex-1 flex-col items-center justify-center py-2 transition-colors gap-1
+    ${isActive ? 'text-primary' : 'text-on-surface-variant hover:text-on-surface'}
   `;
 
-  const getIconClass = ({ isActive }: { isActive: boolean }) => `
-    material-symbols-rounded mb-1 text-2xl px-5 py-1 rounded-full transition-colors
-    ${isActive ? 'bg-secondary-container text-on-secondary-container' : ''}
+  // Icon container style (Pill)
+  const getIconContainerClass = ({ isActive }: { isActive: boolean }) => `
+    flex items-center justify-center px-5 h-8 rounded-full transition-colors
+    ${isActive ? 'bg-primary-container' : 'bg-transparent'}
   `;
+
+  // Icon style
+  const getIconStyle = ({ isActive }: { isActive: boolean }) => ({
+    fontVariationSettings: isActive ? "'FILL' 1" : "'FILL' 0"
+  });
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 border-t border-outline-variant bg-surface-container-low pb-safe z-20">
-      <div className="flex h-16 max-w-2xl mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 border-t border-transparent bg-surface-container-highest pb-safe z-20">
+      <div className="flex h-auto py-2 max-w-2xl mx-auto items-center">
         <NavLink to="/" className={getLinkClass}>
           {({ isActive }) => (
             <>
-              <span className={getIconClass({ isActive })}>dashboard</span>
-              <span className="text-xs font-medium">ダッシュボード</span>
+              <div className={getIconContainerClass({ isActive })}>
+                <span className="material-symbols-rounded text-2xl" style={getIconStyle({ isActive })}>dashboard</span>
+              </div>
+              <span className={`text-xs ${isActive ? 'font-bold' : 'font-medium'}`}>ダッシュボード</span>
             </>
           )}
         </NavLink>
         <NavLink to="/fissures" className={getLinkClass}>
           {({ isActive }) => (
             <>
-              <span className={getIconClass({ isActive })}>filter_drama</span>
-              <span className="text-xs font-medium">亀裂</span>
+              <div className={getIconContainerClass({ isActive })}>
+                <span className="material-symbols-rounded text-2xl" style={getIconStyle({ isActive })}>filter_drama</span>
+              </div>
+              <span className={`text-xs ${isActive ? 'font-bold' : 'font-medium'}`}>亀裂</span>
             </>
           )}
         </NavLink>
         <NavLink to="/relics" className={getLinkClass}>
           {({ isActive }) => (
             <>
-              <span className={getIconClass({ isActive })}>change_history</span>
-              <span className="text-xs font-medium">レリック</span>
+              <div className={getIconContainerClass({ isActive })}>
+                <span className="material-symbols-rounded text-2xl" style={getIconStyle({ isActive })}>change_history</span>
+              </div>
+              <span className={`text-xs ${isActive ? 'font-bold' : 'font-medium'}`}>レリック</span>
             </>
           )}
         </NavLink>
         <NavLink to="/settings" className={getLinkClass}>
           {({ isActive }) => (
             <>
-              <span className={getIconClass({ isActive })}>settings</span>
-              <span className="text-xs font-medium">設定</span>
+              <div className={getIconContainerClass({ isActive })}>
+                <span className="material-symbols-rounded text-2xl" style={getIconStyle({ isActive })}>settings</span>
+              </div>
+              <span className={`text-xs ${isActive ? 'font-bold' : 'font-medium'}`}>設定</span>
             </>
           )}
         </NavLink>
