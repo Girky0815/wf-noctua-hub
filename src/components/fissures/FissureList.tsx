@@ -4,6 +4,13 @@ import { translateMissionType, translateFaction, translateNode, translateTier } 
 import { formatTime } from '../../utils/time';
 import { useCountdown } from '../../hooks/useCountdown';
 import { SectionTitle } from '../ui/SectionTitle';
+import { ListGroup, ListItem } from '../ui/List';
+
+const TIER_ORDER = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem', 'Omnia'];
+
+interface FissureListProps {
+  fissures: Fissure[];
+}
 const FissureItem: React.FC<{ fissure: Fissure }> = ({ fissure }) => {
   const timeLeft = useCountdown(fissure.expiry);
 
