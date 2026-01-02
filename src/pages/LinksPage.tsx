@@ -8,7 +8,7 @@ export const LinksPage: React.FC = () => {
   };
 
   return (
-    <div className="animate-fade-in pb-24 max-w-2xl mx-auto p-4 space-y-6">
+    <div className="animate-fade-in pb-24 space-y-6">
       <div className="space-y-2 mb-6">
         <h1 className="text-3xl font-display font-bold text-on-surface">リンク集</h1>
         <p className="text-on-surface-variant text-sm">
