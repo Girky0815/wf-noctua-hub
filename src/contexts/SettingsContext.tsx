@@ -1,18 +1,36 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+export interface DashboardWidget {
+  id: string;
+  visible: boolean;
+  order: number;
+}
+
 interface Settings {
   isFirstVisit: boolean;
-  // 将来的に表示設定などがここに追加される
+  dashboardConfig: DashboardWidget[];
 }
+
+const defaultDashboardConfig: DashboardWidget[] = [
+  { id: 'cycles', visible: true, order: 0 },
+  { id: 'alerts', visible: true, order: 1 },
+  { id: 'invasions', visible: true, order: 2 },
+  { id: 'sortie', visible: true, order: 3 },
+  { id: 'archonHunt', visible: true, order: 4 },
+  { id: 'resurgence', visible: true, order: 5 },
+  { id: 'voidTrader', visible: true, order: 6 },
+];
+
+const defaultSettings: Settings = {
+  isFirstVisit: true,
+  dashboardConfig: defaultDashboardConfig,
+};
 
 interface SettingsContextType extends Settings {
   completeOnboarding: () => void;
   resetSettings: () => void;
+  updateDashboardConfig: (newConfig: DashboardWidget[]) => void;
 }
-
-const defaultSettings: Settings = {
-  isFirstVisit: true,
-};
 
 const SETTINGS_KEY = 'noctua-hub-settings';
 
@@ -23,7 +41,9 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const saved = localStorage.getItem(SETTINGS_KEY);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // マージして新しい設定項目(dashboardConfig等)が欠けないようにする
+        return { ...defaultSettings, ...parsed };
       } catch (e) {
         console.error('Failed to parse settings:', e);
       }
@@ -43,12 +63,17 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setSettings(defaultSettings);
   };
 
+  const updateDashboardConfig = (newConfig: DashboardWidget[]) => {
+    setSettings((prev) => ({ ...prev, dashboardConfig: newConfig }));
+  };
+
   return (
     <SettingsContext.Provider
       value={{
         ...settings,
         completeOnboarding,
         resetSettings,
+        updateDashboardConfig,
       }}
     >
       {children}

@@ -6,6 +6,7 @@ import { ThemeSelector } from '../components/ThemeSelector';
 import { SectionTitle } from '../components/ui/SectionTitle';
 import { ListGroup, ListTile } from '../components/ui/List';
 
+
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
   const { resetSettings } = useSettings();
@@ -47,6 +48,20 @@ export const SettingsPage: React.FC = () => {
 
   return (
     <div className="flex flex-col pb-24 pt-4">
+      {/* ダッシュボード設定へのリンク */}
+      <div className="mb-6">
+        <SectionTitle title="カスタマイズ" />
+        <ListGroup>
+          <ListTile
+            icon="dashboard_customize"
+            title="ダッシュボード設定"
+            subtitle="表示項目の選択・並び替え"
+            trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+            onClick={() => navigate('/settings/dashboard')}
+          />
+        </ListGroup>
+      </div>
+
       {/* 外観 */}
       <div className="mb-6">
         <SectionTitle title="外観" />

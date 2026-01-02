@@ -1,5 +1,6 @@
 import React from 'react';
 import { useWarframeData } from '../../hooks/useWarframeData';
+import { useSettings } from '../../contexts/SettingsContext';
 import { CycleCard } from './CycleCard';
 import { ZarimanCycleCard } from './ZarimanCycleCard';
 import { DuviriCycleCard } from './DuviriCycleCard';
@@ -10,19 +11,7 @@ import { VoidTraderCard } from './VoidTraderCard';
 import { ResurgenceCard } from './ResurgenceCard';
 import { useCountdown } from '../../hooks/useCountdown';
 import { getEffectiveCycle } from '../../utils/cycleCalculator';
-
-// セクションタイトルのコンポーネント
-const SectionTitle: React.FC<{ title: string; trailing?: React.ReactNode }> = ({ title, trailing }) => (
-  <div className="mb-2 ml-4 flex items-center gap-3">
-    <span
-      className="text-sm font-bold text-primary font-display"
-      style={{ fontVariationSettings: "'ROND' 100" }}
-    >
-      {title}
-    </span>
-    {trailing}
-  </div>
-);
+import { SectionTitle } from '../ui/SectionTitle';
 
 // バッジコンポーネント (アルコン名などを表示)
 const StatusBadge: React.FC<{
@@ -55,9 +44,9 @@ const ResurgenceTimerBadge: React.FC<{ expiry: string }> = ({ expiry }) => {
   return <StatusBadge label={`あと ${timeLeft}`} variant={isUrgent ? 'error' : 'secondary'} />;
 };
 
-
 export const StatusPage: React.FC = () => {
   const { worldState, isLoading, isError } = useWarframeData();
+  const { dashboardConfig } = useSettings();
 
   // データ鮮度チェック (APIのタイムスタンプと比較)
   const isDataStale = React.useMemo(() => {
@@ -103,6 +92,101 @@ export const StatusPage: React.FC = () => {
   const sortie = worldState.sorties?.[0];
   const archonHunt = worldState.archonHunt;
 
+  // ウィジェットのレンダリング関数
+  const renderWidget = (id: string) => {
+    switch (id) {
+      case 'cycles':
+        return (
+          <div key={id}>
+            <SectionTitle title="ワールドサイクル" />
+            <div className="grid grid-cols-2 gap-4">
+              <CycleCard name="地球 (森林)" cycle={worldState.earthCycle} />
+              <CycleCard name="エイドロンの草原" cycle={getEffectiveCycle(worldState.cetusCycle, 'cetus')} />
+              <CycleCard name="オーブ峡谷" cycle={getEffectiveCycle(worldState.vallisCycle, 'vallis')} />
+              <CycleCard name="カンビオン荒地" cycle={getEffectiveCycle(worldState.cambionCycle, 'cambion')} />
+              <DuviriCycleCard cycle={worldState.duviriCycle} />
+              <ZarimanCycleCard cycle={worldState.zarimanCycle} />
+            </div>
+          </div>
+        );
+      case 'alerts':
+        return (
+          <div key={id}>
+            <SectionTitle title="アラート" />
+            <div>
+              <AlertList alerts={worldState.alerts.filter(a => !a.expired && new Date(a.expiry).getTime() > Date.now())} />
+            </div>
+          </div>
+        );
+      case 'invasions':
+        return (
+          <div key={id}>
+            <SectionTitle title="侵略ミッション" />
+            <div>
+              <InvasionList invasions={worldState.invasions} />
+            </div>
+          </div>
+        );
+      case 'sortie':
+        return sortie ? (
+          <div key={id}>
+            <SectionTitle
+              title="今日のソーティ"
+              trailing={<StatusBadge label={sortie.boss} subLabel={sortie.eta} />}
+            />
+            <div>
+              <SortieCard sortie={sortie} />
+            </div>
+          </div>
+        ) : null;
+      case 'archonHunt':
+        return archonHunt ? (
+          <div key={id}>
+            <SectionTitle
+              title="アルコン討伐戦"
+              trailing={
+                <StatusBadge
+                  label={archonHunt.boss.replace('Archon ', '')}
+                  subLabel={archonHunt.eta}
+                />
+              }
+            />
+            <div>
+              <SortieCard sortie={archonHunt} />
+            </div>
+          </div>
+        ) : null;
+      case 'resurgence':
+        return worldState.vaultTrader ? (
+          <div key={id}>
+            <SectionTitle
+              title="Prime Resurgence"
+              trailing={<ResurgenceTimerBadge expiry={worldState.vaultTrader.expiry} />}
+            />
+            <div>
+              <ResurgenceCard trader={worldState.vaultTrader} />
+            </div>
+          </div>
+        ) : null;
+      case 'voidTrader':
+        return worldState.voidTrader ? (
+          <div key={id}>
+            <SectionTitle title="Baro Ki'Teer" />
+            <div>
+              <VoidTraderCard voidTrader={worldState.voidTrader} />
+            </div>
+          </div>
+        ) : null;
+      default:
+        return null;
+    }
+  };
+
+  // 表示設定に基づいてソート・フィルタリング
+  const activeWidgets = dashboardConfig
+    .filter(widget => widget.visible)
+    .sort((a, b) => a.order - b.order);
+
   return (
     <div className="grid gap-6 pb-20 pt-4">
       {/* 警告: データが古い場合 */}
@@ -118,89 +202,8 @@ export const StatusPage: React.FC = () => {
         </div>
       )}
 
-      {/* World Cycles */}
-      {/* World Cycles */}
-      <div>
-        <SectionTitle title="ワールドサイクル" />
-        <div className="grid grid-cols-2 gap-4">
-          <CycleCard name="地球 (森林)" cycle={worldState.earthCycle} />
-          <CycleCard name="エイドロンの草原" cycle={getEffectiveCycle(worldState.cetusCycle, 'cetus')} />
-          <CycleCard name="オーブ峡谷" cycle={getEffectiveCycle(worldState.vallisCycle, 'vallis')} />
-          <CycleCard name="カンビオン荒地" cycle={getEffectiveCycle(worldState.cambionCycle, 'cambion')} />
-          <DuviriCycleCard cycle={worldState.duviriCycle} />
-          <ZarimanCycleCard cycle={worldState.zarimanCycle} />
-        </div>
-      </div>
-
-      {/* Alerts */}
-      <div>
-        <SectionTitle title="アラート" />
-        <div>
-          <AlertList alerts={worldState.alerts.filter(a => !a.expired && new Date(a.expiry).getTime() > Date.now())} />
-        </div>
-      </div>
-
-      {/* Invasions */}
-      <div>
-        <SectionTitle title="侵略ミッション" />
-        <div className="">
-          <InvasionList invasions={worldState.invasions} />
-        </div>
-      </div>
-
-      {/* Sortie */}
-      {sortie && (
-        <div>
-          <SectionTitle
-            title="今日のソーティ"
-            trailing={<StatusBadge label={sortie.boss} subLabel={sortie.eta} />}
-          />
-          <div className="">
-            <SortieCard sortie={sortie} />
-          </div>
-        </div>
-      )}
-
-      {/* Archon Hunt */}
-      {archonHunt && (
-        <div>
-          <SectionTitle
-            title="アルコン討伐戦"
-            trailing={
-              <StatusBadge
-                label={archonHunt.boss.replace('Archon ', '')}
-                subLabel={archonHunt.eta} // 括弧なしでそのまま表示
-              />
-            }
-          />
-          <div className="">
-            <SortieCard sortie={archonHunt} />
-          </div>
-        </div>
-      )}
-
-      {/* Prime Resurgence */}
-      {worldState.vaultTrader && (
-        <div>
-          <SectionTitle
-            title="Prime Resurgence"
-            trailing={<ResurgenceTimerBadge expiry={worldState.vaultTrader.expiry} />}
-          />
-          <div className="">
-            <ResurgenceCard trader={worldState.vaultTrader} />
-          </div>
-        </div>
-      )}
-
-      {/* Void Trader */}
-      {worldState.voidTrader && (
-        <div>
-          <SectionTitle title="Baro Ki'Teer" />
-          <div className="">
-            <VoidTraderCard voidTrader={worldState.voidTrader} />
-          </div>
-        </div>
-      )}
+      {/* 動的レンダリング */}
+      {activeWidgets.map(widget => renderWidget(widget.id))}
     </div>
   );
 };
