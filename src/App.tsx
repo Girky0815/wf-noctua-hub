@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -98,10 +98,23 @@ const HeaderMenuButton: React.FC<{ isOpen: boolean; toggle: () => void }> = ({ i
 
 
 
+import { UpdateNotificationModal } from './components/ui/UpdateNotificationModal';
+import packageJson from '../package.json';
+
 const AppContent = () => {
-  const { isFirstVisit } = useSettings();
+  const { isFirstVisit, lastSeenVersion } = useSettings();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { worldState } = useWarframeData(); // Fetch worldState
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+  useEffect(() => {
+    // Check for update (simple string comparison, or semver if needed)
+    // Here: if lastSeenVersion is different from current, and current is not 0.0.0 (dev)
+    // Actually, just simple: if lastSeenVersion !== current
+    if (!isFirstVisit && lastSeenVersion !== packageJson.version) {
+      setShowUpdateModal(true);
+    }
+  }, [lastSeenVersion, isFirstVisit]);
 
   if (isFirstVisit) {
     return <OnboardingPage />;
@@ -110,6 +123,9 @@ const AppContent = () => {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
+      {showUpdateModal && (
+        <UpdateNotificationModal onClose={() => setShowUpdateModal(false)} />
+      )}
       <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
       <div className="min-h-screen bg-surface-container text-on-background pb-20">

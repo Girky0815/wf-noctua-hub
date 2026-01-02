@@ -9,7 +9,7 @@ import { ListGroup, ListTile } from '../components/ui/List';
 
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
-  const { resetSettings } = useSettings();
+  const { resetSettings, resetUpdateSeen } = useSettings();
   const [showCredits, setShowCredits] = useState(false);
   const [showRawData, setShowRawData] = useState(false);
   const { worldState, isLoading, isError } = useWarframeData();
@@ -167,7 +167,27 @@ export const SettingsPage: React.FC = () => {
             icon="info"
             title="Noctua Hub"
             subtitle={`v${__APP_VERSION__}`}
-            onClick={() => {/* 将来的に詳細画面へ */ }}
+            onClick={() => {
+              console.log('Version clicked: Forcing reset and reload (Direct localStorage)');
+              try {
+                // Reactの状態更新を介さず、直接localStorageを書き換えてリロードすることで
+                // リロード前のモーダル表示（チラつき）を防ぐ
+                const SETTINGS_KEY = 'noctua-hub-settings';
+                const saved = localStorage.getItem(SETTINGS_KEY);
+                if (saved) {
+                  const parsed = JSON.parse(saved);
+                  parsed.lastSeenVersion = '0.0.0';
+                  localStorage.setItem(SETTINGS_KEY, JSON.stringify(parsed));
+                }
+
+                // 少しだけ待ってからリロード
+                setTimeout(() => {
+                  window.location.reload();
+                }, 100);
+              } catch (e) {
+                console.error('Debug trigger failed:', e);
+              }
+            }}
           />
           <ListTile
             icon="code"

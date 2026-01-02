@@ -9,6 +9,7 @@ export interface DashboardWidget {
 interface Settings {
   isFirstVisit: boolean;
   dashboardConfig: DashboardWidget[];
+  lastSeenVersion: string; // Add version tracking
 }
 
 const defaultDashboardConfig: DashboardWidget[] = [
@@ -24,12 +25,15 @@ const defaultDashboardConfig: DashboardWidget[] = [
 const defaultSettings: Settings = {
   isFirstVisit: true,
   dashboardConfig: defaultDashboardConfig,
+  lastSeenVersion: '0.0.0', // Default to 0.0.0 to trigger update on first load if version > 0.0.0
 };
 
 interface SettingsContextType extends Settings {
   completeOnboarding: () => void;
   resetSettings: () => void;
   updateDashboardConfig: (newConfig: DashboardWidget[]) => void;
+  markUpdateSeen: (version: string) => void; // New function
+  resetUpdateSeen: () => void; // For debug
 }
 
 const SETTINGS_KEY = 'noctua-hub-settings';
@@ -42,7 +46,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        // マージして新しい設定項目(dashboardConfig等)が欠けないようにする
+        // Merge to ensure new settings (like lastSeenVersion) are present
         return { ...defaultSettings, ...parsed };
       } catch (e) {
         console.error('Failed to parse settings:', e);
@@ -67,6 +71,14 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setSettings((prev) => ({ ...prev, dashboardConfig: newConfig }));
   };
 
+  const markUpdateSeen = (version: string) => {
+    setSettings((prev) => ({ ...prev, lastSeenVersion: version }));
+  };
+
+  const resetUpdateSeen = () => {
+    setSettings((prev) => ({ ...prev, lastSeenVersion: '0.0.0' }));
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -74,6 +86,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         completeOnboarding,
         resetSettings,
         updateDashboardConfig,
+        markUpdateSeen,
+        resetUpdateSeen,
       }}
     >
       {children}
