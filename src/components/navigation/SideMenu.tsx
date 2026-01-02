@@ -98,6 +98,27 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
               </ListGroup>
             </div>
 
+            {/* お役立ち */}
+            <div>
+              <SectionTitle title="お役立ち" />
+              <ListGroup>
+                <ListTile
+                  icon="change_history"
+                  title="レリックシミュレーター"
+                  subtitle="レリックの中身やドロップ率を確認"
+                  trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+                  onClick={() => handleNavigation('/relics')}
+                />
+                <ListTile
+                  icon="link"
+                  title="リンク集"
+                  subtitle="公式サイト、Wiki、役立つツール"
+                  trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+                  onClick={() => handleNavigation('/links')}
+                />
+              </ListGroup>
+            </div>
+
             {/* 設定 */}
             <div>
               <SectionTitle title="設定" />

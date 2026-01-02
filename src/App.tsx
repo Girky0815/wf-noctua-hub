@@ -7,6 +7,7 @@ import { FissuresPage } from './pages/FissuresPage';
 import { RelicSimulatorPage } from './pages/RelicSimulatorPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { DashboardSettingsPage } from './pages/DashboardSettingsPage';
+import { LinksPage } from './pages/LinksPage';
 import { StatusPage } from './components/status/StatusPage';
 import { Clock } from './components/Clock';
 import { CreditsPage } from './components/CreditsPage';
@@ -123,6 +124,7 @@ const AppContent = () => {
             {/* /menu route removed */}
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/settings/dashboard" element={<DashboardSettingsPage />} />
+            <Route path="/links" element={<LinksPage />} />
             <Route path="/credits" element={<CreditsPage />} />
           </Routes>
         </main>
