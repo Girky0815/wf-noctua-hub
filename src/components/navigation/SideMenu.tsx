@@ -57,7 +57,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
               <ListGroup>
                 <ListTile
                   icon="dashboard"
-                  title="ステータス"
+                  title="ダッシュボード"
                   subtitle="ワールドサイクル、侵略、ソーティなど"
                   trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
                   onClick={() => handleNavigation('/')}

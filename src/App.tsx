@@ -31,7 +31,7 @@ const NavBar = () => {
           {({ isActive }) => (
             <>
               <span className={getIconClass({ isActive })}>dashboard</span>
-              <span className="text-xs font-medium">ステータス</span>
+              <span className="text-xs font-medium">ダッシュボード</span>
             </>
           )}
         </NavLink>
