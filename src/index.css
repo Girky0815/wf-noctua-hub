@@ -150,6 +150,10 @@
 }
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     @apply bg-background text-on-background font-sans antialiased;
   }
