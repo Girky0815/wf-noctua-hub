@@ -1,7 +1,8 @@
 import React from 'react';
 import type { Sortie } from '../../types/warframe';
-import { translateMissionType, translateNode, translateFaction } from '../../utils/translations';
+import { translateMissionType, translateNode, translateFaction, translateSortieModifier, translateSortieDescription } from '../../utils/translations';
 import { ListGroup, ListItem } from '../ui/List';
+import { Tooltip } from '../ui/Tooltip';
 
 interface SortieCardProps {
   sortie?: Sortie;
@@ -25,8 +26,9 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
       return sortie.variants.map(v => ({
         missionType: v.missionType,
         node: v.node,
-        description: `${v.modifier}: ${v.modifierDescription}`,
-        badge: v.modifier, // 赤字で表示する短いテキスト
+        // descriptionも翻訳する
+        description: `${translateSortieModifier(v.modifier)}: ${translateSortieDescription(v.modifierDescription)}`,
+        badge: translateSortieModifier(v.modifier), // 赤字で表示する短いテキスト
         isTranslated: false
       }));
     }
@@ -79,21 +81,40 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
                   </span>
                   <span className="text-xs text-on-surface-variant font-display">{translateNode(item.node)}</span>
                 </div>
-                <div className="text-sm text-on-surface-variant">
-                  {hasVariants ? (
-                    // ソーティ: 条件などを表示
-                    <>
-                      <span className="font-bold text-error">{item.badge}</span>: {item.description.split(': ')[1]}
-                    </>
-                  ) : (
-                    // アルコン: レベルを表示
+                {/* ミッションタイプ以外の情報がない場合(アルコンの通常ステージ等)の考慮 */}
+                {/* descriptionやbadgeがある場合のみ表示、ただしアルコンのLevels表示はInlineのままにする？ 
+                    user request focused on "Description is tooltip".
+                    Sortie variants have badges (Modifier Name) and Descriptions.
+                */}
+                {/* Variants (Sortie Modifiers) */}
+                {hasVariants && (
+                  <div className="text-sm">
+                    <span className="font-bold text-error">{item.badge}</span>
+                  </div>
+                )}
+
+                {/* Non-Variants (e.g. Archon Hunt levels) */}
+                {!hasVariants && (
+                  <div className="text-sm text-on-surface-variant">
                     <span className="flex items-center gap-1">
                       <span className="material-symbols-rounded text-base">swords</span>
                       {item.description}
                     </span>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
+
+              {/* Tooltip for Sortie Modifiers */}
+              {hasVariants && (
+                <Tooltip
+                  title={item.badge} // Translated Modifier Name
+                  content={translateSortieDescription(item.description.split(': ')[1] || '')} // Description part only
+                >
+                  <div className="flex items-center justify-center h-10 w-10 rounded-full hover:bg-surface-container-highest transition-colors text-error cursor-pointer">
+                    <span className="material-symbols-rounded">info</span>
+                  </div>
+                </Tooltip>
+              )}
             </ListItem>
           );
         }))}
