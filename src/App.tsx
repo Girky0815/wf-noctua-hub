@@ -13,6 +13,7 @@ import { Clock } from './components/Clock';
 import { CreditsPage } from './components/CreditsPage';
 import { ScrollToTop } from './components/ScrollToTop';
 import { SideMenu } from './components/navigation/SideMenu'; // Import SideMenu component
+import { useWarframeData } from './hooks/useWarframeData';
 
 const NavBar = () => {
   const getLinkClass = ({ isActive }: { isActive: boolean }) => `
@@ -95,9 +96,12 @@ const HeaderMenuButton: React.FC<{ isOpen: boolean; toggle: () => void }> = ({ i
   );
 };
 
+
+
 const AppContent = () => {
   const { isFirstVisit } = useSettings();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { worldState } = useWarframeData(); // Fetch worldState
 
   if (isFirstVisit) {
     return <OnboardingPage />;
@@ -114,7 +118,7 @@ const AppContent = () => {
             <HeaderMenuButton isOpen={isMenuOpen} toggle={() => setIsMenuOpen(!isMenuOpen)} />
             <h1 className="text-xl font-display font-medium text-on-secondary-container">Noctua Hub</h1>
           </div>
-          <Clock />
+          <Clock lastUpdated={worldState?.timestamp} />
         </header>
         <main className="mx-auto max-w-2xl p-4">
           <Routes>
