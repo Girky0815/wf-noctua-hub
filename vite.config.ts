@@ -13,9 +13,8 @@ export default defineConfig({
       includeAssets: ['favicon.png', 'vite.svg'],
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        // GitHub Pagesのサブディレクトリに合わせて明示的に指定
+        // 実在する index.html をフォールバック先に指定
         navigateFallback: '/wf-noctua-hub/index.html',
-        // 画像などのファイルへのアクセスでindex.htmlが返されないように除外リストを設定
         navigateFallbackDenylist: [/^\/wf-noctua-hub\/assets\/.*$/]
       },
       devOptions: {
@@ -23,27 +22,21 @@ export default defineConfig({
       },
       manifest: {
         name: 'Noctua Hub',
-        short_name: 'Noctua',
-        description: 'Warframe Status & Info Hub',
+        short_name: 'NoctuaHub',
+        description: 'Warframe ステータスと情報ハブアプリ',
         theme_color: '#286A56',
         background_color: '#F6FAF6',
         display: 'standalone',
-        scope: '/wf-noctua-hub/',
-        start_url: '/wf-noctua-hub/?pwa=true',
-        icons: [
-          {
-            src: 'pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
-      }
-    })
+
+        // ↓↓↓ ここを修正 ↓↓↓
+        // 以前: scope: '/wf-noctua-hub/',
+        scope: './',
+
+        // 以前: start_url: '/wf-noctua-hub/?pwa=true',
+        // クエリパラメータ(?pwa=true)を一旦外し、実ファイルを指すことで確実性を高めます
+        start_url: './index.html',
+      },
+    }),
   ],
   base: '/wf-noctua-hub/',
   define: {
