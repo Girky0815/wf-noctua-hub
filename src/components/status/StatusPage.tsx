@@ -97,12 +97,12 @@ export const StatusPage: React.FC = () => {
             <SectionTitle title="ワールドサイクル" />
             <div className="grid grid-cols-2 gap-4">
               {/* 予測されたサイクルを使用 */}
-              <CycleCard name="地球 (森林)" cycle={predicted.earth || worldState.earthCycle} />
-              <CycleCard name="エイドロンの草原" cycle={predicted.cetus || getEffectiveCycle(worldState.cetusCycle, 'cetus')} />
-              <CycleCard name="オーブ峡谷" cycle={predicted.vallis || getEffectiveCycle(worldState.vallisCycle, 'vallis')} />
-              <CycleCard name="カンビオン荒地" cycle={predicted.cambion || getEffectiveCycle(worldState.cambionCycle, 'cambion')} />
-              <DuviriCycleCard cycle={predicted.duviri || worldState.duviriCycle} />
-              <ZarimanCycleCard cycle={predicted.zariman || worldState.zarimanCycle} />
+              <CycleCard name="地球 (森林)" cycle={predicted.earth || worldState.earthCycle} isPredicted={!!predicted.earth} />
+              <CycleCard name="エイドロンの草原" cycle={predicted.cetus || getEffectiveCycle(worldState.cetusCycle, 'cetus')} isPredicted={!!predicted.cetus} />
+              <CycleCard name="オーブ峡谷" cycle={predicted.vallis || getEffectiveCycle(worldState.vallisCycle, 'vallis')} isPredicted={!!predicted.vallis} />
+              <CycleCard name="カンビオン荒地" cycle={predicted.cambion || getEffectiveCycle(worldState.cambionCycle, 'cambion')} isPredicted={!!predicted.cambion} />
+              <DuviriCycleCard cycle={predicted.duviri || worldState.duviriCycle} isPredicted={!!predicted.duviri} />
+              <ZarimanCycleCard cycle={predicted.zariman || worldState.zarimanCycle} isPredicted={!!predicted.zariman} />
             </div>
           </div>
         );

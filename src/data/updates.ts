@@ -6,19 +6,31 @@ export interface UpdateLog {
 
 export const updates: UpdateLog[] = [
   // テンプレート (次回の更新時にコピーして使用してください)
-  /*
+  //   {
+  //     version: 'x.y.z',
+  //     date: '2026-MM-DD',
+  //     content: `
+  // ## 新機能
+  // - **機能名**: 説明
+
+  // ## 修正
+  // - **修正内容**: 説明
+  //     `.trim(),
+  //   },
   {
-    version: '0.x.0',
-    date: '2026-MM-DD',
+    version: '1.0.2',
+    date: '2026-01-04',
     content: `
 ## 新機能
-- **機能名**: 説明
+- **APIデータ未更新表示**: APIデータが更新されていない場合、亀裂にも同様の表示がなされるように。
+  - 文言を修正し、いつからAPIデータが更新されていないことを示すように。
+- **データ更新間隔の調節**: 30秒に1回更新するように(以前は1分に1回)。
+  
 
 ## 修正
 - **修正内容**: 説明
     `.trim(),
   },
-  */
   {
     version: '1.0.1',
     date: '2026-01-03', // Use current date for the active version

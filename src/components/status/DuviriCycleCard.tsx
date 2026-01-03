@@ -11,9 +11,10 @@ import IconElectricity from '../../assets/icons/electricity.png';
 
 interface DuviriCycleCardProps {
   cycle?: DuviriCycle;
+  isPredicted?: boolean;
 }
 
-export const DuviriCycleCard: React.FC<DuviriCycleCardProps> = ({ cycle }) => {
+export const DuviriCycleCard: React.FC<DuviriCycleCardProps> = ({ cycle, isPredicted }) => {
   const timeLeft = useCountdown(cycle?.expiry);
 
   if (!cycle) return <div className="h-24 animate-pulse rounded-2xl bg-surface-container-high" />;
@@ -53,7 +54,12 @@ export const DuviriCycleCard: React.FC<DuviriCycleCardProps> = ({ cycle }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl bg-surface-bright p-4 text-on-surface">
+    <div className="relative flex flex-col items-center justify-center rounded-2xl bg-surface-bright p-4 text-on-surface overflow-hidden">
+      {isPredicted && (
+        <span className="absolute top-2 right-2 material-symbols-rounded text-[18px] text-on-surface-variant opacity-60" title="自動計算中">
+          calculate
+        </span>
+      )}
       <div className="mb-1 text-sm font-medium text-on-surface-variant">デュヴィリ</div>
       <div className="flex items-center gap-2">
         <img

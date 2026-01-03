@@ -6,9 +6,10 @@ import { useCountdown } from '../../hooks/useCountdown';
 interface CycleCardProps {
   name: string;
   cycle?: Cycle;
+  isPredicted?: boolean;
 }
 
-export const CycleCard: React.FC<CycleCardProps> = ({ name, cycle }) => {
+export const CycleCard: React.FC<CycleCardProps> = ({ name, cycle, isPredicted }) => {
   // Hook call order must be maintained, so we call it even if cycle is undefined (pass undefined)
   const timeLeft = useCountdown(cycle?.expiry);
 
@@ -21,7 +22,12 @@ export const CycleCard: React.FC<CycleCardProps> = ({ name, cycle }) => {
   const icon = isDay ? 'sunny' : 'bedtime';
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl bg-surface-bright p-4 text-on-surface">
+    <div className="relative flex flex-col items-center justify-center rounded-2xl bg-surface-bright p-4 text-on-surface overflow-hidden">
+      {isPredicted && (
+        <span className="absolute top-2 right-2 material-symbols-rounded text-[18px] text-on-surface-variant opacity-60" title="自動計算中">
+          calculate
+        </span>
+      )}
       <div className="mb-1 text-sm font-medium text-on-surface-variant">{name}</div>
       <div className="flex items-center gap-2">
         <span className={`material-symbols-rounded ${isDay ? 'text-primary' : 'text-tertiary'}`}>
