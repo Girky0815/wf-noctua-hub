@@ -10,7 +10,6 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'vite.svg'],
-      // ▼ 追加: 真っ白になる問題を解決するための設定
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         navigateFallback: '/wf-noctua-hub/index.html',
@@ -27,7 +26,6 @@ export default defineConfig({
         background_color: '#F6FAF6',
         display: 'standalone',
         scope: '/wf-noctua-hub/',
-        // ▼ 修正: 明示的に index.html を指定
         start_url: '/wf-noctua-hub/index.html',
         icons: [
           {

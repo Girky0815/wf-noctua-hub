@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, useNavigate, Navigate } from 'react-router-dom';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { OnboardingPage } from './pages/OnboardingPage';
@@ -138,6 +138,8 @@ const AppContent = () => {
         </header>
         <main className="mx-auto max-w-2xl p-4">
           <Routes>
+            {/* PWA Direct Launch Redirect */}
+            <Route path="index.html" element={<Navigate to="/" replace />} />
             <Route path="/" element={<StatusPage />} />
             <Route path="/fissures" element={<FissuresPage />} />
             <Route path="/relics" element={<RelicSimulatorPage />} />
