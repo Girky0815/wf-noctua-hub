@@ -65,7 +65,7 @@ export const DuviriCycleCard: React.FC<DuviriCycleCardProps> = ({ cycle, isPredi
         <img
           src={iconSrc}
           alt={stateLabel}
-          className="w-6 h-6 object-contain"
+          className="w-6 h-6 object-contain select-none"
         />
         <span className="text-xl font-bold font-display">{stateLabel}</span>
       </div>

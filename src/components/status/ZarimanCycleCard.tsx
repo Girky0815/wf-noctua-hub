@@ -32,7 +32,7 @@ export const ZarimanCycleCard: React.FC<ZarimanCycleCardProps> = ({ cycle, isPre
         <img
           src={iconSrc}
           alt={factionLabel}
-          className="w-6 h-6 object-contain"
+          className="w-6 h-6 object-contain select-none"
         />
         <span className="text-xl font-bold font-display">{factionLabel}</span>
       </div>
