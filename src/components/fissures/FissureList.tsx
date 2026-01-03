@@ -4,7 +4,38 @@ import { translateMissionType, translateFaction, translateNode, translateTier } 
 import { formatTime } from '../../utils/time';
 import { useCountdown } from '../../hooks/useCountdown';
 import { SectionTitle } from '../ui/SectionTitle';
-import { ListGroup, ListItem } from '../ui/List';
+import { ListGroup, ListItem, ListTile } from '../ui/List';
+
+const FissureItem: React.FC<{ fissure: Fissure }> = ({ fissure }) => {
+  const timeLeft = useCountdown(fissure.expiry);
+  const faction = translateFaction(fissure.enemy);
+  const missionType = translateMissionType(fissure.missionType);
+  const node = translateNode(fissure.node);
+
+  return (
+    <ListTile
+      title={missionType}
+      subtitle={
+        <span className="flex items-center gap-1">
+          {node} • {faction}
+        </span>
+      }
+      trailing={
+        <div className="flex items-center gap-2">
+          <span
+            className="text-sm bg-surface-container-highest px-2 py-0.5 rounded text-on-surface-variant"
+            style={{
+              fontFamily: "'Google Sans Flex', sans-serif",
+              fontFeatureSettings: "'tnum' 1"
+            }}
+          >
+            {timeLeft}
+          </span>
+        </div>
+      }
+    />
+  );
+};
 
 const TIER_ORDER = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem', 'Omnia'];
 
@@ -12,9 +43,7 @@ interface FissureListProps {
   fissures: Fissure[];
   isStale?: boolean;
 }
-// ... (some lines skipped, update the interface above)
 
-// ... (FissureItem implementation unchanged)
 
 export const FissureList: React.FC<FissureListProps> = ({ fissures, isStale }) => {
   if (!fissures || fissures.length === 0) {
