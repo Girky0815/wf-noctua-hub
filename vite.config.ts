@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
-
 import npmPackage from './package.json';
 
 // https://vite.dev/config/
@@ -11,9 +10,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'vite.svg'],
+      // ▼ 追加: 真っ白になる問題を解決するための設定
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-        // 実在する index.html をフォールバック先に指定
         navigateFallback: '/wf-noctua-hub/index.html',
         navigateFallbackDenylist: [/^\/wf-noctua-hub\/assets\/.*$/]
       },
@@ -22,21 +21,28 @@ export default defineConfig({
       },
       manifest: {
         name: 'Noctua Hub',
-        short_name: 'NoctuaHub',
-        description: 'Warframe ステータスと情報ハブアプリ',
+        short_name: 'Noctua',
+        description: 'Warframe Status & Info Hub',
         theme_color: '#286A56',
         background_color: '#F6FAF6',
         display: 'standalone',
-
-        // ↓↓↓ ここを修正 ↓↓↓
-        // 以前: scope: '/wf-noctua-hub/',
-        scope: './',
-
-        // 以前: start_url: '/wf-noctua-hub/?pwa=true',
-        // クエリパラメータ(?pwa=true)を一旦外し、実ファイルを指すことで確実性を高めます
-        start_url: './index.html',
-      },
-    }),
+        scope: '/wf-noctua-hub/',
+        // ▼ 修正: ?pwa=true を削除し、ディレクトリ指定に変更 (これが原因で真っ白になっていました)
+        start_url: '/wf-noctua-hub/',
+        icons: [
+          {
+            src: 'pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      }
+    })
   ],
   base: '/wf-noctua-hub/',
   define: {
