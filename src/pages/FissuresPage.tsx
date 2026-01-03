@@ -2,6 +2,8 @@ import React from 'react';
 import { useWarframeData } from '../hooks/useWarframeData';
 import { FissureList } from '../components/fissures/FissureList';
 
+import { StaleDataWarning } from '../components/ui/StaleDataWarning';
+
 export const FissuresPage: React.FC = () => {
   const { worldState, isLoading, isError } = useWarframeData();
   const [filterMode, setFilterMode] = React.useState<'normal' | 'hard' | 'storm'>('normal');
@@ -49,7 +51,6 @@ export const FissuresPage: React.FC = () => {
   return (
     <div className="animate-fade-in pb-24">
       {/* Fixed Header */}
-      {/* Fixed Header */}
       <div className={`fixed top-[80px] left-0 right-0 z-10 border-b transition-colors duration-300 shadow-sm
         ${isScrolled ? 'bg-surface-container-highest border-surface-container-highest' : 'bg-transparent border-transparent'}
       `}>
@@ -90,7 +91,10 @@ export const FissuresPage: React.FC = () => {
       </div>
 
       {/* Spacer for fixed header */}
-      <div className="pt-24">
+      <div className="pt-24 space-y-4">
+        {/* Stale Data Warning */}
+        {worldState && <StaleDataWarning timestamp={worldState.timestamp} />}
+
         <FissureList fissures={filteredFissures} />
       </div>
 

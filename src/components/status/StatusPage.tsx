@@ -12,6 +12,8 @@ import { ResurgenceCard } from './ResurgenceCard';
 import { useCountdown } from '../../hooks/useCountdown';
 import { getEffectiveCycle } from '../../utils/cycleCalculator';
 import { SectionTitle } from '../ui/SectionTitle';
+import { StaleDataWarning } from '../ui/StaleDataWarning';
+import { usePredictedCycles } from '../../hooks/usePredictedCycles';
 
 // バッジコンポーネント (アルコン名などを表示)
 const StatusBadge: React.FC<{
@@ -48,14 +50,8 @@ export const StatusPage: React.FC = () => {
   const { worldState, isLoading, isError } = useWarframeData();
   const { dashboardConfig } = useSettings();
 
-  // データ鮮度チェック (APIのタイムスタンプと比較)
-  const isDataStale = React.useMemo(() => {
-    if (!worldState?.timestamp) return false;
-    const dataTime = new Date(worldState.timestamp).getTime();
-    const now = Date.now();
-    const diff = now - dataTime;
-    return diff > 30 * 60 * 1000; // 30分以上古い場合は警告
-  }, [worldState?.timestamp]);
+  // サイクル予測フックの使用
+  const predicted = usePredictedCycles(worldState);
 
   if (isError) {
     return (
@@ -100,12 +96,13 @@ export const StatusPage: React.FC = () => {
           <div key={id}>
             <SectionTitle title="ワールドサイクル" />
             <div className="grid grid-cols-2 gap-4">
-              <CycleCard name="地球 (森林)" cycle={worldState.earthCycle} />
-              <CycleCard name="エイドロンの草原" cycle={getEffectiveCycle(worldState.cetusCycle, 'cetus')} />
-              <CycleCard name="オーブ峡谷" cycle={getEffectiveCycle(worldState.vallisCycle, 'vallis')} />
-              <CycleCard name="カンビオン荒地" cycle={getEffectiveCycle(worldState.cambionCycle, 'cambion')} />
-              <DuviriCycleCard cycle={worldState.duviriCycle} />
-              <ZarimanCycleCard cycle={worldState.zarimanCycle} />
+              {/* 予測されたサイクルを使用 */}
+              <CycleCard name="地球 (森林)" cycle={predicted.earth || worldState.earthCycle} />
+              <CycleCard name="エイドロンの草原" cycle={predicted.cetus || getEffectiveCycle(worldState.cetusCycle, 'cetus')} />
+              <CycleCard name="オーブ峡谷" cycle={predicted.vallis || getEffectiveCycle(worldState.vallisCycle, 'vallis')} />
+              <CycleCard name="カンビオン荒地" cycle={predicted.cambion || getEffectiveCycle(worldState.cambionCycle, 'cambion')} />
+              <DuviriCycleCard cycle={predicted.duviri || worldState.duviriCycle} />
+              <ZarimanCycleCard cycle={predicted.zariman || worldState.zarimanCycle} />
             </div>
           </div>
         );
@@ -189,18 +186,8 @@ export const StatusPage: React.FC = () => {
 
   return (
     <div className="grid gap-6 pb-20 pt-4">
-      {/* 警告: データが古い場合 */}
-      {isDataStale && (
-        <div className="flex items-start gap-3 rounded-2xl bg-error-container p-4 text-on-error-container">
-          <span className="material-symbols-rounded mt-0.5">warning</span>
-          <div className="flex flex-col text-sm">
-            <span className="rounded-full font-bold text-lg">APIデータが更新されていません</span>
-            <span className="opacity-90">
-              Warframe Status API からの情報が <strong>{Math.floor((Date.now() - new Date(worldState.timestamp).getTime()) / (1000 * 60))} 分</strong>以上遅れています。<br></br>アラート等は更新時点の情報で現在利用可能なものが表示されます。<br></br>APIが正常に利用できるまで、ワールドステータスは正常に表示されません。
-            </span>
-          </div>
-        </div>
-      )}
+      {/* 警告: データが古い場合 (Component化) */}
+      <StaleDataWarning timestamp={worldState.timestamp} />
 
       {/* 動的レンダリング */}
       {activeWidgets.map(widget => renderWidget(widget.id))}
