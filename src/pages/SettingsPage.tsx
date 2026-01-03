@@ -4,7 +4,7 @@ import { useSettings } from '../contexts/SettingsContext';
 import { useWarframeData } from '../hooks/useWarframeData';
 import { ThemeSelector } from '../components/ThemeSelector';
 import { SectionTitle } from '../components/ui/SectionTitle';
-import { ListGroup, ListTile } from '../components/ui/List';
+import { ListGroup, ListTile, ListItem } from '../components/ui/List';
 
 
 export const SettingsPage: React.FC = () => {
@@ -66,16 +66,27 @@ export const SettingsPage: React.FC = () => {
       <div className="mb-6">
         <SectionTitle title="外観" />
         <ListGroup>
-          <ListTile
-            icon="palette"
-            title="テーマ"
-            subtitle={
-              <div className="flex flex-col gap-3 mt-1 w-full">
-                <span>アプリの配色を変更します</span>
-                <ThemeSelector className="w-fit self-end" />
+          <ListItem>
+            <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-4">
+                <span className="material-symbols-rounded text-2xl text-on-surface-variant">palette</span>
+                <div className="flex flex-col">
+                  <span
+                    className="font-medium text-base font-display"
+                    style={{ fontVariationSettings: "'ROND' 100" }}
+                  >
+                    テーマ
+                  </span>
+                  <span className="text-xs text-on-surface-variant opacity-80 leading-snug">
+                    アプリの配色を変更します
+                  </span>
+                </div>
               </div>
-            }
-          />
+              <div className="flex justify-end">
+                <ThemeSelector />
+              </div>
+            </div>
+          </ListItem>
         </ListGroup>
       </div>
 

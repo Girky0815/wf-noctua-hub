@@ -60,13 +60,13 @@ export const ListTile: React.FC<ListTileProps> = ({
         ${className}
       `}
     >
-      <div className="flex items-center gap-4 overflow-hidden">
+      <div className="flex-1 flex items-center gap-4 overflow-hidden">
         {icon && (
           <span className={`material-symbols-rounded text-2xl ${destructive ? 'text-error' : 'text-on-surface-variant'}`}>
             {icon}
           </span>
         )}
-        <div className="flex flex-col overflow-hidden">
+        <div className="flex flex-col overflow-hidden w-full">
           <span
             className="truncate font-medium text-base font-display"
             style={{ fontVariationSettings: "'ROND' 100" }}
@@ -74,9 +74,9 @@ export const ListTile: React.FC<ListTileProps> = ({
             {title}
           </span>
           {subtitle && (
-            <span className="text-xs text-on-surface-variant opacity-80 leading-snug">
+            <div className={`text-xs text-on-surface-variant opacity-80 leading-snug ${typeof subtitle === 'string' ? '' : 'w-full'}`}>
               {subtitle}
-            </span>
+            </div>
           )}
         </div>
       </div>
