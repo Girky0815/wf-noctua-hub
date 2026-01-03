@@ -22,7 +22,7 @@ export default defineConfig({
         background_color: '#F6FAF6',
         display: 'standalone',
         scope: '/wf-noctua-hub/',
-        start_url: '/wf-noctua-hub/',
+        start_url: '/wf-noctua-hub/index.html',
         icons: [
           {
             src: 'pwa-192x192.png',
