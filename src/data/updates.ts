@@ -17,6 +17,14 @@ export const updates: UpdateLog[] = [
   // - **修正内容**: 説明
   //   },
   {
+    version: '1.1.5',
+    date: '2026-01-04',
+    content: `
+## 修正
+- PWAが起動できない問題を修正試行中
+    `.trim(),
+  },
+  {
     version: '1.1.4',
     date: '2026-01-04',
     content: `
