@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/wf-noctua-hub/dev-sw.js?dev-sw', { scope: '/wf-noctua-hub/', type: 'classic' })
