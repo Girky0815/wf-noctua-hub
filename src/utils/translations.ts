@@ -288,7 +288,12 @@ export const translateSortieModifier = (modifier: string): string => {
   return modifier;
 };
 
-export const translateSortieDescription = (description: string): string => {
+export const translateSortieDescription = (description: string, modifier?: string): string => {
+  // 特定のModifierに対する強制上書き (APIの説明文が共通の場合などの対策)
+  if (modifier && (modifier.includes('Extreme Cold') || modifier.includes('極寒'))) {
+    return 'ダッシュ不可。移動/パルクール/近接攻撃/リロード/アビリティ発動速度が低下する。';
+  }
+
   // 1. 完全一致 (辞書にある場合)
   if (sortieDescriptions[description]) {
     return sortieDescriptions[description];
@@ -322,7 +327,8 @@ export const translateSortieDescription = (description: string): string => {
 
   // 環境異常系 (Environmental)
   if (description.includes('Mobility') || description.match(/Fog|Visible/i) || description.match(/Fire|Flame/i) || description.match(/Gravity/i) || description.match(/Radiation/i) || description.match(/Magnetic/i) || description.match(/Energy/i) || description.match(/Shield/i) || description.match(/Health/i)) {
-    if (description.match(/Mobility|Cold|Freeze|Ice/i)) return 'Warframeの最大シールドが50%減少する。';
+    if (description.match(/Mobility|Shield/i)) return 'Warframeの最大シールドが50%減少する。';
+    if (description.match(/Cold|Freeze|Ice/i)) return 'ダッシュ不可。移動/パルクール/近接攻撃/リロード/アビリティ発動速度が低下する。';
     if (description.match(/Fog|Visible|Mist/i)) return '視界が悪化し、敵の射程と精度が低下する。';
     if (description.match(/Fire|Flame|Heat/i)) return 'エリアの一部が炎に包まれ、炎に触れると火炎状態異常になる。敵の攻撃に50%火炎ダメージが付与される。Warframeの最大ヘルスが半減し、シールドリチャージが大幅に低下する。';
     if (description.match(/Low Gravity|Gravity/i)) return '重力が低下する。';
