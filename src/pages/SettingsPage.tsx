@@ -69,8 +69,12 @@ export const SettingsPage: React.FC = () => {
           <ListTile
             icon="palette"
             title="テーマ"
-            subtitle="アプリの配色を変更します"
-            trailing={<ThemeSelector />}
+            subtitle={
+              <div className="flex flex-col gap-3 mt-1 w-full">
+                <span>アプリの配色を変更します</span>
+                <ThemeSelector className="w-fit self-end" />
+              </div>
+            }
           />
         </ListGroup>
       </div>

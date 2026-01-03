@@ -74,7 +74,7 @@ export const ListTile: React.FC<ListTileProps> = ({
             {title}
           </span>
           {subtitle && (
-            <span className={`truncate text-sm ${destructive ? 'text-error/80' : 'text-on-surface-variant'}`}>
+            <span className="text-xs text-on-surface-variant opacity-80 leading-snug">
               {subtitle}
             </span>
           )}

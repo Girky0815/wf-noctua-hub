@@ -1,7 +1,11 @@
 import React from 'react';
 import { useTheme, type Theme } from '../contexts/ThemeContext';
 
-export const ThemeSelector: React.FC = () => {
+interface ThemeSelectorProps {
+  className?: string;
+}
+
+export const ThemeSelector: React.FC<ThemeSelectorProps> = ({ className = '' }) => {
   const { theme, setTheme } = useTheme();
 
   const themes: { id: Theme; label: string; icon: string }[] = [
@@ -11,7 +15,7 @@ export const ThemeSelector: React.FC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className={`grid grid-cols-3 gap-2 ${className}`}>
       {themes.map((t) => (
         <button
           key={t.id}
