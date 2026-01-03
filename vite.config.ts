@@ -19,8 +19,8 @@ export default defineConfig({
         enabled: true
       },
       manifest: {
-        name: 'Noctua Hub',
-        short_name: 'Noctua',
+        name: 'NoctuaHub',
+        short_name: 'NoctuaHub',
         description: 'Warframe Status & Info Hub',
         theme_color: '#286A56',
         background_color: '#F6FAF6',

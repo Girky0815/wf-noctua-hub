@@ -17,6 +17,14 @@ export const updates: UpdateLog[] = [
   // - **修正内容**: 説明
   //   },
   {
+    version: '1.1.10',
+    date: '2026-01-04',
+    content: `
+## 修正
+- **アプリアイコンと名称の更新**: アプリ名を「NoctuaHub」に変更し、アイコンの背景色を調整して視認性を向上させました。
+    `.trim(),
+  },
+  {
     version: '1.1.9',
     date: '2026-01-04',
     content: `
