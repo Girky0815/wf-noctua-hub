@@ -15,8 +15,15 @@ export const updates: UpdateLog[] = [
 
   // ## 修正
   // - **修正内容**: 説明
-  //     `.trim(),
   //   },
+  {
+    version: '1.1.2',
+    date: '2026-01-04',
+    content: `
+## 修正
+- **PWA起動不具合の修正**: GitHub Pages上でPWAとしてインストールした際、正しく起動しない問題を修正しました。
+    `.trim(),
+  },
   {
     version: '1.1.0',
     date: '2026-01-04',
