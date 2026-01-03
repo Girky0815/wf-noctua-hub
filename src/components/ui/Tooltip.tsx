@@ -47,7 +47,12 @@ export const Tooltip: React.FC<TooltipProps> = ({ children, title, content }) =>
             {title}
           </h3>
           <p className="text-sm opacity-90 leading-relaxed" style={{ color: 'inherit' }}>
-            {content}
+            {content.split(/<br\s*\/?>/i).map((line, i, arr) => (
+              <React.Fragment key={i}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </React.Fragment>
+            ))}
           </p>
         </div>
       )}

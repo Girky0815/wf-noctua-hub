@@ -107,6 +107,19 @@ export const planetNames: Record<string, string> = {
   'Zariman': 'Zariman',
 };
 
+// ボス名の日本語訳
+export const bossNames: Record<string, string> = {
+  'Tyl Regor': 'Tyl Regor', // 原文のままが多いため一旦そのまま定義、必要に応じてカタカナ化
+  'Hyena Pack': 'Hyena Pack',
+  'Ambulas': 'Ambulas',
+  'Kela De Thaym': 'Kela De Thaym',
+  'Ropalolyst': 'ロパロリスト',
+  'Phorid': 'Phorid',
+  'Lephantis': 'Lephantis',
+  'Vay Hek': 'Vay Hek',
+  // 必要に応じて追加
+};
+
 // 侵略ミッション種別
 export const invasionDescriptions: Record<string, string> = {
   'Grineer Offensive': 'グリニア 侵攻',
@@ -170,184 +183,154 @@ export const translateTier = (tier: string): string => {
   return relicTiers[tier] || tier;
 };
 
+export const translateBoss = (boss: string): string => {
+  return bossNames[boss] || boss;
+};
+
 // ソーティの状況(デバフ)の日本語訳
 // プレフィックス付きのmodifierに対応するためのマッピング
 // APIからは "Enemy Elemental Enhancement: Electricity" のような形式で返ってくることがある
+// ソーティの状況(デバフ)の日本語訳 (基本単語のみ定義)
 export const sortieModifiers: Record<string, string> = {
-  // 環境異常 (Environmental Effect)
-  'Environmental Effect: Extreme Cold': '極寒',
-  'Environmental Effect: Dense Fog': '濃霧',
-  'Environmental Effect: Cryogenic Leakage': '冷却液漏洩',
-  'Environmental Effect: Fire': '火災',
-  'Environmental Effect: Electromagnetic Anomalies': '電磁気異常',
-  'Environmental Effect: Radiation Hazard': '放射線障害',
-  'Environmental Effect: Low Gravity': '低重力',
-  'Environmental Effect: Energy Reduction': 'エネルギー減少',
+  // 環境異常 (Environmental Effect / Hazard)
+  'Extreme Cold': '極寒',
+  'Dense Fog': '濃霧',
+  'Cryogenic Leakage': '極低温漏出',
+  'Fire': '火災',
+  'Electromagnetic Anomalies': '電磁変異',
+  'Radiation Hazard': '放射線障害',
+  'Radiation Pockets': '放射線障害',
+  'Low Gravity': '低重力',
+  'Energy Reduction': 'エネルギー減少',
 
-  // 物理強化 (Enemy Physical Enhancement)
-  'Enemy Physical Enhancement: Slash': '敵物理強化 (切断)',
-  'Enemy Physical Enhancement: Impact': '敵物理強化 (衝撃)',
-  'Enemy Physical Enhancement: Puncture': '敵物理強化 (貫通)',
-
-  // 属性強化 (Enemy Elemental Enhancement)
-  'Enemy Elemental Enhancement: Heat': '敵属性強化 (火炎)',
-  'Enemy Elemental Enhancement: Cold': '敵属性強化 (冷気)',
-  'Enemy Elemental Enhancement: Electricity': '敵属性強化 (電気)',
-  'Enemy Elemental Enhancement: Toxin': '敵属性強化 (毒)',
-  'Enemy Elemental Enhancement: Blast': '敵属性強化 (爆発)',
-  'Enemy Elemental Enhancement: Corrosive': '敵属性強化 (腐食)',
-  'Enemy Elemental Enhancement: Gas': '敵属性強化 (ガス)',
-  'Enemy Elemental Enhancement: Magnetic': '敵属性強化 (磁気)',
-  'Enemy Elemental Enhancement: Radiation': '敵属性強化 (放射線)',
-  'Enemy Elemental Enhancement: Viral': '敵属性強化 (感染)',
+  // 物理/属性 (Physical / Elemental)
+  'Slash': '切断',
+  'Impact': '衝撃',
+  'Puncture': '貫通',
+  'Heat': '火炎',
+  'Cold': '冷気',
+  'Electricity': '電気',
+  'Toxin': '毒',
+  'Blast': '爆発',
+  'Corrosive': '腐食',
+  'Gas': 'ガス',
+  'Magnetic': '磁気',
+  'Radiation': '放射線',
+  'Viral': '感染',
 
   // 基本的なmodifier (プレフィックスなし、またはその他)
-  'Augmented Enemy Armor': '敵装甲強化',
+  'Augmented Enemy Armor': '敵アーマー増強',
   'Augmented Enemy Shields': '敵シールド増強',
   'Eximus Stronghold': 'エクシマスの要塞',
-  'Sniper Only': 'スナイパーのみ',
+
+  // 武器制限 (Weapon Restriction)
+  'Sniper Only': '精密ライフルのみ',
   'Assault Rifle Only': 'アサルトライフルのみ',
   'Melee Only': '近接のみ',
   'Bow Only': '弓のみ',
   'Pistol Only': 'ピストルのみ',
   'Shotgun Only': 'ショットガンのみ',
+
+  // その他
   'Weapon Restriction': '武器制限',
 };
 
-// ソーティの詳細説明(ヒント)の日本語訳
-export const sortieDescriptions: Record<string, string> = {
-  // Elemental / Physical Enhancement (Generic pattern often used)
-  // 'Enemies deal extra Slash damage and have extra Slash resistance': '敵の切断ダメージが増加し、切断耐性を持つ。',
-  // 'Enemies deal extra Impact damage and have extra Impact resistance': '敵の衝撃ダメージが増加し、衝撃耐性を持つ。',
-  // 'Enemies deal extra Puncture damage and have extra Puncture resistance': '敵の貫通ダメージが増加し、貫通耐性を持つ。',
-  // 'Enemies deal extra Heat damage and have extra Heat resistance': '敵の火炎ダメージが増加し、火炎耐性を持つ。',
-  // 'Enemies deal extra Cold damage and have extra Cold resistance': '敵の冷気ダメージが増加し、冷気耐性を持つ。',
-  // 'Enemies deal extra Electricity damage and have extra Electricity resistance': '敵の電気ダメージが増加し、電気耐性を持つ。',
-  // 'Enemies deal extra Toxin damage and have extra Toxin resistance': '敵の毒ダメージが増加し、毒耐性を持つ。',
-  // 'Enemies deal extra Blast damage and have extra Blast resistance': '敵の爆発ダメージが増加し、爆発耐性を持つ。',
-  // 'Enemies deal extra Corrosive damage and have extra Corrosive resistance': '敵の腐食ダメージが増加し、腐食耐性を持つ。',
-  // 'Enemies deal extra Gas damage and have extra Gas resistance': '敵のガスダメージが増加し、ガス耐性を持つ。',
-  // 'Enemies deal extra Magnetic damage and have extra Magnetic resistance': '敵の磁気ダメージが増加し、磁気耐性を持つ。',
-  // 'Enemies deal extra Radiation damage and have extra Radiation resistance': '敵の放射線ダメージが増加し、放射線耐性を持つ。',
-  // 'Enemies deal extra Viral damage and have extra Viral resistance': '敵のウイルスダメージが増加し、ウイルス耐性を持つ。',
-
-  // Environmental
-  'Warframe shields are reduced by 50%': 'Warframeの最大シールドが50%減少する。', // Cryogenic Leakage / Extreme Cold
-  'Visibility is reduced': '視界が悪化し、敵の射程と精度が低下する。', // Dense Fog
-  'Areas of the level are engulfed in fire': 'エリアの一部が炎に包まれ、炎に触れると火炎状態異常になる。敵の攻撃に50%火炎ダメージが付与される。Warframeの最大ヘルスが半減し、シールドリチャージが大幅に低下する。', // Fire
-  'Gravity is reduced': '重力が低下する。', // Low Gravity
-  'Clouds of radiation cover the area': '放射線の雲(緑色)が発生し、触れると放射線状態異常になる。', // Radiation Hazard
-  'Random locations will be struck by magnetic anomalies': 'エリアが低重力になり、磁気雲(青色)が発生する(電気/磁気/Voidで一時的に除去可)。磁気雲に触れると磁気状態異常になる。', // Electromagnetic Anomalies
-  'Max Energy is 25% of normal': 'Warframeの最大エネルギーが通常の25%になる。', // Energy Reduction
-
-  // Buffs
-  'Enemies have enhanced Armor': '敵の装甲値が+300%。', // Augmented Enemy Armor
-  'Enemies have enhanced shields': '敵のシールドが+300%。', // Augmented Enemy Shields
-  'More Eximus units will appear': 'エクシマスユニットの出現率が大幅に上昇する。', // Eximus Stronghold
-
-  // Weapon Restrictions (Simple match)
-  'Only Sniper Rifles can be used': 'スナイパーライフルのみ使用可能。',
-  'Only Assault Rifles can be used': 'アサルトライフルのみ使用可能。',
-  'Only Melee weapons can be used': '近接武器のみ使用可能。',
-  'Only Bows can be used': '弓のみ使用可能。',
-  'Only Secondary weapons can be used': 'セカンダリ武器のみ使用可能。', // Pistol Only maps to this usually? Or "Only Pistols..."? API varies.
-  'Only Shotguns can be used': 'ショットガンのみ使用可能。',
-
-  // Short descriptions from API (fallback mapping)
-  //   'Slash': '敵の切断ダメージが増加し、切断耐性を持つ。',
-  //   'Impact': '敵の衝撃ダメージが増加し、衝撃耐性を持つ。',
-  //   'Puncture': '敵の貫通ダメージが増加し、貫通耐性を持つ。',
-  //   'Heat': '敵の火炎ダメージが増加し、火炎耐性を持つ。',
-  //   'Cold': '敵の冷気ダメージが増加し、冷気耐性を持つ。',
-  //   'Electricity': '敵の電気ダメージが増加し、電気耐性を持つ。',
-  //   'Toxin': '敵の毒ダメージが増加し、毒耐性を持つ。',
-  //   'Blast': '敵の爆発ダメージが増加し、爆発耐性を持つ。',
-  //   'Corrosive': '敵の腐食ダメージが増加し、腐食耐性を持つ。',
-  //   'Gas': '敵のガスダメージが増加し、ガス耐性を持つ。',
-  //   'Magnetic': '敵の磁気ダメージが増加し、磁気耐性を持つ。',
-  //   'Radiation': '敵の放射線ダメージが増加し、放射線耐性を持つ。',
-  //   'Viral': '敵のウイルスダメージが増加し、ウイルス耐性を持つ。',
-  //   'Extreme Cold': 'Warframeの最大シールドが50%減少する。',
-  //   'Dense Fog': '視界が悪化し、敵の射程と精度が低下する。',
-  //   'Fire': 'エリアの一部が炎に包まれ、触れると火炎状態異常になる。',
-  //   'Low Gravity': '重力が低下する。',
-  //   'Radiation Hazard': '放射線の雲が発生し、触れると放射線状態異常になる。',
-  //   'Electromagnetic Anomalies': '磁気異常が発生し、HUDの乱れやエネルギー減少を引き起こす。',
-  //   'Energy Reduction': 'Warframeの最大エネルギーが通常の25%になる。',
-};
-
 export const translateSortieModifier = (modifier: string): string => {
-  // 完全一致をトライ
+  // 1. 完全一致
   if (sortieModifiers[modifier]) {
     return sortieModifiers[modifier];
   }
 
-  // もし辞書にない場合、部分的なプレフィックス除去を試みることも可能だが、
-  // 現状は辞書を充実させる方針とする。
-  // 必要であればここで "Environmental Effect: " などを削除して再検索するロジックを追加する。
+  // 2. プレフィックス処理
+  const prefixes = [
+    { prefix: 'Environmental Effect: ', template: (s: string) => s }, // そのまま
+    { prefix: 'Environmental Hazard: ', template: (s: string) => s }, // そのまま
+    { prefix: 'Enemy Physical Enhancement: ', template: (s: string) => `敵物理強化 (${s})` },
+    { prefix: 'Enemy Elemental Enhancement: ', template: (s: string) => `敵属性強化 (${s})` },
+    { prefix: 'Weapon Restriction: ', template: (s: string) => `武器制限: ${s}` },
+  ];
+
+  for (const { prefix, template } of prefixes) {
+    if (modifier.startsWith(prefix)) {
+      const core = modifier.substring(prefix.length);
+      const translatedCore = sortieModifiers[core] || core;
+      return template(translatedCore);
+    }
+  }
+
   return modifier;
 };
 
-export const translateSortieDescription = (description: string, modifier?: string): string => {
-  // 特定のModifierに対する強制上書き (APIの説明文が共通の場合などの対策)
-  if (modifier && (modifier.includes('Extreme Cold') || modifier.includes('極寒'))) {
-    return 'ダッシュ不可。移動/パルクール/近接攻撃/リロード/アビリティ発動速度が低下する。';
+// ソーティの詳細説明(ヒント)の日本語訳
+// ソーティの詳細説明(ヒント)の日本語訳 (Modifier名から検索)
+export const sortieModifierDescriptions: Record<string, string> = {
+  // 環境異常
+  'Extreme Cold': 'Warframe の機動性が低下する。<br />ダッシュができなくなり、移動/パルクール/近接攻撃/リロード/アビリティ発動速度が低下する。',
+  'Dense Fog': '視認性が大幅に制限され、エリアが濃い霧に覆われる。地球森林タイルでのみ発生し、夜固定になる。',
+  'Cryogenic Leakage': 'エリアの一部が凍結し、これに触れると冷気異常になる。<br>Warframeのシールドが-50%。敵の攻撃に+25%冷気ダメージ追加。',
+  'Fire': 'エリアの一部が炎に包まれ、炎に触れると火炎異常になる。炎は冷気ダメージで除去できる。<br>Warframe の最大ヘルスが-50%。敵の攻撃に+25%火炎ダメージ。',
+  'Electromagnetic Anomalies': '低重力状態になり、エリアの各所に青い磁気雲が発生。磁気雲に触れると磁気異常(3秒間 シールドリチャージ停止、シールドへのダメージが+100%、視界が乱れ、90エネルギーを失う)になる。<br />磁気雲は電気/磁気/Voidダメージで一時的に除去できる。',
+  // 'Radiation Hazard': 'エリア全体に放射線の状態異常が周期的に発生する。',
+  'Radiation Pockets': '緑色の放射線の雲が発生し、触れると放射線異常(4秒間 射撃精度減少、フレンドリーファイア有効、味方蘇生不可)になる。<br>敵への物理ダメージ-75%、放射線ダメージ+100%。',
+  'Low Gravity': 'エリアが低重力になる。',
+  'Energy Reduction': 'エネルギーの最大値が25%になり、エネルギー継続回復によるエネルギー回復速度が大幅に低下する。',
+
+  // 強化
+  'Augmented Enemy Armor': '敵の装甲値+300%。感染体に装甲値+100(除去不可)。<br>オロキンでは元グリニアのみ装甲値が増加する。',
+  'Augmented Enemy Shields': '敵勢力コーパスのみ。敵のシールド+300%。',
+  'Eximus Stronghold': 'エクシマスユニットが多く出現する。',
+
+  // 物理/属性
+  'Slash': '敵の攻撃に+100%切断ダメージ。敵はすべての物理ダメージに対して85%の耐性をもつ(切断異常によるダメージは耐性対象外)。',
+  'Impact': '敵の攻撃に+100%衝撃ダメージ。敵はすべての物理ダメージに対して85%の耐性をもつ(切断異常によるダメージは耐性対象外)。',
+  'Puncture': '敵の攻撃に+100%貫通ダメージ。敵はすべての物理ダメージに対して85%の耐性をもつ(切断異常によるダメージは耐性対象外)。',
+  'Heat': '敵の攻撃に+100%火炎ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Cold': '敵の攻撃に+100%冷気ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Electricity': '敵の攻撃に+100%電気ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Toxin': '敵の攻撃に+100%毒ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Blast': '敵の攻撃に+100%爆発ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Corrosive': '敵の攻撃に+100%腐食ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Gas': '敵の攻撃に+100%ガスダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Magnetic': '敵の攻撃に+100%磁気ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Radiation': '敵の攻撃に+100%放射線ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+  'Viral': '敵の攻撃に+100%感染ダメージ。敵はすべての属性ダメージに対して85%の耐性をもつ。',
+
+  // 武器制限
+  'Sniper Only': '精密ライフルのみ使用可能。<br>他の武器は使用できないが、例外的にアビリティ武器は使用可能。',
+  'Assault Rifle Only': 'アサルトライフルのみ使用可能。<br>他の武器は使用できないが、例外的にアビリティ武器は使用可能。',
+  'Melee Only': '近接武器のみ使用可能。<br>他の武器は使用できないが、例外的にアビリティ武器は使用可能。',
+  'Bow Only': '弓/クロスボウのみ使用可能。<br>他の武器は使用できないが、例外的にアビリティ武器は使用可能。',
+  'Pistol Only': 'セカンダリ武器(=ピストル)のみ使用可能。<br>他の武器は使用できないが、例外的にアビリティ武器は使用可能。',
+  'Shotgun Only': 'ショットガンのみ使用可能。<br>他の武器は使用できないが、例外的にアビリティ武器は使用可能。',
+  'Weapon Restriction': '特定の武器のみ使用可能。<br>他の武器は使用できないが、例外的にアビリティ武器は使用可能。',
+};
+
+export const translateSortieDescription = (modifier: string): string => {
+  // 1. 完全一致 (Modifier名から直接検索)
+  if (sortieModifierDescriptions[modifier]) {
+    return sortieModifierDescriptions[modifier];
   }
 
-  // 1. 完全一致 (辞書にある場合)
-  if (sortieDescriptions[description]) {
-    return sortieDescriptions[description];
+  // 2. プレフィックス処理 (Modifier名からコア部分を抽出して再検索)
+  // 例: "Environmental Effect: Dense Fog" -> "Dense Fog"
+  const prefixes = [
+    'Environmental Effect: ',
+    'Environmental Hazard: ',
+    'Enemy Physical Enhancement: ',
+    'Enemy Elemental Enhancement: ',
+    'Weapon Restriction: ',
+  ];
+
+  for (const prefix of prefixes) {
+    if (modifier.startsWith(prefix)) {
+      const core = modifier.substring(prefix.length);
+      if (sortieModifierDescriptions[core]) {
+        return sortieModifierDescriptions[core];
+      }
+    }
   }
 
-  // 2. パターンマッチング (辞書にない場合の柔軟な対応)
-
-  // Physical / Elemental Enhancement Patterns
-  // Pattern A: "Enemies deal extra [Type] damage and have extra [Type] resistance"
-  // Pattern B: "Enemies deal increased [Type] damage and also have increased Immunity to said damage type"
-  // Pattern C: "Enemies can deal enhanced [Type] damage. Finishing damage is not resisted."
-
-  if (description.includes('damage')) {
-    // 物理 (Physical)
-    if (description.match(/Slash/i)) return '敵の切断ダメージが+100%増加し、85%の物理ダメージ耐性を持つ。';
-    if (description.match(/Impact/i)) return '敵の衝撃ダメージが+100%増加し、85%の物理ダメージ耐性を持つ。';
-    if (description.match(/Puncture/i)) return '敵の貫通ダメージが+100%増加し、85%の物理ダメージ耐性を持つ。';
-
-    // 属性 (Elemental)
-    if (description.match(/Heat|Fire/i)) return '敵の火炎ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Cold|Freeze/i)) return '敵の冷気ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Electricity|Electric/i)) return '敵の電気ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Toxin|Poison/i)) return '敵の毒ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Blast/i)) return '敵の爆発ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Corrosive/i)) return '敵の腐食ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Gas/i)) return '敵のガスダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Magnetic/i)) return '敵の磁気ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Radiation/i)) return '敵の放射線ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-    if (description.match(/Viral/i)) return '敵の感染ダメージが+100%増加し、85%の属性ダメージ耐性を持つ。';
-  }
-
-  // 環境異常系 (Environmental)
-  if (description.includes('Mobility') || description.match(/Fog|Visible/i) || description.match(/Fire|Flame/i) || description.match(/Gravity/i) || description.match(/Radiation/i) || description.match(/Magnetic/i) || description.match(/Energy/i) || description.match(/Shield/i) || description.match(/Health/i)) {
-    if (description.match(/Mobility|Shield/i)) return 'Warframeの最大シールドが50%減少する。';
-    if (description.match(/Cold|Freeze|Ice/i)) return 'ダッシュ不可。移動/パルクール/近接攻撃/リロード/アビリティ発動速度が低下する。';
-    if (description.match(/Fog|Visible|Mist/i)) return '視界が悪化し、敵の射程と精度が低下する。';
-    if (description.match(/Fire|Flame|Heat/i)) return 'エリアの一部が炎に包まれ、炎に触れると火炎状態異常になる。敵の攻撃に50%火炎ダメージが付与される。Warframeの最大ヘルスが半減し、シールドリチャージが大幅に低下する。';
-    if (description.match(/Low Gravity|Gravity/i)) return '重力が低下する。';
-    if (description.match(/Radiation/i)) return '放射線の雲(緑色)が発生し、触れると放射線状態異常になる。';
-    if (description.match(/Magnetic/i)) return 'エリアが低重力になり、磁気雲(青色)が発生する(電気/磁気/Voidで一時的に除去可)。磁気雲に触れると磁気状態異常になる。';
-    if (description.match(/Energy/i)) return 'Warframeの最大エネルギーが通常の25%になる。';
-  }
-
-  // Weapon Restriction Patterns
-  // "Only ... can be used..."
-  if (description.includes('Only') && description.includes('can be used')) {
-    if (description.match(/Sniper/i)) return 'スナイパーライフルのみ使用可能。';
-    if (description.match(/Assault Rifle/i)) return 'アサルトライフルのみ使用可能。';
-    if (description.match(/Melee/i)) return '近接武器のみ使用可能。';
-    if (description.match(/Bow/i)) return '弓のみ使用可能。';
-    if (description.match(/Pistols|Secondary/i)) return 'セカンダリ武器のみ使用可能。';
-    if (description.match(/Shotgun/i)) return 'ショットガンのみ使用可能。';
-  }
-
-  // フォールバック: 翻訳できなかった場合はそのまま返す
-  return description;
+  // 3. フォールバック (何も見つからない場合)
+  // ここでAPIのdescriptionを使わないように空文字などを返すか、汎用メッセージを返す
+  return '詳細情報なし';
 };

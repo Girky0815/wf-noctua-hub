@@ -27,7 +27,7 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
         missionType: v.missionType,
         node: v.node,
         // descriptionも翻訳する (Modifierを渡して特定の翻訳を上書き可能にする)
-        description: `${translateSortieModifier(v.modifier)}: ${translateSortieDescription(v.modifierDescription, v.modifier)}`,
+        description: translateSortieDescription(v.modifier),
         badge: translateSortieModifier(v.modifier), // 赤字で表示する短いテキスト
         isTranslated: false
       }));
@@ -108,7 +108,7 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
               {hasVariants && (
                 <Tooltip
                   title={item.badge} // Translated Modifier Name
-                  content={item.description.split(': ')[1] || ''} // Description part only (Already translated)
+                  content={item.description} // Description part only (Already translated)
                 >
                   <div className="flex items-center justify-center h-10 w-10 rounded-full hover:bg-surface-container-highest transition-colors text-error cursor-pointer">
                     <span className="material-symbols-rounded">info</span>
