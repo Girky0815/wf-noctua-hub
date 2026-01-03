@@ -21,8 +21,8 @@ export default defineConfig({
         theme_color: '#286A56',
         background_color: '#F6FAF6',
         display: 'standalone',
-        scope: './',
-        start_url: './',
+        scope: '/wf-noctua-hub/',
+        start_url: '/wf-noctua-hub/?pwa=true',
         icons: [
           {
             src: 'pwa-192x192.png',
