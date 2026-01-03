@@ -21,6 +21,14 @@ export const updates: UpdateLog[] = [
     date: '2026-01-04',
     content: `
 ## 修正
+- **PWA起動設定の最終調整**: Start URLを index.html まで明示的に指定しました。
+    `.trim(),
+  },
+  {
+    version: '1.1.6',
+    date: '2026-01-04',
+    content: `
+## 修正
 - PWAが起動できない問題を修正試行中
     `.trim(),
   },

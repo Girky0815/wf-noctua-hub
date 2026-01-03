@@ -27,8 +27,8 @@ export default defineConfig({
         background_color: '#F6FAF6',
         display: 'standalone',
         scope: '/wf-noctua-hub/',
-        // ▼ 修正: ?pwa=true を削除し、ディレクトリ指定に変更 (これが原因で真っ白になっていました)
-        start_url: '/wf-noctua-hub/',
+        // ▼ 修正: 明示的に index.html を指定
+        start_url: '/wf-noctua-hub/index.html',
         icons: [
           {
             src: 'pwa-192x192.png',
