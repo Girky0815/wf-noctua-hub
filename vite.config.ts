@@ -11,6 +11,13 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'vite.svg'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        // GitHub Pagesのサブディレクトリに合わせて明示的に指定
+        navigateFallback: '/wf-noctua-hub/index.html',
+        // 画像などのファイルへのアクセスでindex.htmlが返されないように除外リストを設定
+        navigateFallbackDenylist: [/^\/wf-noctua-hub\/assets\/.*$/]
+      },
       devOptions: {
         enabled: true
       },
