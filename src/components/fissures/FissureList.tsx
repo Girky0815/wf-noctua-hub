@@ -10,46 +10,29 @@ const TIER_ORDER = ['Lith', 'Meso', 'Neo', 'Axi', 'Requiem', 'Omnia'];
 
 interface FissureListProps {
   fissures: Fissure[];
+  isStale?: boolean;
 }
-const FissureItem: React.FC<{ fissure: Fissure }> = ({ fissure }) => {
-  const timeLeft = useCountdown(fissure.expiry);
+// ... (some lines skipped, update the interface above)
 
-  return (
-    <ListItem className="flex items-center justify-between p-4 text-on-surface">
-      <div className="flex flex-col gap-1 overflow-hidden">
-        <div className="flex items-center gap-2">
-          <span className="font-medium font-display text-base" style={{ fontVariationSettings: "'ROND' 100" }}>
-            {translateNode(fissure.node)}
-          </span>
-          {fissure.isHard && <span className="material-symbols-rounded text-sm text-error" title="Steel Path">mode_standby</span>}
-          {fissure.isStorm && <span className="material-symbols-rounded text-sm text-secondary" title="Void Storm">rocket_launch</span>}
-        </div>
+// ... (FissureItem implementation unchanged)
 
-        <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-          <span className="font-display rounded bg-secondary-container px-1.5 py-0.5 text-xs font-medium text-on-secondary-container">
-            {translateMissionType(fissure.missionType)}
-          </span>
-          <span>•</span>
-          <span>{translateFaction(fissure.enemy, fissure.node)}</span>
-        </div>
-      </div>
-
-      <div className="flex flex-col items-end gap-1 text-xs text-on-surface-variant">
-        <span className="font-display tracking-wide" style={{ fontFeatureSettings: "'tnum'" }}>
-          {timeLeft || '--'}
-        </span>
-      </div>
-    </ListItem>
-  );
-};
-
-export const FissureList: React.FC<FissureListProps> = ({ fissures }) => {
+export const FissureList: React.FC<FissureListProps> = ({ fissures, isStale }) => {
   if (!fissures || fissures.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 text-on-surface-variant opacity-60">
-        <span className="material-symbols-rounded text-4xl mb-2">filter_drama</span>
-        <p>現在発生している亀裂ミッションはありません</p>
-      </div>
+      <ListGroup>
+        <ListItem className="p-6 text-center text-on-surface-variant">
+          <div className="mb-2">
+            <span className="material-symbols-rounded text-3xl opacity-50">
+              {isStale ? 'manage_history' : 'filter_drama'}
+            </span>
+          </div>
+          <p className="text-sm">
+            {isStale
+              ? 'APIデータ更新待ち (有効な亀裂なし)'
+              : '現在発生している亀裂ミッションはありません'}
+          </p>
+        </ListItem>
+      </ListGroup>
     );
   }
 

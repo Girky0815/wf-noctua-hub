@@ -29,12 +29,25 @@ export const FissuresPage: React.FC = () => {
   // Filter Logic
   const filteredFissures = React.useMemo(() => {
     if (!worldState?.fissures) return [];
+
+    // 現在時刻
+    const now = Date.now();
+
     return worldState.fissures.filter(f => {
+      // 期限切れを除外
+      if (new Date(f.expiry).getTime() <= now) return false;
+
       if (filterMode === 'hard') return f.isHard;
       if (filterMode === 'storm') return f.isStorm;
       return !f.isHard && !f.isStorm; // Normal
     });
-  }, [worldState?.fissures, filterMode]);
+  }, [worldState?.fissures, filterMode]); // NOTE: real-time filtering might require a timer or just rely on re-renders. Since useWarframeData updates every 30s and components re-render, this should be fine for "rough" filtering.
+
+  const isStale = React.useMemo(() => {
+    if (!worldState?.timestamp) return false;
+    const diff = Date.now() - new Date(worldState.timestamp).getTime();
+    return diff > 30 * 60 * 1000;
+  }, [worldState?.timestamp]);
 
   const toggleFilter = (mode: 'hard' | 'storm') => {
     setFilterMode(current => current === mode ? 'normal' : mode);
@@ -95,7 +108,7 @@ export const FissuresPage: React.FC = () => {
         {/* Stale Data Warning */}
         {worldState && <StaleDataWarning timestamp={worldState.timestamp} />}
 
-        <FissureList fissures={filteredFissures} />
+        <FissureList fissures={filteredFissures} isStale={isStale} />
       </div>
 
       <p className="mt-4 px-2 text-center text-xs text-on-surface-variant opacity-70">
