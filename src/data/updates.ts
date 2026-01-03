@@ -17,6 +17,14 @@ export const updates: UpdateLog[] = [
   // - **修正内容**: 説明
   //   },
   {
+    version: '1.1.3',
+    date: '2026-01-04',
+    content: `
+## 修正
+- **PWA設定の調整**: 起動URLを相対パスに変更し、GitHub Pages環境での動作安定性を向上させました。
+    `.trim(),
+  },
+  {
     version: '1.1.2',
     date: '2026-01-04',
     content: `
