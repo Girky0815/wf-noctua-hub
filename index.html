@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Noctua Hub</title>
   <script type="text/javascript">
@@ -21,6 +21,38 @@
         );
       }
     }(window.location))
+  </script>
+  <script type="text/javascript">
+      // Theme Initialization (Prevent FOUC)
+      (function () {
+        try {
+          var theme = localStorage.getItem('noctua-hub-theme') || 'light';
+          var root = document.documentElement;
+
+          // Reset classes
+          root.classList.remove('light', 'dark', 'black');
+
+          // Apply classes
+          if (theme === 'black') {
+            root.classList.add('dark', 'black');
+          } else {
+            root.classList.add(theme);
+          }
+
+          // Set initial theme color
+          var themeColor = '#F6FAF6'; // light
+          if (theme === 'dark') themeColor = '#0B0F0D';
+          if (theme === 'black') themeColor = '#000000';
+
+          // We can't querySelector existing meta here as it might not be parsed yet if distinct, 
+          // but we can create/append or update if it exists. 
+          // Actually, creating a new one is safest in head before body.
+          var meta = document.createElement('meta');
+          meta.name = "theme-color";
+          meta.content = themeColor;
+          document.head.appendChild(meta);
+        } catch (e) { console.error('Theme init failed', e); }
+      })();
   </script>
 </head>
 

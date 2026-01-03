@@ -164,3 +164,28 @@
     font-variation-settings: 'ROND' 100;
   }
 }
+
+/* Material Symbols Layout Stability (Prevent FOUT/FOIT layout shifts) */
+.material-symbols-rounded {
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  line-height: 1;
+  /* Enforce square rendering to prevent text spill */
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  /* Better vertical alignment */
+  vertical-align: bottom;
+  
+  /* Prevent selection */
+  -webkit-user-select: none;
+  user-select: none;
+  
+  /* Rendering opts */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+}
