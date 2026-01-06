@@ -64,7 +64,7 @@ export const FissuresPage: React.FC = () => {
   return (
     <div className="animate-fade-in pb-24">
       {/* Fixed Header */}
-      <div className={`fixed top-[76px] left-0 right-0 z-10 border-b transition-colors duration-300 shadow-sm
+      <div className={`fixed top-[78.5px] left-0 right-0 z-10 border-b transition-colors duration-300 shadow-sm
         ${isScrolled ? 'bg-surface-container-highest border-surface-container-highest' : 'bg-transparent border-transparent'}
       `}>
         <div className="mx-auto flex max-w-2xl items-center justify-between px-6 py-3">
