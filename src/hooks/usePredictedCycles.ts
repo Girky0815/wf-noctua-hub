@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { WorldState, Cycle, ZarimanCycle, DuviriCycle } from '../types/warframe';
-import { getEffectiveCycle } from '../utils/cycleCalculator';
+import { getCetusCycle, getVallisCycle, getCambionCycle, getEarthCycle } from '../utils/localCycles';
 
 // サイクル計算用ヘルパー
 const predictStandardCycle = (lastCycle: Cycle, now: number): Cycle | null => {
@@ -17,7 +17,6 @@ const predictStandardCycle = (lastCycle: Cycle, now: number): Cycle | null => {
   const cyclesPassed = Math.floor(elapsed / duration) + 1;
 
   // 新しい有効期限
-  // expiry + (duration * cyclesPassed)
   const newExpiryTime = expiry + (duration * cyclesPassed);
   const newActivationTime = newExpiryTime - duration;
 
@@ -30,7 +29,7 @@ const predictStandardCycle = (lastCycle: Cycle, now: number): Cycle | null => {
     activation: new Date(newActivationTime).toISOString(),
     state: newState,
     isDay: isDay,
-    timeLeft: '計算中...', // UI側で別途計算されるのでここはダミーでも良いが、型合わせ
+    timeLeft: '計算中...',
     shortString: `${newState === 'day' ? 'Day' : 'Night'} (予測)`
   };
 };
@@ -41,8 +40,6 @@ const predictZarimanCycle = (lastCycle: ZarimanCycle, now: number): ZarimanCycle
 
   const activation = new Date(lastCycle.activation).getTime();
   let duration = expiry - activation;
-
-  // durationが取得できない/異常な場合のフォールバック
   if (duration < 1000 * 60) duration = 2.5 * 60 * 60 * 1000; // Fallback 2.5h
 
   const elapsed = now - expiry;
@@ -51,7 +48,6 @@ const predictZarimanCycle = (lastCycle: ZarimanCycle, now: number): ZarimanCycle
   const newExpiryTime = expiry + (duration * cyclesPassed);
   const newActivationTime = newExpiryTime - duration;
 
-  // 占領勢力交代 (Corpus <-> Grineer)
   const isEven = cyclesPassed % 2 === 0;
   const isCorpus = isEven ? lastCycle.isCorpus : !lastCycle.isCorpus;
   const state = isCorpus ? 'Corpus' : 'Grineer';
@@ -82,12 +78,10 @@ const predictDuviriCycle = (lastCycle: DuviriCycle, now: number): DuviriCycle | 
   const newExpiryTime = expiry + (duration * cyclesPassed);
   const newActivationTime = newExpiryTime - duration;
 
-  // ムード遷移
   const currentMoodIndex = DUVIRI_MOODS.indexOf(lastCycle.state.toLowerCase());
-  if (currentMoodIndex === -1) return null; // 未知のムード
+  if (currentMoodIndex === -1) return null;
 
   const nextMoodIndex = (currentMoodIndex + cyclesPassed) % DUVIRI_MOODS.length;
-  // 先頭大文字化
   const nextMood = DUVIRI_MOODS[nextMoodIndex].charAt(0).toUpperCase() + DUVIRI_MOODS[nextMoodIndex].slice(1);
 
   return {
@@ -95,7 +89,7 @@ const predictDuviriCycle = (lastCycle: DuviriCycle, now: number): DuviriCycle | 
     expiry: new Date(newExpiryTime).toISOString(),
     activation: new Date(newActivationTime).toISOString(),
     state: nextMood,
-    choices: lastCycle.choices // 予測ではChoices(武器候補)は変えられないのでそのまま維持（API復旧待ち）
+    choices: lastCycle.choices
   };
 };
 
@@ -117,23 +111,52 @@ export const usePredictedCycles = (worldState: WorldState | null | undefined) =>
     const updateCycles = () => {
       const now = Date.now();
 
-      // Cetus/Vallis/Cambion: 期限切れの場合のみ getEffectiveCycle の結果を予測値として扱う
-      const isCetusStale = new Date(worldState.cetusCycle.expiry).getTime() <= now;
-      const isVallisStale = new Date(worldState.vallisCycle.expiry).getTime() <= now;
-      const isCambionStale = new Date(worldState.cambionCycle.expiry).getTime() <= now;
+      // ローカル計算 (Local Calculation override)
+      // APIデータの値ではなく、ローカル計算値を優先して使用する
+      const localCetus = getCetusCycle(now);
+      const localVallis = getVallisCycle(now);
+      const localCambion = getCambionCycle(now);
+      const localEarth = getEarthCycle(now);
+
+      // マージ: APIデータのメタ情報(idなど)をベースに、ローカル計算結果(expiry, state)を上書き
+      // Note: APIがダウンしている場合でも worldState がキャッシュにあれば計算できる
+      // worldState が null の場合はこのフック自体が動かない
+
+      const mergedCetus: Cycle = {
+        ...worldState.cetusCycle,
+        ...localCetus,
+        activation: new Date(new Date(localCetus.expiry!).getTime() - (localCetus.isDay ? 100 * 60 * 1000 : 50 * 60 * 1000)).toISOString() // activation 逆算
+      } as Cycle;
+
+      const mergedVallis: Cycle = {
+        ...worldState.vallisCycle,
+        ...localVallis,
+        activation: new Date(new Date(localVallis.expiry!).getTime() - (localVallis.state === 'warm' ? 400 * 1000 : 1200 * 1000)).toISOString()
+      } as Cycle;
+
+      const mergedCambion: Cycle = {
+        ...worldState.cambionCycle,
+        ...localCambion,
+        activation: new Date(new Date(localCambion.expiry!).getTime() - (localCambion.state === 'fass' ? 100 * 60 * 1000 : 50 * 60 * 1000)).toISOString()
+      } as Cycle;
+
+
+
 
       setPredictedState({
         earth: predictStandardCycle(worldState.earthCycle, now),
-        cetus: isCetusStale ? (getEffectiveCycle(worldState.cetusCycle, 'cetus') || null) : null,
-        vallis: isVallisStale ? (getEffectiveCycle(worldState.vallisCycle, 'vallis') || null) : null,
-        cambion: isCambionStale ? (getEffectiveCycle(worldState.cambionCycle, 'cambion') || null) : null,
+        cetus: mergedCetus,
+        vallis: mergedVallis,
+        cambion: mergedCambion,
+        // Zariman, Duviri は複雑なため既存の予測ロジック(期限切れ時のみ)を維持
+        // 必要に応じてこれらもEpochベースに移行できるが、まずは主要3エリアを修正
         zariman: predictZarimanCycle(worldState.zarimanCycle, now),
         duviri: predictDuviriCycle(worldState.duviriCycle, now),
       });
     };
 
     updateCycles();
-    const interval = setInterval(updateCycles, 1000); // 毎秒チェックして更新即時反映
+    const interval = setInterval(updateCycles, 1000);
 
     return () => clearInterval(interval);
   }, [worldState]);
