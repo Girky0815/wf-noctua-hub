@@ -24,6 +24,7 @@ export const ListItem: React.FC<ListItemProps> = ({ children, className = '', on
       rounded-[4px] first:rounded-t-3xl last:rounded-b-3xl
       ${onClick ? 'cursor-pointer hover:bg-surface-container-high' : ''}
       ${className}
+      overflow-hidden
     `}
   >
     {children}

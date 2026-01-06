@@ -122,7 +122,12 @@ export const SettingsPage: React.FC = () => {
             icon="code"
             title="API レスポンス(JSON)"
             subtitle="APIから取得した生データを見る"
-            trailing={<span className="material-symbols-rounded text-on-surface-variant">terminal chevron_right</span>}
+            trailing={
+              <div className="flex items-center gap-1 text-on-surface-variant">
+                <span className="material-symbols-rounded">terminal</span>
+                <span className="material-symbols-rounded">chevron_right</span>
+              </div>
+            }
             onClick={() => setShowRawData(true)}
           />
         </ListGroup>
