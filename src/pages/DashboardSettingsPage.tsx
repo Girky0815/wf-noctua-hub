@@ -11,6 +11,7 @@ const WIDGET_NAMES: Record<string, string> = {
   invasions: '侵略ミッション',
   sortie: '今日のソーティ',
   archonHunt: 'アルコン討伐戦',
+  archimedea: '深淵/次元アルキメデア',
   resurgence: 'Prime Resurgence',
   voidTrader: "Baro Ki'Teer",
 };

@@ -9,6 +9,7 @@ import { InvasionList } from './InvasionList';
 import { SortieCard } from './SortieCard';
 import { VoidTraderCard } from './VoidTraderCard';
 import { ResurgenceCard } from './ResurgenceCard';
+import { ArchimedeaCard } from './ArchimedeaCard';
 import { useCountdown } from '../../hooks/useCountdown';
 import { getEffectiveCycle } from '../../utils/cycleCalculator';
 import { SectionTitle } from '../ui/SectionTitle';
@@ -37,11 +38,14 @@ const StatusBadge: React.FC<{
 const ResurgenceTimerBadge: React.FC<{ expiry: string }> = ({ expiry }) => {
   const timeLeft = useCountdown(expiry);
 
-  const isUrgent = React.useMemo(() => {
+  // useMemo removed to allow recalculation on re-renders (triggered by useCountdown)
+  // as Date.now() changes.
+  const isUrgent = (() => {
     if (!expiry) return false;
+    // eslint-disable-next-line react-hooks/purity
     const diff = new Date(expiry).getTime() - Date.now();
     return diff > 0 && diff < 24 * 60 * 60 * 1000;
-  }, [expiry]);
+  })();
 
   return <StatusBadge label={`あと ${timeLeft}`} variant={isUrgent ? 'error' : 'secondary'} />;
 };
@@ -84,9 +88,10 @@ export const StatusPage: React.FC = () => {
     );
   }
 
-  // ソーティ/アルコン情報の準備
+  // ソーティ/アルコン/アルキメデア情報の準備
   const sortie = worldState.sorties?.[0] || worldState.sortie;
   const archonHunt = worldState.archonHunt;
+  const archimedeas = worldState.archimedeas;
 
   // ウィジェットのレンダリング関数
   const renderWidget = (id: string) => {
@@ -151,6 +156,25 @@ export const StatusPage: React.FC = () => {
             <div>
               <SortieCard sortie={archonHunt} />
             </div>
+          </div>
+        ) : null;
+      case 'archimedea':
+        return archimedeas && archimedeas.length > 0 ? (
+          <div key={id}>
+            {archimedeas.map(a => (
+              <div key={a.id} className="mb-6">
+                {/* ArchimedeaCard internally handles title/header because of the switch. 
+                     However, if we want consistency, we might want a SectionTitle here.
+                     But ArchimedeaCard has a title inside.
+                     Let's leave it as is, or separate Title? 
+                     Archimedea is split into Deep and Dimensional.
+                     Each Archimedea object is one entry.
+                     ArchimedeaCard renders a list group.
+                     It seems fine to just render the card.
+                 */}
+                <ArchimedeaCard archimedea={a} />
+              </div>
+            ))}
           </div>
         ) : null;
       case 'resurgence':

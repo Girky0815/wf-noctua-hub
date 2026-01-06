@@ -35,7 +35,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 bottom-0 z-50 w-full md:w-[480px] bg-surface-container shadow-xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed top-0 left-0 bottom-0 z-50 w-full md:w-120 bg-surface-container shadow-xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
       >
         <div className="flex flex-col h-full overflow-y-auto pb-safe pt-safe">
@@ -85,15 +85,23 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
               </ListGroup>
             </div>
 
-            {/* 上級者向け (Placeholder) */}
+            {/* 上級者向け */}
             <div>
-              <SectionTitle title="上級者向け (準備中)" />
+              <SectionTitle title="上級者向け" />
               <ListGroup>
                 <ListTile
-                  icon="lock"
-                  title="鋼の道のり / アルキメデア"
-                  subtitle="詳細情報は今後追加予定です"
-                  className="opacity-60"
+                  icon="science"
+                  title="アルキメデア"
+                  subtitle="深淵 / 次元アルキメデア"
+                  trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+                  onClick={() => handleNavigation('/archimedea')}
+                />
+                <ListTile
+                  icon="diamond"
+                  title="アルコン討伐戦"
+                  subtitle="対ナルメル・アルコン戦"
+                  trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+                  onClick={() => handleNavigation('/archon-hunt')}
                 />
               </ListGroup>
             </div>

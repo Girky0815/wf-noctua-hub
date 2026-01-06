@@ -4,9 +4,10 @@ interface TooltipProps {
   children: React.ReactNode; // Trigger element
   title: string;
   content: string;
+  placement?: 'left' | 'right';
 }
 
-export const Tooltip: React.FC<TooltipProps> = ({ children, title, content }) => {
+export const Tooltip: React.FC<TooltipProps> = ({ children, title, content, placement = 'right' }) => {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +27,10 @@ export const Tooltip: React.FC<TooltipProps> = ({ children, title, content }) =>
     };
   }, [isVisible]);
 
+  const placementClasses = placement === 'left'
+    ? 'left-0 origin-top-left'
+    : 'right-0 origin-top-right';
+
   return (
     <div className="relative inline-flex" ref={containerRef}>
       <div
@@ -37,7 +42,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ children, title, content }) =>
 
       {isVisible && (
         <div
-          className="absolute right-0 top-full mt-2 z-50 w-64 rounded-2xl p-4 shadow-lg ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 origin-top-right"
+          className={`absolute top-full mt-2 z-50 w-64 rounded-2xl p-4 shadow-lg ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 ${placementClasses}`}
           style={{
             backgroundColor: 'var(--error-container)',
             color: 'var(--on-error-container)'
