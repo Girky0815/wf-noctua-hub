@@ -175,7 +175,7 @@
   /* Enforce square rendering to prevent text spill */
   width: 1em;
   height: 1em;
-  overflow: hidden;
+  /* overflow: hidden; Removed to prevent clipping on right edge */
   /* Better vertical alignment */
   vertical-align: bottom;
   
