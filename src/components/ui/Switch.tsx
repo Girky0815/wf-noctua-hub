@@ -35,9 +35,9 @@ export const Switch: React.FC<SwitchProps> = ({ checked, onChange, disabled = fa
           className="material-symbols-rounded text-[16px] transition-opacity duration-200"
           style={{
             color: checked ? 'var(--primary)' : 'var(--surface-container-highest)',
-            fontWeight: 700, // クラスではなくスタイルで指定して .font-bold の上書きを回避
+            fontWeight: 400, // クラスではなくスタイルで指定して .font-bold の上書きを回避
             fontFamily: 'Material Symbols Rounded', // 明示的に指定
-            fontVariationSettings: "'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 20"
+            fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20"
           }}
         >
           {checked ? 'check' : 'close'}
