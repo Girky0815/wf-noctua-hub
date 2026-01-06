@@ -19,7 +19,6 @@ export const StaleDataWarning: React.FC<StaleDataWarningProps> = ({ timestamp })
       setDiffMinutes(diff);
 
       // 次の「10秒区切り」までの時間を計算してセット (時計合わせ)
-      // 例: 12:00:03 -> 7秒後に実行 -> 12:00:10
       const delay = 10000 - (now % 10000);
       timeoutId = setTimeout(calculateDiff, delay);
     };
@@ -39,7 +38,13 @@ export const StaleDataWarning: React.FC<StaleDataWarningProps> = ({ timestamp })
   const timeString = `${hours}:${minutes}`;
 
   return (
-    <div className="flex items-start gap-3 rounded-2xl bg-error-container p-4 text-on-error-container animate-fade-in mb-6">
+    <div
+      className="flex items-start gap-3 rounded-2xl p-4 animate-fade-in mb-6"
+      style={{
+        backgroundColor: 'var(--error-container)',
+        color: 'var(--on-error-container)'
+      }}
+    >
       <span className="material-symbols-rounded mt-0.5">warning</span>
       <div className="flex flex-col text-sm">
         <span className="font-bold text-lg mb-1">APIデータ更新なし ({diffMinutes}分)</span>
