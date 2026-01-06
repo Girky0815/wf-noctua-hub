@@ -16,6 +16,45 @@ export interface WorldState {
   sortie?: Sortie; // Fallback for singular
   archonHunt: Sortie;
   vaultTrader: VaultTrader;
+  archimedeas: Archimedea[];
+}
+
+export interface Archimedea {
+  id: string;
+  activation: string;
+  expiry: string;
+  type: string; // "C T_ L A B" | "C T_ H E X"
+  typeKey: string;
+  missions: ArchimedeaMission[];
+  personalModifiers: ArchimedeaModifier[];
+}
+
+export interface ArchimedeaMission {
+  faction: string;
+  factionKey: string;
+  missionType: string;
+  missionTypeKey: string;
+  diviation: ArchimedeaDeviation;
+  risks: ArchimedeaRisk[];
+}
+
+export interface ArchimedeaDeviation {
+  key: string;
+  name: string;
+  description: string;
+}
+
+export interface ArchimedeaRisk {
+  key: string;
+  name: string;
+  description: string;
+  isHard: boolean;
+}
+
+export interface ArchimedeaModifier {
+  key: string;
+  name: string;
+  description: string;
 }
 
 export interface ZarimanCycle {

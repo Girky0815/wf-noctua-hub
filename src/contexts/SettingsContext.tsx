@@ -17,9 +17,10 @@ const defaultDashboardConfig: DashboardWidget[] = [
   { id: 'alerts', visible: true, order: 1 },
   { id: 'invasions', visible: true, order: 2 },
   { id: 'sortie', visible: true, order: 3 },
-  { id: 'archonHunt', visible: true, order: 4 },
-  { id: 'resurgence', visible: true, order: 5 },
-  { id: 'voidTrader', visible: true, order: 6 },
+  { id: 'archonHunt', visible: false, order: 4 },
+  { id: 'archimedea', visible: false, order: 5 }, // New
+  { id: 'resurgence', visible: true, order: 6 },
+  { id: 'voidTrader', visible: true, order: 7 },
 ];
 
 const defaultSettings: Settings = {
@@ -46,6 +47,16 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
+
+        // Migration: Ensure new widgets are added to existing config
+        if (parsed.dashboardConfig) {
+          const existingIds = new Set(parsed.dashboardConfig.map((w: DashboardWidget) => w.id));
+          const missingWidgets = defaultDashboardConfig.filter(w => !existingIds.has(w.id));
+          if (missingWidgets.length > 0) {
+            parsed.dashboardConfig = [...parsed.dashboardConfig, ...missingWidgets];
+          }
+        }
+
         // Merge to ensure new settings (like lastSeenVersion) are present
         return { ...defaultSettings, ...parsed };
       } catch (e) {

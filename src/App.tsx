@@ -8,6 +8,8 @@ import { RelicSimulatorPage } from './pages/RelicSimulatorPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { DashboardSettingsPage } from './pages/DashboardSettingsPage';
 import { LinksPage } from './pages/LinksPage';
+import { ArchimedeaPage } from './pages/ArchimedeaPage';
+import { ArchonHuntPage } from './pages/ArchonHuntPage';
 import { StatusPage } from './components/status/StatusPage';
 import { Clock } from './components/Clock';
 import { CreditsPage } from './components/CreditsPage';
@@ -143,6 +145,8 @@ const AppContent = () => {
             <Route path="/" element={<StatusPage />} />
             <Route path="/fissures" element={<FissuresPage />} />
             <Route path="/relics" element={<RelicSimulatorPage />} />
+            <Route path="/archimedea" element={<ArchimedeaPage />} />
+            <Route path="/archon-hunt" element={<ArchonHuntPage />} />
             {/* /menu route removed */}
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/settings/dashboard" element={<DashboardSettingsPage />} />
