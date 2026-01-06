@@ -17,6 +17,16 @@ export const updates: UpdateLog[] = [
   // - **修正内容**: 説明
   //   },
   {
+    version: '1.2.3',
+    date: '2026-01-06',
+    content: `
+## 修正
+- 内部ツール(Vite, TailwindCSS)を最新バージョンへ更新
+- UI表示不具合の修正
+  - リストの左端のアイコンがわずかに見切れていた問題を修正
+    `.trim(),
+  },
+  {
     version: '1.2.2',
     date: '2026-01-06',
     content: `
