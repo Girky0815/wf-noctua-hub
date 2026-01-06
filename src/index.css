@@ -1,9 +1,7 @@
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,GRAD,ROND@6..144,-10..0,25..151,1..1000,0..100,0..100&family=Noto+Sans+JP:wght@100..900&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Local Font: GenJyuuGothicX (Subset) - Fallback for ROND 100 */
 @font-face {
@@ -155,7 +153,11 @@
   }
 
   body {
-    @apply bg-background text-on-background font-sans antialiased;
+    background-color: var(--background);
+    color: var(--on-background);
+    font-family: theme('fontFamily.sans');
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Apply ROND 100 and GenJyuuGothicX for bold text/headings */
