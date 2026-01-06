@@ -3,6 +3,61 @@
 
 @import "tailwindcss";
 
+@theme {
+  /* Fonts */
+  --font-sans: 'Google Sans Flex', 'Noto Sans JP', 'GenJyuuGothicX', sans-serif;
+  --font-display: 'Google Sans Flex', 'GenJyuuGothicX', 'Noto Sans JP', sans-serif;
+  --font-jp-fallback: 'Noto Sans JP', sans-serif;
+
+  /* Border Radius */
+  --radius-3xl: 28px;
+
+  /* Colors */
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-inverse-primary: var(--inverse-primary);
+
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+
+  --color-tertiary: var(--tertiary);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary-container: var(--on-tertiary-container);
+
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+  
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-surface-variant: var(--surface-variant);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+
+  /* Surface Containers (M3E) */
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-scrim: var(--scrim);
+}
+
 /* Local Font: GenJyuuGothicX (Subset) - Fallback for ROND 100 */
 @font-face {
   font-family: 'GenJyuuGothicX';
