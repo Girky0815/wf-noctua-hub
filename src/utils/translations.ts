@@ -429,8 +429,8 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   // --- 次元アルキメデア 独自リスク ---
   'Ballonfest': { name: 'バルーンフェスト', desc: 'スカルドラ・ハービンガーの数が増え、攻撃と移動速度が上昇する。' },
   'Artillery Beacon': { name: '砲兵ビーコン', desc: 'スカルドラ兵を倒すと砲兵ビーコンをドロップし、辺りに砲撃を降らせる。' },
-  'Rotten Flesh': { name: '腐敗した肉体', desc: 'テックロットが常時ダメージを受け、死亡時にガス爆発を起こす。(全ての敵が死亡時にガスダメージエリア(0.25秒毎ダメージ)を残す)' },
-  'Competitiveness': { name: '競争心', desc: 'Amir/Aoi戦のペナルティ(25秒毎)がランダムに発生する。(エネルギーオーブ無効化などに注意)' },
+  'Rotten Flesh': { name: '腐敗した肉体', desc: 'テックロットはエフェルボンに浸されており、時間経過によりダメージを受ける。スカルドラ含む全ての敵は死亡時に爆発しガスダメージを与えるダメージエリア(0.25秒ごとにダメージを受ける)を残す。' },
+  'Competitiveness': { name: '競争心', desc: 'フェイスオフミッションのペナルティが25秒ごとにランダム発生(あらゆる手法でのエネルギー回復が禁止される「エネルギーオーブ無効化」に注意)。' },
   'Miasmite Swarm': { name: 'ミアズマイト・スウォーム', desc: 'テックロット ミアズマイトがミッション中湧き出る。' },
   'Dense Fog': { name: '濃霧', desc: 'エフェルボンガスがマップを覆う。敵からドロップするフィルターで一時的救済を得られる。' },
   'It\'s Alive': { name: 'イッツアライブ', desc: '地下エリアでプレイヤーが動きを止めると増殖物たちが襲い掛かる。' },
@@ -463,8 +463,8 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Abbreviated Abilities': { name: 'アビリティ短縮', desc: 'アビリティ持続時間が50%減少。(MOD等で計算した最終値に乗算)' },
   'Swooning': { name: '失神消耗', desc: 'ヘルスダメージを受けると、ヒット毎に最大エネルギーの5%が消費される。' },
   'Transference Distortion': { name: '転移障害', desc: 'オペレーター/漂流者への転移不可。(Last Gaspやネクロメカ搭乗も不可。転移不要なフォーカス受動効果は有効)' },
-  'Framecurse Syndrome': { name: 'フレームカース・シンドローム', desc: 'アビリティ発動時にヘルスへ直接50ダメージを受ける。(シールド無視)' },
-  'Knifestep Syndrome': { name: 'ナイフステップ・シンドローム', desc: '移動中、速度に比例してヘルスが減少する。(ジャンプ中は減少停止)' },
+  'Framecurse syndrome': { name: 'フレームカース・シンドローム', desc: 'アビリティ発動時にヘルス/オーバーガードへ直接50ダメージを受ける。(シールド無視)' },
+  'Knifestep Syndrome': { name: 'ナイフステップ・シンドローム', desc: '移動中、速度に比例してヘルス/オーバーガードが減少する。(ジャンプ中は減少停止)' },
   'Energy Starved': { name: 'エネルギー枯渇', desc: '10メートル以内の敵一体につき、毎秒2エネルギーを失う。' },
   'Ammo Scarcity': { name: '弾薬不足(Scarcity)', desc: '所持弾薬が毎秒約5%消失する。(バッテリー武器はリチャージ速度低下)' },
   'Exposure Curse': { name: '摘発の呪い', desc: 'シールドが破壊されると、無限に持続するステータス効果を受ける。' }, // Wiki: 露出の呪い (内容要確認: シールド消失?) -> "摘発"の方がニュアンス近いか? 原文Exposure
