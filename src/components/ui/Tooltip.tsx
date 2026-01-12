@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 
 interface TooltipProps {
   children: React.ReactNode; // Trigger element
@@ -29,44 +29,43 @@ export const Tooltip: React.FC<TooltipProps> = ({ children, title, content, plac
   }, [isVisible]);
 
   // Adjust position to prevent overflow
-  const [adjustedStyle, setAdjustedStyle] = useState<React.CSSProperties>({});
+  // Instead of complex transforms, we'll determine "effective placement" (left or right aligned)
+  const [effectivePlacement, setEffectivePlacement] = useState<'left' | 'right'>(placement);
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (isVisible && tooltipRef.current && containerRef.current) {
       const tooltip = tooltipRef.current;
       const rect = tooltip.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
-      const styles: React.CSSProperties = {};
 
-      // Reset transforms first to get accurate measurements if needed, 
-      // but here we just check current rect vs viewport
+      // Reset to default placement first to measure?
+      // Actually, if we are 'left' (left-0), we check right overflow.
+      // If we are 'right' (right-0), we check left overflow.
 
-      let offsetX = 0;
-
-      // Check right overflow
-      if (rect.right > viewportWidth - 16) { // 16px buffer
-        offsetX = (viewportWidth - 16) - rect.right;
+      if (placement === 'left') {
+        // Aligned to left edge. Check if right edge overflows.
+        if (rect.right > viewportWidth - 16) {
+          // Overflowing right -> Flip to Right aligned (expands to left)
+          setEffectivePlacement('right');
+        } else {
+          setEffectivePlacement('left');
+        }
+      } else {
+        // Aligned to right edge. Check if left edge overflows (goes off-screen left).
+        if (rect.left < 16) {
+          // Overflowing left -> Flip to Left aligned (expands to right)
+          setEffectivePlacement('left');
+        } else {
+          setEffectivePlacement('right');
+        }
       }
-
-      // Check left overflow
-      if (rect.left < 16) { // 16px buffer
-        offsetX = 16 - rect.left;
-      }
-
-      if (offsetX !== 0) {
-        // Apply correction respecting the original placement
-        // Since we can't easily change the class-based transform, we use margin-left
-        // or specifically transform
-        styles.transform = `translateX(${offsetX}px)`;
-      }
-
-      setAdjustedStyle(styles);
     } else {
-      setAdjustedStyle({});
+      // Reset when hidden
+      setEffectivePlacement(placement);
     }
-  }, [isVisible]);
+  }, [isVisible, placement]);
 
-  const placementClasses = placement === 'left'
+  const placementClasses = effectivePlacement === 'left'
     ? 'left-0 origin-top-left'
     : 'right-0 origin-top-right';
 
@@ -82,11 +81,10 @@ export const Tooltip: React.FC<TooltipProps> = ({ children, title, content, plac
       {isVisible && (
         <div
           ref={tooltipRef}
-          className={`absolute top-full mt-2 z-50 w-64 rounded-2xl p-4 shadow-lg ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 ${placementClasses}`}
+          className={`absolute top-full mt-2 z-50 w-64 rounded-2xl p-4 shadow-lg ring-1 ring-black/5 animate-in fade-in duration-200 ${placementClasses}`}
           style={{
             backgroundColor: 'var(--error-container)',
             color: 'var(--on-error-container)',
-            ...adjustedStyle
           }}
         >
           <h3 className="mb-1 text-lg font-bold font-display" style={{ color: 'inherit' }}>
