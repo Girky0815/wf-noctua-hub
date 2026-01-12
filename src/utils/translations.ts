@@ -220,7 +220,7 @@ export const sortieModifiers: Record<string, string> = {
 
   // 基本的なmodifier (プレフィックスなし、またはその他)
   'Augmented Enemy Armor': '敵アーマー増強',
-  'Augmented Enemy Shields': '敵シールド増強',
+  'Enhanced Enemy Shields': '敵シールド増強',
   'Eximus Stronghold': 'エクシマスの要塞',
 
   // 武器制限 (Weapon Restriction)
@@ -277,7 +277,7 @@ export const sortieModifierDescriptions: Record<string, string> = {
 
   // 強化
   'Augmented Enemy Armor': '敵の装甲値+300%。感染体に装甲値+100(除去不可)。<br>オロキンでは元グリニアのみ装甲値が増加する。',
-  'Augmented Enemy Shields': '敵勢力コーパスのみ。敵のシールド+300%。',
+  'Enhanced Enemy Shields': '敵勢力コーパスのみ。敵のシールド+300%。',
   'Eximus Stronghold': 'エクシマスユニットが多く出現する。',
 
   // 物理/属性
