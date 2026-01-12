@@ -58,26 +58,54 @@ export const StatusPage: React.FC = () => {
   const predicted = usePredictedCycles(worldState);
 
   if (isError) {
-    return (
-      <div className="flex h-full items-center justify-center p-8">
-        <div className="flex items-start gap-3 rounded-2xl bg-error-container p-6 text-on-error-container max-w-2xl w-full">
-          <span className="material-symbols-rounded mt-1 text-2xl">error</span>
-          <div className="flex flex-col">
-            <span className="font-bold text-xl mb-2">API がダウンしています!</span>
-            <span className="opacity-90 leading-relaxed">
-              Warframe Status API (<code>api.warframestat.us</code>) との通信に失敗しました。<br />
-              現在 API サーバーがダウンしているか、メンテナンス中の可能性があります。<br />
-              <br />
-              <strong>対応策:</strong>
-              <ul className="list-disc list-inside ml-2 mt-1">
-                <li>しばらく時間を置いてからページを再読み込みしてください</li>
-                <li>APIのサーバーステータスを確認してください</li>
-              </ul>
-            </span>
+    // Determine error type
+    const status = isError.status;
+
+    if (status) {
+      // API Error (404, 502, etc.)
+      return (
+        <div className="flex h-full items-center justify-center p-8">
+          <div className="flex items-start gap-3 rounded-2xl bg-error-container p-6 text-on-error-container max-w-2xl w-full">
+            <span className="material-symbols-rounded mt-1 text-2xl">dns</span>
+            <div className="flex flex-col">
+              <span className="font-bold text-xl mb-2">API がダウンしています! ({status})</span>
+              <span className="opacity-90 leading-relaxed">
+                Warframe Status API がエラーを返しました。<br />
+                現在サーバーがダウンしているか、メンテナンス中の可能性があります。<br />
+                <br />
+                <strong>対応策:</strong>
+                <ul className="list-disc list-inside ml-2 mt-1">
+                  <li>しばらく時間を置いてからページを再読み込みしてください</li>
+                  <li>APIのサーバーステータスを確認してください</li>
+                </ul>
+              </span>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      // Network Error (No Internet, DNS failure, etc.)
+      return (
+        <div className="flex h-full items-center justify-center p-8">
+          <div className="flex items-start gap-3 rounded-2xl bg-surface-container-highest p-6 text-on-surface max-w-2xl w-full border border-outline/20">
+            <span className="material-symbols-rounded mt-1 text-2xl">wifi_off</span>
+            <div className="flex flex-col">
+              <span className="font-bold text-xl mb-2">通信エラー</span>
+              <span className="opacity-90 leading-relaxed">
+                API サーバーに接続できませんでした。<br />
+                インターネット接続を確認してください。<br />
+                <br />
+                <strong>確認事項:</strong>
+                <ul className="list-disc list-inside ml-2 mt-1">
+                  <li>Wi-Fi やモバイルデータ通信が有効になっているか</li>
+                  <li>機内モードになっていないか</li>
+                </ul>
+              </span>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 
   if (isLoading || !worldState) {

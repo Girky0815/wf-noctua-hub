@@ -29,6 +29,7 @@ export const OnboardingPage: React.FC = () => {
               <ul className="list-disc space-y-2 pl-4">
                 <li><span className="text-error">本アプリは Warframe 公式アプリではありません</span>。Digital Extremes Ltd. とは提携・関係していません。</li>
                 <li>本アプリは完全無料・広告無しでご利用いただけます。</li>
+                <li>本アプリはユーザーデータなど一切の情報を収集・利用していません。</li>
                 <li>利用しているAPI の状況により、機能が一時的に利用できなくなる可能性があります<span className="text-error">(APIがダウンすると機能が使えません)</span>。</li>
                 <li>本アプリの使用によって生じたいかなる損害についても、作者は責任を負いません。</li>
                 <li>本アプリの開発は Gemini 3 Pro + Google Antigravity を用いて開発しています。<br />アプリの動作は作者も一通り確認していますが、予期せぬバグが含まれる可能性があります。</li>
