@@ -378,7 +378,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Invulnerable Alchemy': { name: '無敵の錬金術', desc: '敵の10%が特定の属性バリア(アンフォールでのみ破壊可)を持つ。(バリア持ちは対応元素のオーラとマークが表示される)' },
   'Eximus Amphors': { name: 'エクシマスアンフォール', desc: 'アンフォールはエクシマスからのみドロップする。(バグでエクシマスが湧かなくなった場合、ホスト移行か未使用アンフォールの処分を推奨)' },
   'Eroding Senses': { name: '感覚麻痺', desc: 'オリクルとビトリウムが時間経過と共にダメージを受ける。必要なボスフェングリフを集めることでダメージが止まり微量の回復を行う。' },
-  'Glyph Inflation': { name: 'グリフインフレーション', desc: 'セキュリティシステムの起動には2倍のボスフェングリフが必要です。' },
+  'Glyph Inflation': { name: 'グリフインフレーション', desc: 'セキュリティシステムの起動には2倍のボスフェングリフが必要。' },
   'Glyph Trap': { name: 'グリフトラップ', desc: '一部のボスフェングリフが触れた者を250m先へテレポートさせる罠となる。ポータルは見つかった後45秒間残る。' },
   'Radioactive Decay': { name: '放射性衰弱', desc: '全ての敵が無敵化し、放射線状態異常が付与されている場合のみダメージを受ける。ミッション中Chyrinka Pillarがランダムに出現し放射線状態異常を付与する。' },
   'Barbed Glyphs': { name: 'バーブグリフ', desc: 'グリフ回収時に少量の火炎ダメージと状態異常を受ける。' },
@@ -388,7 +388,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Fragment Two': { name: 'フラグメント・ツー', desc: '最終決戦で2体のフラグメント体と対峙する。' },
   'Engorged Gruzzling': { name: '充血グラズリング', desc: '全グラズリングがエクシマスになる。' },
   'Unified Purpose': { name: '統一目的', desc: '敵が起動済みコンジットを標的にし、破壊可能になる。(コンジットには防衛対象としてヘルスが設定される)' },
-  'Double Demolisher': { name: 'ダブルデモリッシャー', desc: '2体のネクロメカデモリッシャーがコンジットを攻撃するが、ヘルスは低め。' }, // Wiki: Double Demolisher
+  'Double Trouble': { name: 'ダブルデモリッシャー', desc: '2体のネクロメカデモリッシャーがコンジットを攻撃するが、ヘルスは低め。' }, // Wiki: Double Demolisher
 
   // --- 次元アルキメデア (Temporal Archimedea) 偏差 (Deviations) ---
   'Cache Crash': { name: 'キャッシュクラッシュ', desc: '補給品貯蔵庫の自爆タイマー(3分)がミッション開始と同時に作動する。(解錠失敗時、クリアに必要なキル数が2倍に増加)' },
@@ -401,11 +401,11 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Growth Hormone': { name: '成長ホルモン', desc: 'レガサイトは世代ごとにより強力になる代わり、逃走が遅くなる。' },
   'Parallel Evolution': { name: '並行進化', desc: 'レガサイトが進化すると、マップ上の他の敵も新しいアビリティを得る。' },
   'Reinforcements': { name: '援軍', desc: '戦闘中、最初はスカルドラ、次にテックロットの援軍が登場する。' },
-  'Toxic Tank': { name: '毒タンク', desc: '戦車は毒のオーラをまとい、毒の軌跡を残し、攻撃は毒ダメージを与える。' },
-  'Thermian Plating': { name: 'サーミアンメッキ', desc: '戦車がサーミアンメッキを持ち、専用武器(Thermian RPG)でのみダメージを与えられる。(第2形態も同様。敵からRPGを奪って攻撃せよ)' },
+  'Tank Super Toxic': { name: '毒タンク', desc: '戦車は毒のオーラをまとい、毒の軌跡を残し、攻撃は毒ダメージを与える。' },
+  'Thermian Plating': { name: 'サーミアンメッキ', desc: '戦車がサーミアンメッキを持ち、専用武器(Thermian RPG)でのみダメージを与えられる(第2形態も同様。敵からRPGを奪って攻撃する必要がある)。' },
   'Noise Suppression': { name: 'ノイズ抑制', desc: 'Flareの上空にドローンが飛び、エフェルボンガスをまき散らす。' },
   'Miasmite Mash': { name: 'ミアズマイト・マッシュ', desc: '敵は倒されるとミアズマイトをドロップし、即座にFlareに襲い掛かる。' },
-  'Vamploc': { name: 'ヴァンプロック', desc: 'Flare周囲(10m)にフィールド発生。内部にテンノがいるとアビリティ阻害と引き換えにFlareを回復する。(不在時はFlareヘルスが減少)' },
+  'Vampire Rock': { name: 'ヴァンプロック', desc: 'Flareの周囲(10m)にフィールド発生。内部にテンノがいるとアビリティ阻害・エネルギー減少と引き換えにFlareを回復する(テンノ不在時はFlareのヘルスが減少)。' },
 
   // --- リスクレベル (Risks: Common & Deep/Temporal) ---
   'Hostile Regeneration': { name: '敵性再生', desc: '敵ヘルスが徐々に回復する。(5秒間ダメージを受けないと、毎秒最大ヘルスの10%を回復)' },
@@ -419,12 +419,12 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Postmortal Surges': { name: '死後の呪い', desc: '倒した敵がVoidエネルギーで爆発する。' },
   'Elemental Enhancement': { name: '属性強化', desc: '敵は+100%の属性ダメージを与え、属性ダメージに対する+85%の耐性を持つ。' },
   'Eximus Reinforcement': { name: 'エクシマスの増援', desc: '追加のエクシマスユニットが出現する。' },
-  'All or Nothing': { name: '乾坤一擲(けんこんいってき)', desc: '敵の与ダメージ-15%・被ダメージ+15%。代わりに移動・攻撃・発射速度が+15%上昇する。' }, // 仮
+  'Bold Venture': { name: '乾坤一擲(けんこんいってき)', desc: '敵の与ダメージ-15%・被ダメージ+15%。代わりに移動・攻撃・発射速度が+15%上昇する。' }, // 仮
   'Devil\'s Bargain': { name: '悪魔の取引', desc: '倒された敵の4m内にいる分隊メンバーは発射速度が25％上昇するが、弾薬効率が50％減少する。' },
   'Entanglement': { name: '絡み合い', desc: '倒された敵の4m内にいる分隊メンバーの移動速度とパルクール速度を減少する。' },
   'Commanding Calvarin': { name: '指揮機カルヴァリン', desc: 'ローグ・カルヴァリンが強化され、着弾時に爆発する弾丸を使用する。(オーバーガードとネクロメカに対して5倍のダメージ)' },
   'Explosive Potential': { name: '爆発的可能性', desc: 'シャフリング・フラグメントが、爆発するラプチャリング・フラグメントに置き換わる。' },
-  'The Pull of the Arcocanid': { name: 'いざなうアルコカニド', desc: 'ローグ・アルコカニドが突進攻撃を行うと、WARFRAMEを前方へ引き寄せる' },
+  'Alluring Arcocanids': { name: 'いざなうアルコカニド', desc: 'ローグ・アルコカニドが突進攻撃を行うと、WARFRAMEを前方へ引き寄せる' },
 
   // --- 次元アルキメデア 独自リスク ---
   'Ballonfest': { name: 'バルーンフェスト', desc: 'スカルドラ・ハービンガーの数が増え、攻撃と移動速度が上昇する。' },
@@ -432,12 +432,12 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Rotten Flesh': { name: '腐敗した肉体', desc: 'テックロットが常時ダメージを受け、死亡時にガス爆発を起こす。(全ての敵が死亡時にガスダメージエリア(0.25秒毎ダメージ)を残す)' },
   'Competitiveness': { name: '競争心', desc: 'Amir/Aoi戦のペナルティ(25秒毎)がランダムに発生する。(エネルギーオーブ無効化などに注意)' },
   'Miasmite Swarm': { name: 'ミアズマイト・スウォーム', desc: 'テックロット ミアズマイトがミッション中湧き出る。' },
-  'Thick Fog': { name: '濃霧', desc: 'エフェルボンガスがマップを覆う。敵からドロップするフィルターで一時的救済を得られる。' },
+  'Dense Fog': { name: '濃霧', desc: 'エフェルボンガスがマップを覆う。敵からドロップするフィルターで一時的救済を得られる。' },
   'It\'s Alive': { name: 'イッツアライブ', desc: '地下エリアでプレイヤーが動きを止めると増殖物たちが襲い掛かる。' },
   'Techrot Speedrun': { name: 'テックロット・スピードラン', desc: '全ての敵がテックロットに入れ替わり、移動速度が上昇する。' },
   'Scaldra Speedrun': { name: 'スカルドラ・スピードラン', desc: '全ての敵がスカルドラに入れ替わり、移動速度が上昇する。' },
   'Heavy Weaponry': { name: '重兵器', desc: '敵はヘビー武器(=AW銃)以外から受けるダメージが95%減少する。敵はヘビー弾薬パックをドロップし、ヘビー武器再展開時間が5秒に短縮する。' },
-  'Arcade Automata': { name: 'アーケード・オートマタ', desc: '敵の射撃が低速の大きな球体に変化する。(出現勢力がスカルドラに置換または優先される)' },
+  'Arcade Automate': { name: 'アーケード・オートマタ', desc: '敵の射撃が低速の大きな球体に変化する(出現勢力がスカルドラに置換または優先される)。' },
   'Beyond the Wall': { name: '壁の向こう側', desc: 'スカルドラとテックロットにササヤキたちが加勢する。' },
   'Thick Ice': { name: '厚い氷', desc: 'アークティック エクシマスのバブルの耐久度が30倍になる。' }, // 冬
   'Jade Spirits': { name: 'ジェイドスピリッツ', desc: 'ジェイドウィスプがエリアを徘徊する。近づくとそのプレイヤーを追跡し、ジェイドライトビームに変身する。' }, // 春
@@ -458,12 +458,12 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Secondary Wounds': { name: '二次創傷', desc: 'ダメージを受けるたびに、貫通状態異常を1スタック受ける。' }, // Wiki: 二次的創傷
   'Lethargic Shields': { name: '不活性シールド', desc: 'シールドリチャージ遅延が500%増加。(通常6秒、完全枯渇時は24秒まで遅延)' },
   'Ammo Deficit': { name: '弾薬不足(Deficit)', desc: '弾薬回復量が75%減少。(バッテリー武器やアビリティ武器には影響しない)' },
-  'Fractured': { name: 'ひび割れ', desc: 'アビリティを使用すると装甲値が10秒間10%減少する。' },
+  'Fractured Armor': { name: 'ひび割れ', desc: 'アビリティを使用すると装甲値が10秒間10%減少する。' },
   'Untreatable': { name: '治療不能', desc: 'ヘルスオーブ取得不可、ピックアップによる回復も無効。(Equilibrium等のMOD効果も含め、オーブによるヘルス回復は一切不可)' },
   'Abbreviated Abilities': { name: 'アビリティ短縮', desc: 'アビリティ持続時間が50%減少。(MOD等で計算した最終値に乗算)' },
   'Swooning': { name: '失神消耗', desc: 'ヘルスダメージを受けると、ヒット毎に最大エネルギーの5%が消費される。' },
   'Transference Distortion': { name: '転移障害', desc: 'オペレーター/漂流者への転移不可。(Last Gaspやネクロメカ搭乗も不可。転移不要なフォーカス受動効果は有効)' },
-  'Frame Curse Syndrome': { name: 'フレームカース・シンドローム', desc: 'アビリティ発動時にヘルスへ直接50ダメージを受ける。(シールド無視)' },
+  'Framecurse Syndrome': { name: 'フレームカース・シンドローム', desc: 'アビリティ発動時にヘルスへ直接50ダメージを受ける。(シールド無視)' },
   'Knifestep Syndrome': { name: 'ナイフステップ・シンドローム', desc: '移動中、速度に比例してヘルスが減少する。(ジャンプ中は減少停止)' },
   'Energy Starved': { name: 'エネルギー枯渇', desc: '10メートル以内の敵一体につき、毎秒2エネルギーを失う。' },
   'Ammo Scarcity': { name: '弾薬不足(Scarcity)', desc: '所持弾薬が毎秒約5%消失する。(バッテリー武器はリチャージ速度低下)' },
@@ -474,7 +474,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Void Energy Overload': { name: 'アビリティ オーバーロード', desc: 'アビリティ使用時に近くでVoidの裂け目が開く。' },
   'Supply Shortage': { name: '供給不足', desc: 'すべての武器の最大弾薬数が75％減少する。' },
   'Constriction': { name: '狭窄', desc: '最大エネルギーが75％減少。' },
-  'Hyper-Sensitivity': { name: '過敏症', desc: 'ステータス低下効果の持続時間が3倍になる。' },
+  'Hypersensitive': { name: '過敏症', desc: 'ステータス低下効果の持続時間が3倍になる。' },
   'Dull Blade': { name: 'なまくら', desc: '-50％近接コンボ確率。' },
   'Consequences': { name: '後遺症', desc: '被ダメージ毎に最大ヘルスが減少(×0.985)。(12秒間ダメージを受けなければ最大ヘルスの3%ずつ回復)' },
   'Anti Guard': { name: '油断', desc: '自身と仲間のオーバーガード獲得量が75%減少。' },
