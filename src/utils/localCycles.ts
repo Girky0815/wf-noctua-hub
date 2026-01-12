@@ -23,8 +23,9 @@ const CETUS_CYCLE_MS = 150 * 60 * 1000; // 150 minutes
 // 18:06:40 JST = 1767690400000.
 // 1767690400000 - 1600000 = 1767688800000
 // calibration +1s -> 1767688801000
+// calibration +1s -> 1767688801000
 const VALLIS_EPOCH = 1767688801000;
-const VALLIS_CYCLE_MS = 1600 * 1000; // 26m 40s
+const VALLIS_CYCLE_MS = 1600 * 1000; // 26m 40s (6m40s Warm + 20m Cold)
 
 // Cambion Drift: Synchronized with Cetus (Fass = Day, Vome = Night)
 const CAMBION_EPOCH = CETUS_EPOCH;
@@ -54,9 +55,11 @@ export const getCetusCycle = (now: number): Partial<Cycle> => {
 
   // 次の状態への切り替わり時刻 (expiry)
   const expiryTime = now + timeLeft;
+  const activationTime = expiryTime - (isDay ? dayDuration : (CETUS_CYCLE_MS - dayDuration));
 
   return {
     id: `cetus-local-${expiryTime}`,
+    activation: new Date(activationTime).toISOString(),
     expiry: new Date(expiryTime).toISOString(),
     isDay,
     state: isDay ? 'day' : 'night',
@@ -83,9 +86,11 @@ export const getVallisCycle = (now: number): Partial<Cycle> => {
   const isWarm = cycleTime < warmDuration;
   const timeLeft = isWarm ? (warmDuration - cycleTime) : (VALLIS_CYCLE_MS - cycleTime);
   const expiryTime = now + timeLeft;
+  const activationTime = expiryTime - (isWarm ? warmDuration : (VALLIS_CYCLE_MS - warmDuration));
 
   return {
     id: `vallis-local-${expiryTime}`,
+    activation: new Date(activationTime).toISOString(),
     expiry: new Date(expiryTime).toISOString(),
     isDay: false, // Not applicable really
     state: isWarm ? 'warm' : 'cold', // 'warm' or 'cold'
@@ -105,9 +110,11 @@ export const getCambionCycle = (now: number): Partial<Cycle> => {
   const isFass = cycleTime < fassDuration;
   const timeLeft = isFass ? (fassDuration - cycleTime) : (CAMBION_CYCLE_MS - cycleTime);
   const expiryTime = now + timeLeft;
+  const activationTime = expiryTime - (isFass ? fassDuration : (CAMBION_CYCLE_MS - fassDuration));
 
   return {
     id: `cambion-local-${expiryTime}`,
+    activation: new Date(activationTime).toISOString(),
     expiry: new Date(expiryTime).toISOString(),
     // Cambion API uses active: 'fass' | 'vome'
     state: isFass ? 'fass' : 'vome',
@@ -127,9 +134,11 @@ export const getEarthCycle = (now: number): Partial<Cycle> => {
   const isDay = cycleTime < dayDuration;
   const timeLeft = isDay ? (dayDuration - cycleTime) : (EARTH_CYCLE_MS - cycleTime);
   const expiryTime = now + timeLeft;
+  const activationTime = expiryTime - dayDuration;
 
   return {
     id: `earth-local-${expiryTime}`,
+    activation: new Date(activationTime).toISOString(),
     expiry: new Date(expiryTime).toISOString(),
     isDay,
     state: isDay ? 'day' : 'night',

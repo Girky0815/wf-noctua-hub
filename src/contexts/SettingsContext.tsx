@@ -27,14 +27,16 @@ const defaultDashboardConfig: DashboardWidget[] = [
   { id: 'voidTrader', visible: true, order: 7 },
 ];
 
+export const DEFAULT_CYCLE_CALIBRATION = {
+  cetus: 31,
+  vallis: 801,
+};
+
 const defaultSettings: Settings = {
   isFirstVisit: true,
   dashboardConfig: defaultDashboardConfig,
   lastSeenVersion: '0.0.0', // Default to 0.0.0 to trigger update on first load if version > 0.0.0
-  cycleCalibration: {
-    cetus: 0,
-    vallis: 0,
-  },
+  cycleCalibration: DEFAULT_CYCLE_CALIBRATION,
 };
 
 interface SettingsContextType extends Settings {
