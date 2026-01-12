@@ -7,6 +7,7 @@ import { FissuresPage } from './pages/FissuresPage';
 import { RelicSimulatorPage } from './pages/RelicSimulatorPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { DashboardSettingsPage } from './pages/DashboardSettingsPage';
+import { WorldCycleCalibrationPage } from './pages/WorldCycleCalibrationPage';
 import { LinksPage } from './pages/LinksPage';
 import { ArchimedeaPage } from './pages/ArchimedeaPage';
 import { ArchonHuntPage } from './pages/ArchonHuntPage';
@@ -104,6 +105,7 @@ import { UpdateNotificationModal } from './components/ui/UpdateNotificationModal
 import packageJson from '../package.json';
 
 const AppContent = () => {
+  console.log('AppContent Rendered. Setup routes.');
   const { isFirstVisit, lastSeenVersion } = useSettings();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { worldState } = useWarframeData(); // Fetch worldState
@@ -150,6 +152,7 @@ const AppContent = () => {
             {/* /menu route removed */}
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/settings/dashboard" element={<DashboardSettingsPage />} />
+            <Route path="/settings/calibration" element={<WorldCycleCalibrationPage />} />
             <Route path="/links" element={<LinksPage />} />
             <Route path="/credits" element={<CreditsPage />} />
           </Routes>

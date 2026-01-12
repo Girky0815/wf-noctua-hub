@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSettings } from '../contexts/SettingsContext';
 import type { WorldState, Cycle, ZarimanCycle, DuviriCycle } from '../types/warframe';
 import { getCetusCycle, getVallisCycle, getCambionCycle, getEarthCycle } from '../utils/localCycles';
 
@@ -105,6 +106,8 @@ export const usePredictedCycles = (worldState: WorldState | null | undefined) =>
     earth: null, cetus: null, vallis: null, cambion: null, zariman: null, duviri: null
   });
 
+  const { cycleCalibration } = useSettings();
+
   useEffect(() => {
     if (!worldState) return;
 
@@ -112,32 +115,44 @@ export const usePredictedCycles = (worldState: WorldState | null | undefined) =>
       const now = Date.now();
 
       // ローカル計算 (Local Calculation override)
-      // APIデータの値ではなく、ローカル計算値を優先して使用する
       const localCetus = getCetusCycle(now);
       const localVallis = getVallisCycle(now);
       const localCambion = getCambionCycle(now);
       const localEarth = getEarthCycle(now);
 
-      // マージ: APIデータのメタ情報(idなど)をベースに、ローカル計算結果(expiry, state)を上書き
-      // Note: APIがダウンしている場合でも worldState がキャッシュにあれば計算できる
-      // worldState が null の場合はこのフック自体が動かない
+      // Apply Calibration Offsets (in milliseconds)
+      const cetusOffset = (cycleCalibration?.cetus || 0) * 1000;
+      const vallisOffset = (cycleCalibration?.vallis || 0) * 1000;
 
+      // Helper to apply offset to a cycle-like object
+      const applyOffset = (cycle: Cycle, offset: number) => {
+        if (offset === 0) return cycle;
+        const newExpiry = new Date(new Date(cycle.expiry).getTime() + offset).toISOString();
+        const newActivation = new Date(new Date(cycle.activation).getTime() + offset).toISOString();
+        return { ...cycle, expiry: newExpiry, activation: newActivation };
+      };
+
+      const calibratedCetus = applyOffset(localCetus as Cycle, cetusOffset);
+      const calibratedVallis = applyOffset(localVallis as Cycle, vallisOffset);
+      const calibratedCambion = applyOffset(localCambion as Cycle, cetusOffset); // Share Cetus offset
+
+      // マージ: APIデータのメタ情報(idなど)をベースに、ローカル計算結果(expiry, state)を上書き
       const mergedCetus: Cycle = {
         ...worldState.cetusCycle,
-        ...localCetus,
-        activation: new Date(new Date(localCetus.expiry!).getTime() - (localCetus.isDay ? 100 * 60 * 1000 : 50 * 60 * 1000)).toISOString() // activation 逆算
+        ...calibratedCetus,
+        activation: new Date(new Date(calibratedCetus.expiry!).getTime() - (calibratedCetus.isDay ? 100 * 60 * 1000 : 50 * 60 * 1000)).toISOString()
       } as Cycle;
 
       const mergedVallis: Cycle = {
         ...worldState.vallisCycle,
-        ...localVallis,
-        activation: new Date(new Date(localVallis.expiry!).getTime() - (localVallis.state === 'warm' ? 400 * 1000 : 1200 * 1000)).toISOString()
+        ...calibratedVallis,
+        activation: new Date(new Date(calibratedVallis.expiry!).getTime() - (calibratedVallis.state === 'warm' ? 400 * 1000 : 1200 * 1000)).toISOString()
       } as Cycle;
 
       const mergedCambion: Cycle = {
         ...worldState.cambionCycle,
-        ...localCambion,
-        activation: new Date(new Date(localCambion.expiry!).getTime() - (localCambion.state === 'fass' ? 100 * 60 * 1000 : 50 * 60 * 1000)).toISOString()
+        ...calibratedCambion,
+        activation: new Date(new Date(calibratedCambion.expiry!).getTime() - (calibratedCambion.state === 'fass' ? 100 * 60 * 1000 : 50 * 60 * 1000)).toISOString()
       } as Cycle;
 
 

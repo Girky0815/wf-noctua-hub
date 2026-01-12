@@ -59,6 +59,13 @@ export const SettingsPage: React.FC = () => {
             trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
             onClick={() => navigate('/settings/dashboard')}
           />
+          <ListTile
+            icon="tune"
+            title="ワールドサイクル補正"
+            subtitle="サイクル時間のズレを手動で調整"
+            trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+            onClick={() => navigate('/settings/calibration')}
+          />
         </ListGroup>
       </div>
 

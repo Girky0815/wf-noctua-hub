@@ -10,6 +10,10 @@ interface Settings {
   isFirstVisit: boolean;
   dashboardConfig: DashboardWidget[];
   lastSeenVersion: string; // Add version tracking
+  cycleCalibration: {
+    cetus: number; // Offset in seconds
+    vallis: number; // Offset in seconds
+  };
 }
 
 const defaultDashboardConfig: DashboardWidget[] = [
@@ -27,6 +31,10 @@ const defaultSettings: Settings = {
   isFirstVisit: true,
   dashboardConfig: defaultDashboardConfig,
   lastSeenVersion: '0.0.0', // Default to 0.0.0 to trigger update on first load if version > 0.0.0
+  cycleCalibration: {
+    cetus: 0,
+    vallis: 0,
+  },
 };
 
 interface SettingsContextType extends Settings {
@@ -35,6 +43,7 @@ interface SettingsContextType extends Settings {
   updateDashboardConfig: (newConfig: DashboardWidget[]) => void;
   markUpdateSeen: (version: string) => void; // New function
   resetUpdateSeen: () => void; // For debug
+  updateCycleCalibration: (location: 'cetus' | 'vallis', offset: number) => void;
 }
 
 const SETTINGS_KEY = 'noctua-hub-settings';
@@ -57,7 +66,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           }
         }
 
-        // Merge to ensure new settings (like lastSeenVersion) are present
+        // Merge to ensure new settings (like lastSeenVersion, cycleCalibration) are present
         return { ...defaultSettings, ...parsed };
       } catch (e) {
         console.error('Failed to parse settings:', e);
@@ -90,6 +99,16 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setSettings((prev) => ({ ...prev, lastSeenVersion: '0.0.0' }));
   };
 
+  const updateCycleCalibration = (location: 'cetus' | 'vallis', offset: number) => {
+    setSettings((prev) => ({
+      ...prev,
+      cycleCalibration: {
+        ...prev.cycleCalibration,
+        [location]: offset,
+      },
+    }));
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -99,6 +118,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         updateDashboardConfig,
         markUpdateSeen,
         resetUpdateSeen,
+        updateCycleCalibration,
       }}
     >
       {children}

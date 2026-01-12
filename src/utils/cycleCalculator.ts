@@ -16,11 +16,29 @@ type CycleType = 'cetus' | 'vallis' | 'cambion';
  * @param type サイクルの種類
  * @returns 現在の有効なサイクルデータ
  */
-export const getEffectiveCycle = (cycle: Cycle | undefined, type: CycleType): Cycle | undefined => {
+export const getEffectiveCycle = (cycle: Cycle | undefined, type: CycleType, offsetSeconds: number = 0): Cycle | undefined => {
   if (!cycle || !cycle.expiry) return cycle;
 
+  // Apply calibration offset
+  // Offset is in seconds. Positive offset means Noctua Hub is "too fast" (expiry is too early), so we extend it.
+  // Actually, wait.
+  // If Noctua says "30s left" but Game says "60s left", Noctua is 30s ahead.
+  // We want to make Noctua say "60s left".
+  // Expiry is fixed timestamp from API.
+  // timeSinceExpiry = now - expiry.
+  // If we want "more time left", we need effective 'now' to be earlier, OR effective 'expiry' to be later.
+  // Let's adjust Expiry.
+  // adjustedExpiry = expiry + offset.
+  // If offset = +30s. Expiry becomes 30s later.
+  // timeSinceExpiry = now - (expiry + 30s) = (now - expiry) - 30s.
+  // So 'remainder' becomes smaller?
+  // Let's think about "Time Left".
+  // Time Left = Expiry - Now.
+  // New Time Left = (Expiry + Offset) - Now = (Expiry - Now) + Offset.
+  // If Offset is +30s, Time Left increases by 30s. Correct.
+
   const now = Date.now();
-  const expiryTime = new Date(cycle.expiry).getTime();
+  const expiryTime = new Date(cycle.expiry).getTime() + (offsetSeconds * 1000);
 
   // まだ有効期限内であれば、APIデータをそのまま信頼する
   if (expiryTime > now) {
