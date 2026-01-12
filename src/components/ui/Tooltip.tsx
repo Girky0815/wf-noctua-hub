@@ -10,6 +10,7 @@ interface TooltipProps {
 export const Tooltip: React.FC<TooltipProps> = ({ children, title, content, placement = 'right' }) => {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   // Close when clicking outside
   useEffect(() => {
@@ -27,6 +28,44 @@ export const Tooltip: React.FC<TooltipProps> = ({ children, title, content, plac
     };
   }, [isVisible]);
 
+  // Adjust position to prevent overflow
+  const [adjustedStyle, setAdjustedStyle] = useState<React.CSSProperties>({});
+
+  React.useLayoutEffect(() => {
+    if (isVisible && tooltipRef.current && containerRef.current) {
+      const tooltip = tooltipRef.current;
+      const rect = tooltip.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const styles: React.CSSProperties = {};
+
+      // Reset transforms first to get accurate measurements if needed, 
+      // but here we just check current rect vs viewport
+
+      let offsetX = 0;
+
+      // Check right overflow
+      if (rect.right > viewportWidth - 16) { // 16px buffer
+        offsetX = (viewportWidth - 16) - rect.right;
+      }
+
+      // Check left overflow
+      if (rect.left < 16) { // 16px buffer
+        offsetX = 16 - rect.left;
+      }
+
+      if (offsetX !== 0) {
+        // Apply correction respecting the original placement
+        // Since we can't easily change the class-based transform, we use margin-left
+        // or specifically transform
+        styles.transform = `translateX(${offsetX}px)`;
+      }
+
+      setAdjustedStyle(styles);
+    } else {
+      setAdjustedStyle({});
+    }
+  }, [isVisible]);
+
   const placementClasses = placement === 'left'
     ? 'left-0 origin-top-left'
     : 'right-0 origin-top-right';
@@ -42,10 +81,12 @@ export const Tooltip: React.FC<TooltipProps> = ({ children, title, content, plac
 
       {isVisible && (
         <div
+          ref={tooltipRef}
           className={`absolute top-full mt-2 z-50 w-64 rounded-2xl p-4 shadow-lg ring-1 ring-black/5 animate-in fade-in zoom-in-95 duration-200 ${placementClasses}`}
           style={{
             backgroundColor: 'var(--error-container)',
-            color: 'var(--on-error-container)'
+            color: 'var(--on-error-container)',
+            ...adjustedStyle
           }}
         >
           <h3 className="mb-1 text-lg font-bold font-display" style={{ color: 'inherit' }}>
