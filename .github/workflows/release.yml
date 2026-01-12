@@ -1,4 +1,4 @@
-name: Release and Deploy
+name: 更新作業(リリース作成/Pagesへのデプロイ)
 
 on:
   push:
