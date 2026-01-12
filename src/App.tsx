@@ -1,22 +1,36 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, NavLink, useNavigate, Navigate } from 'react-router-dom';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { OnboardingPage } from './pages/OnboardingPage';
-import { FissuresPage } from './pages/FissuresPage';
-import { RelicSimulatorPage } from './pages/RelicSimulatorPage';
-import { SettingsPage } from './pages/SettingsPage';
-import { DashboardSettingsPage } from './pages/DashboardSettingsPage';
-import { WorldCycleCalibrationPage } from './pages/WorldCycleCalibrationPage';
-import { LinksPage } from './pages/LinksPage';
-import { ArchimedeaPage } from './pages/ArchimedeaPage';
-import { ArchonHuntPage } from './pages/ArchonHuntPage';
-import { StatusPage } from './components/status/StatusPage';
+
+// Lazy loading components
+// 各ページコンポーネントをオンデマンドで読み込むように変更
+const OnboardingPage = lazy(() => import('./pages/OnboardingPage').then(module => ({ default: module.OnboardingPage })));
+const FissuresPage = lazy(() => import('./pages/FissuresPage').then(module => ({ default: module.FissuresPage })));
+const RelicSimulatorPage = lazy(() => import('./pages/RelicSimulatorPage').then(module => ({ default: module.RelicSimulatorPage })));
+const SettingsPage = lazy(() => import('./pages/SettingsPage').then(module => ({ default: module.SettingsPage })));
+const DashboardSettingsPage = lazy(() => import('./pages/DashboardSettingsPage').then(module => ({ default: module.DashboardSettingsPage })));
+const WorldCycleCalibrationPage = lazy(() => import('./pages/WorldCycleCalibrationPage').then(module => ({ default: module.WorldCycleCalibrationPage })));
+const LinksPage = lazy(() => import('./pages/LinksPage').then(module => ({ default: module.LinksPage })));
+const ArchimedeaPage = lazy(() => import('./pages/ArchimedeaPage').then(module => ({ default: module.ArchimedeaPage })));
+const ArchonHuntPage = lazy(() => import('./pages/ArchonHuntPage').then(module => ({ default: module.ArchonHuntPage })));
+// StatusPage (Dashboard) もLazy Load化して初期バンドルを削減
+const StatusPage = lazy(() => import('./components/status/StatusPage').then(module => ({ default: module.StatusPage })));
+const CreditsPage = lazy(() => import('./components/CreditsPage').then(module => ({ default: module.CreditsPage })));
+
 import { Clock } from './components/Clock';
-import { CreditsPage } from './components/CreditsPage';
 import { ScrollToTop } from './components/ScrollToTop';
-import { SideMenu } from './components/navigation/SideMenu'; // Import SideMenu component
+import { SideMenu } from './components/navigation/SideMenu'; // シェルの一部として常駐するためEager Loadのまま
 import { useWarframeData } from './hooks/useWarframeData';
+import { UpdateNotificationModal } from './components/ui/UpdateNotificationModal';
+import packageJson from '../package.json';
+
+// ローディングインジケーター
+const LoadingSpinner = () => (
+  <div className="flex h-full min-h-[50vh] items-center justify-center">
+    <div className="h-12 w-12 animate-spin rounded-full border-4 border-surface-variant border-t-primary"></div>
+  </div>
+);
 
 const NavBar = () => {
   const getLinkClass = ({ isActive }: { isActive: boolean }) => `
@@ -99,11 +113,6 @@ const HeaderMenuButton: React.FC<{ isOpen: boolean; toggle: () => void }> = ({ i
   );
 };
 
-
-
-import { UpdateNotificationModal } from './components/ui/UpdateNotificationModal';
-import packageJson from '../package.json';
-
 const AppContent = () => {
   console.log('AppContent Rendered. Setup routes.');
   const { isFirstVisit, lastSeenVersion } = useSettings();
@@ -112,16 +121,18 @@ const AppContent = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   useEffect(() => {
-    // Check for update (simple string comparison, or semver if needed)
-    // Here: if lastSeenVersion is different from current, and current is not 0.0.0 (dev)
-    // Actually, just simple: if lastSeenVersion !== current
+    // Check for update
     if (!isFirstVisit && lastSeenVersion !== packageJson.version) {
       setShowUpdateModal(true);
     }
   }, [lastSeenVersion, isFirstVisit]);
 
   if (isFirstVisit) {
-    return <OnboardingPage />;
+    return (
+      <Suspense fallback={<LoadingSpinner />}>
+        <OnboardingPage />
+      </Suspense>
+    );
   }
 
   return (
@@ -141,21 +152,23 @@ const AppContent = () => {
           <Clock lastUpdated={worldState?.timestamp} />
         </header>
         <main className="mx-auto max-w-2xl p-4">
-          <Routes>
-            {/* PWA Direct Launch Redirect */}
-            <Route path="index.html" element={<Navigate to="/" replace />} />
-            <Route path="/" element={<StatusPage />} />
-            <Route path="/fissures" element={<FissuresPage />} />
-            <Route path="/relics" element={<RelicSimulatorPage />} />
-            <Route path="/archimedea" element={<ArchimedeaPage />} />
-            <Route path="/archon-hunt" element={<ArchonHuntPage />} />
-            {/* /menu route removed */}
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/settings/dashboard" element={<DashboardSettingsPage />} />
-            <Route path="/settings/calibration" element={<WorldCycleCalibrationPage />} />
-            <Route path="/links" element={<LinksPage />} />
-            <Route path="/credits" element={<CreditsPage />} />
-          </Routes>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              {/* PWA Direct Launch Redirect */}
+              <Route path="index.html" element={<Navigate to="/" replace />} />
+              <Route path="/" element={<StatusPage />} />
+              <Route path="/fissures" element={<FissuresPage />} />
+              <Route path="/relics" element={<RelicSimulatorPage />} />
+              <Route path="/archimedea" element={<ArchimedeaPage />} />
+              <Route path="/archon-hunt" element={<ArchonHuntPage />} />
+              {/* /menu route removed */}
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/settings/dashboard" element={<DashboardSettingsPage />} />
+              <Route path="/settings/calibration" element={<WorldCycleCalibrationPage />} />
+              <Route path="/links" element={<LinksPage />} />
+              <Route path="/credits" element={<CreditsPage />} />
+            </Routes>
+          </Suspense>
         </main>
         <NavBar />
       </div>

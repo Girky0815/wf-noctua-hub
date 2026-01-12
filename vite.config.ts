@@ -48,6 +48,16 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(npmPackage.version),
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-utils': ['swr'],
+        }
+      }
+    }
+  },
   server: {
     host: true,
   },
