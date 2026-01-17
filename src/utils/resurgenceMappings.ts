@@ -1,4 +1,35 @@
-export type ResurgenceCategory = 'Warframe' | 'Primary' | 'Secondary' | 'Melee' | 'Companion' | 'Archwing' | 'Relic' | 'Unknown';
+export type ResurgenceCategory = 'Warframe' | 'Primary' | 'Secondary' | 'Melee' | 'Companion' | 'Archwing' | 'Arch-Gun' | 'Relic' | 'Unknown';
+
+export const getWikiUrl = (name: string, category: ResurgenceCategory): string | null => {
+  // Exclude categories that don't have good standalone pages or logic is unclear
+  if (category === 'Companion' || category === 'Archwing' || category === 'Relic' || category === 'Unknown') {
+    return null;
+  }
+
+  const upperName = name.toUpperCase();
+
+  if (category === 'Warframe') {
+    // e.g. "ASH PRIME" -> "ASH" (remove " PRIME") -> "ASH#prime"
+    const baseName = upperName.replace(' PRIME', '');
+    const encodedName = encodeURIComponent(baseName);
+    return `https://wikiwiki.jp/warframe/${encodedName}#prime`;
+  }
+
+  if (category === 'Primary' || category === 'Secondary' || category === 'Melee' || category === 'Arch-Gun') {
+    // Rule: <WEAPON NAME PRIME IN CAPS>
+    let targetName = upperName;
+
+    // "COBRA & CRANE PRIME" -> "COBRA ＆ CRANE PRIME"
+    targetName = targetName.replace(/&/g, '＆');
+
+    // Wikiwiki uses %20 for spaces. encodeURIComponent handles this.
+    // %EF%BC%86 is UTF-8 for '＆'.
+    const encoded = encodeURIComponent(targetName);
+    return `https://wikiwiki.jp/warframe/${encoded}`;
+  }
+
+  return null;
+};
 
 interface ResurgenceItemDef {
   name: string;
@@ -24,6 +55,7 @@ const RESURGENCE_FIXES: Record<string, ResurgenceItemDef> = {
   'mesa prime': { name: 'Mesa Prime', category: 'Warframe' },
   'nova prime': { name: 'Nova Prime', category: 'Warframe' },
   'odonata prime': { name: 'Odonata Prime', category: 'Warframe' },
+  'paladin prime': { name: 'Oberon Prime', category: 'Warframe' },
   'rhino prime': { name: 'Rhino Prime', category: 'Warframe' },
   'trinity prime': { name: 'Trinity Prime', category: 'Warframe' },
   'volt prime': { name: 'Volt Prime', category: 'Warframe' },
@@ -31,10 +63,15 @@ const RESURGENCE_FIXES: Record<string, ResurgenceItemDef> = {
 
   // --- Primary ---
   'boar prime': { name: 'Boar Prime', category: 'Primary' },
+  'prime baza gun': { name: 'Baza Prime', category: 'Primary' },
+  'prime cernos': { name: 'Cernos Prime', category: 'Primary' },
   'latron prime': { name: 'Latron Prime', category: 'Primary' },
   'prime panthera': { name: 'Panthera Prime', category: 'Primary' },
   'rubico prime': { name: 'Rubico Prime', category: 'Primary' },
+  'prime scourge weapon': { name: 'Scourge Prime', category: 'Primary' },
   'soma prime': { name: 'Soma Prime', category: 'Primary' },
+  'prime sybaris rifle': { name: 'Sybaris Prime', category: 'Primary' },
+  'prime tigris': { name: 'Tigris Prime', category: 'Primary' },
   'tiberon prime': { name: 'Tiberon Prime', category: 'Primary' },
   'vectis prime': { name: 'Vectis Prime', category: 'Primary' },
 
@@ -43,6 +80,10 @@ const RESURGENCE_FIXES: Record<string, ResurgenceItemDef> = {
   'prime ballistica': { name: 'Ballistica Prime', category: 'Secondary' },
   'pyrana prime': { name: 'Pyrana Prime', category: 'Secondary' },
   'sicarus prime': { name: 'Sicarus Prime', category: 'Secondary' },
+  'prime knell weapon': { name: 'Knell Prime', category: 'Secondary' },
+  'prime li dagger': { name: 'Spira Prime', category: 'Secondary' },
+  'prime hystrix weapon': { name: 'Hystrix Prime', category: 'Secondary' },
+
 
   // --- Melee ---
   'bo prime': { name: 'Bo Prime', category: 'Melee' },
@@ -51,11 +92,19 @@ const RESURGENCE_FIXES: Record<string, ResurgenceItemDef> = {
   'glaive prime': { name: 'Glaive Prime', category: 'Melee' },
   'gram prime': { name: 'Gram Prime', category: 'Melee' },
   'kronen prime': { name: 'Kronen Prime', category: 'Melee' },
+  'prime dual keres weapon': { name: 'Dual Keres Prime', category: 'Melee' },
+  'prime galatine': { name: 'Galatine Prime', category: 'Melee' },
   'prime kris dagger': { name: 'Karyst Prime', category: 'Melee' },
   'prime nami skyla': { name: 'Nami Skyla Prime', category: 'Melee' },
+  'prime nikana': { name: 'Nikana Prime', category: 'Melee' },
+  'prime silva aegis': { name: 'Silva & Aegis Prime', category: 'Melee' },
+  'prime venka claws': { name: 'Venka Prime', category: 'Melee' },
   'prime redeemer': { name: 'Redeemer Prime', category: 'Melee' },
   'reaper prime': { name: 'Reaper Prime', category: 'Melee' },
   'redeemer prime wep': { name: 'Redeemer Prime', category: 'Melee' },
+
+  // Arch-Gun
+  'prime corvas weapon': { name: 'Corvas Prime', category: 'Arch-Gun' },
 
   // --- Companion / Others ---
   'carrier prime': { name: 'Carrier Prime', category: 'Companion' },
@@ -82,18 +131,25 @@ export const normalizeResurgenceItem = (rawName: string): ResurgenceItemDef => {
     .replace(' wings', '')
     .replace(' cerebrum', '')
     .replace(' carapace', '')
+    .replace(' upper limb', '')
+    .replace(' lower limb', '')
+    .replace(' grip', '')
+    .replace(' string', '')
     .trim();
+
+  console.log(`[Resurgence] Raw: "${rawName}" -> Key: "${lowerName}"`);
 
   // 1. Check direct fix map
   if (RESURGENCE_FIXES[lowerName]) {
     return RESURGENCE_FIXES[lowerName];
   }
 
-  // Vanguard Relic replacement (Specific mappings requested by user)
+  // バンガードレリック
   if (lowerName.includes('vanguard vault')) {
     const parts = lowerName.split(' ');
     const code = parts[3]?.toLowerCase() || ''; // "a", "b", "c", "d"
 
+    // とりあえず指定
     const vaultMap: Record<string, string> = {
       'a': 'C1',
       'b': 'P1',
@@ -140,33 +196,4 @@ function itemIsWarframe(name: string): boolean {
   return WARFRAMES.some(wf => name.toLowerCase().includes(wf));
 }
 
-export const getWikiUrl = (name: string, category: ResurgenceCategory): string | null => {
-  // Exclude categories that don't have good standalone pages or logic is unclear
-  if (category === 'Companion' || category === 'Archwing' || category === 'Relic' || category === 'Unknown') {
-    return null;
-  }
 
-  const upperName = name.toUpperCase();
-
-  if (category === 'Warframe') {
-    // e.g. "ASH PRIME" -> "ASH" (remove " PRIME") -> "ASH#prime"
-    const baseName = upperName.replace(' PRIME', '');
-    const encodedName = encodeURIComponent(baseName);
-    return `https://wikiwiki.jp/warframe/${encodedName}#prime`;
-  }
-
-  if (category === 'Primary' || category === 'Secondary' || category === 'Melee') {
-    // Rule: <WEAPON NAME PRIME IN CAPS>
-    let targetName = upperName;
-
-    // "COBRA & CRANE PRIME" -> "COBRA ＆ CRANE PRIME"
-    targetName = targetName.replace(/&/g, '＆');
-
-    // Wikiwiki uses %20 for spaces. encodeURIComponent handles this.
-    // %EF%BC%86 is UTF-8 for '＆'.
-    const encoded = encodeURIComponent(targetName);
-    return `https://wikiwiki.jp/warframe/${encoded}`;
-  }
-
-  return null;
-};

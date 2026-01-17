@@ -70,7 +70,7 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
               className="flex items-center gap-3 p-4"
             >
               {/* ステージ番号 */}
-              <div className="text-lg font-bold text-primary opacity-80 font-display">
+              <div className="text-xl font-bold text-primary opacity-80 font-display">
                 {STAGE_NUMBERS[index] || (index + 1)}
               </div>
 

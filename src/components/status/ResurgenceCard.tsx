@@ -13,12 +13,15 @@ const getCategoryIcon = (category: ResurgenceCategory): string => {
     case 'Primary': return 'location_searching'; // or similar
     case 'Secondary': return 'filter_center_focus';
     case 'Melee': return 'swords';
+    case 'Arch-Gun': return 'rocket_launch';
     case 'Companion': return 'drone';
     case 'Archwing': return 'flight';
     case 'Relic': return 'diamond';
     default: return 'change_history';
   }
 };
+
+
 
 export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
   if (!trader) return null;
@@ -49,6 +52,10 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
         if (name.includes('helmet')) return false;
         if (name.includes('dangle')) return false;
         if (name.includes('pack')) return false;
+        if (name.includes('cape')) return false;
+        if (name.includes('emote')) return false;
+        if (name.includes('scarf')) return false;
+        if (name.includes('ephemera')) return false;
         if (!keep) return false;
 
         return true;
@@ -75,7 +82,7 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
       return true;
     }).sort((a, b) => {
       // Sort by Category order then Name
-      const order = ['Warframe', 'Primary', 'Secondary', 'Melee', 'Companion', 'Archwing', 'Relic', 'Unknown'];
+      const order = ['Warframe', 'Primary', 'Secondary', 'Melee', 'Arch-Gun', 'Companion', 'Archwing', 'Relic', 'Unknown'];
       const catDiff = order.indexOf(a.category) - order.indexOf(b.category);
       if (catDiff !== 0) return catDiff;
       return a.displayName.localeCompare(b.displayName);
