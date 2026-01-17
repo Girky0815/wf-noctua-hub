@@ -66,6 +66,7 @@ const RESURGENCE_FIXES: Record<string, ResurgenceItemDef> = {
   'prime baza gun': { name: 'Baza Prime', category: 'Primary' },
   'prime cernos': { name: 'Cernos Prime', category: 'Primary' },
   'latron prime': { name: 'Latron Prime', category: 'Primary' },
+  'prime nagantaka weapon': { name: 'Nagantaka Prime', category: 'Primary' },
   'prime panthera': { name: 'Panthera Prime', category: 'Primary' },
   'rubico prime': { name: 'Rubico Prime', category: 'Primary' },
   'prime scourge weapon': { name: 'Scourge Prime', category: 'Primary' },

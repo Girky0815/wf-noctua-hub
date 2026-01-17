@@ -17,6 +17,14 @@ export const updates: UpdateLog[] = [
   // - **修正内容**: 説明
   //   },
   {
+    version: '1.5.3-1',
+    date: '2026-01-17',
+    content: `
+## 情報追加
+- **Prime リサージェンス**: 更新漏れ分(Nagantaka)の情報を追加。
+    `.trim(),
+  },
+  {
     version: '1.5.3',
     date: '2026-01-17',
     content: `
