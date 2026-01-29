@@ -13,6 +13,7 @@ const WIDGET_NAMES: Record<string, string> = {
   archonHunt: 'アルコン討伐戦',
   archimedea: '深淵/次元アルキメデア',
   resurgence: 'Prime Resurgence',
+  circuit: 'サーキット',
   voidTrader: "Baro Ki'Teer",
 };
 

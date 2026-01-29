@@ -4,6 +4,7 @@ import { useSettings } from '../../contexts/SettingsContext';
 import { CycleCard } from './CycleCard';
 import { ZarimanCycleCard } from './ZarimanCycleCard';
 import { DuviriCycleCard } from './DuviriCycleCard';
+import { CircuitCard } from './CircuitCard';
 import { AlertList } from './AlertList';
 import { InvasionList } from './InvasionList';
 import { SortieCard } from './SortieCard';
@@ -203,6 +204,12 @@ export const StatusPage: React.FC = () => {
                 <ArchimedeaCard archimedea={a} />
               </div>
             ))}
+          </div>
+        ) : null;
+      case 'circuit':
+        return worldState.duviriCycle ? (
+          <div key={id}>
+            <CircuitCard cycle={worldState.duviriCycle} />
           </div>
         ) : null;
       case 'resurgence':

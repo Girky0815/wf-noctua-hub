@@ -14,6 +14,7 @@ const WorldCycleCalibrationPage = lazy(() => import('./pages/WorldCycleCalibrati
 const LinksPage = lazy(() => import('./pages/LinksPage').then(module => ({ default: module.LinksPage })));
 const ArchimedeaPage = lazy(() => import('./pages/ArchimedeaPage').then(module => ({ default: module.ArchimedeaPage })));
 const ArchonHuntPage = lazy(() => import('./pages/ArchonHuntPage').then(module => ({ default: module.ArchonHuntPage })));
+const CircuitPage = lazy(() => import('./pages/CircuitPage').then(module => ({ default: module.CircuitPage })));
 // StatusPage (Dashboard) もLazy Load化して初期バンドルを削減
 const StatusPage = lazy(() => import('./components/status/StatusPage').then(module => ({ default: module.StatusPage })));
 const CreditsPage = lazy(() => import('./components/CreditsPage').then(module => ({ default: module.CreditsPage })));
@@ -161,6 +162,7 @@ const AppContent = () => {
               <Route path="/relics" element={<RelicSimulatorPage />} />
               <Route path="/archimedea" element={<ArchimedeaPage />} />
               <Route path="/archon-hunt" element={<ArchonHuntPage />} />
+              <Route path="/circuit" element={<CircuitPage />} />
               {/* /menu route removed */}
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/settings/dashboard" element={<DashboardSettingsPage />} />

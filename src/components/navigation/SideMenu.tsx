@@ -72,15 +72,15 @@ export const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
               </ListGroup>
             </div>
 
-            {/* 中級者向け (Placeholder) */}
             <div>
-              <SectionTitle title="中級者向け (準備中)" />
+              <SectionTitle title="中級者向け" />
               <ListGroup>
                 <ListTile
-                  icon="construction"
-                  title="ソーティ / 仲裁"
-                  subtitle="詳細情報は今後追加予定です"
-                  className="opacity-60"
+                  icon="token"
+                  title="サーキット"
+                  subtitle="サーキットの報酬を見る"
+                  trailing={<span className="material-symbols-rounded text-on-surface-variant">chevron_right</span>}
+                  onClick={() => handleNavigation('/circuit')}
                 />
               </ListGroup>
             </div>

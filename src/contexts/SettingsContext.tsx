@@ -24,7 +24,8 @@ const defaultDashboardConfig: DashboardWidget[] = [
   { id: 'archonHunt', visible: false, order: 4 },
   { id: 'archimedea', visible: false, order: 5 }, // New
   { id: 'resurgence', visible: true, order: 6 },
-  { id: 'voidTrader', visible: true, order: 7 },
+  { id: 'circuit', visible: true, order: 7 }, // New: Circuit
+  { id: 'voidTrader', visible: true, order: 8 },
 ];
 
 export const DEFAULT_CYCLE_CALIBRATION = {
