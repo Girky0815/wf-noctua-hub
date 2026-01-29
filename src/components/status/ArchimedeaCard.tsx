@@ -75,8 +75,11 @@ export const ArchimedeaCard: React.FC<ArchimedeaCardProps> = ({ archimedea }) =>
           const missionName = translateArchimedeaMission(mission.missionType, archimedea.typeKey);
           const factionName = translateArchimedeaFaction(mission.faction);
 
-          // Deviation
-          const devTrans = translateArchimedeaModifier(mission.diviation.name, mission.diviation.description, archimedea.typeKey);
+          // Deviation (Optional)
+          const deviation = mission.deviation;
+          const devTrans = deviation
+            ? translateArchimedeaModifier(deviation.name, deviation.description, archimedea.typeKey)
+            : { name: 'Unknown', desc: '' };
 
           // Risks
           const visibleRisks = mission.risks ? mission.risks.filter(risk => {
@@ -107,14 +110,16 @@ export const ArchimedeaCard: React.FC<ArchimedeaCardProps> = ({ archimedea }) =>
                   </span>
                 </div>
 
-                {/* Deviation (Red) */}
-                <div className="mt-1">
-                  <Tooltip title={devTrans.name} content={devTrans.desc} placement="left">
-                    <span className="text-sm font-bold text-error cursor-help border-b border-dotted border-error/50 inline-block">
-                      {devTrans.name}
-                    </span>
-                  </Tooltip>
-                </div>
+                {/* Deviation (Red) - Only show if exists */}
+                {deviation && (
+                  <div className="mt-1">
+                    <Tooltip title={devTrans.name} content={devTrans.desc} placement="left">
+                      <span className="text-sm font-bold text-error cursor-help border-b border-dotted border-error/50 inline-block">
+                        {devTrans.name}
+                      </span>
+                    </Tooltip>
+                  </div>
+                )}
 
                 {/* Risks (Normal Color, Tooltip) */}
                 {visibleRisks.length > 0 && (

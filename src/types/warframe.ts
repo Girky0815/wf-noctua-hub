@@ -34,7 +34,7 @@ export interface ArchimedeaMission {
   factionKey: string;
   missionType: string;
   missionTypeKey: string;
-  diviation: ArchimedeaDeviation;
+  deviation?: ArchimedeaDeviation;
   risks: ArchimedeaRisk[];
 }
 

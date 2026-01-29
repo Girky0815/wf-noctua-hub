@@ -59,17 +59,27 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       try {
         const parsed = JSON.parse(saved);
 
-        // Migration: Ensure new widgets are added to existing config
-        if (parsed.dashboardConfig) {
-          const existingIds = new Set(parsed.dashboardConfig.map((w: DashboardWidget) => w.id));
+        // Migration & Safe Merge
+        const mergedSettings: Settings = {
+          ...defaultSettings,
+          ...parsed,
+          // Explicitly merge nested objects to avoid overwriting with incomplete data
+          cycleCalibration: {
+            ...defaultSettings.cycleCalibration,
+            ...(parsed.cycleCalibration || {}),
+          },
+        };
+
+        // Ensure dashboardConfig has all required widgets
+        if (mergedSettings.dashboardConfig) {
+          const existingIds = new Set(mergedSettings.dashboardConfig.map((w: DashboardWidget) => w.id));
           const missingWidgets = defaultDashboardConfig.filter(w => !existingIds.has(w.id));
           if (missingWidgets.length > 0) {
-            parsed.dashboardConfig = [...parsed.dashboardConfig, ...missingWidgets];
+            mergedSettings.dashboardConfig = [...mergedSettings.dashboardConfig, ...missingWidgets];
           }
         }
 
-        // Merge to ensure new settings (like lastSeenVersion, cycleCalibration) are present
-        return { ...defaultSettings, ...parsed };
+        return mergedSettings;
       } catch (e) {
         console.error('Failed to parse settings:', e);
       }
