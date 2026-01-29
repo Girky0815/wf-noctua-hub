@@ -362,9 +362,7 @@ export const translateArchimedeaMission = (missionType: string, archimedeaType: 
   return missionTypes[missionType] || missionType;
 };
 
-// 既知のモディファイア翻訳 (一部はWikiやユーザー指定に基づく)
-// 既知のモディファイア翻訳 (Wikiの情報に基づく)
-// 既知のモディファイア翻訳 (Wikiの情報に基づく)
+// 既知のモディファイア翻訳
 export const archimedeaModifiers: Record<string, { name: string; desc?: string }> = {
   // --- 深淵アルキメデア (Deep Archimedea) 偏差 (Deviations) ---
   'Necramech Influx': { name: 'ネクロメカ流入', desc: 'ネクロメカの出現頻度が増加する。(カルヴァリンによる召喚以外でも出現する可能性あり)' },
@@ -375,7 +373,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Hostile Support': { name: '敵対的支援', desc: '生命維持装置は無効化される。ネクロメカが90秒ごとに出現し、倒すと6個の生命維持モジュールをドロップする。' },
   'Hazardous Area': { name: '危険エリア', desc: '生命維持装置を起動すると危険エリアを排除できる。' },
   'Hazardous Wares': { name: '危険物資', desc: 'アンフォールは運搬中に関連する属性ダメージを与える。' },
-  'Alchemical Shields': { name: '無敵の錬金術', desc: '敵の10%が特定の属性バリア(アンフォールでのみ破壊可)を持つ。(バリア持ちは対応元素のオーラとマークが表示される)' },
+  'Alchemical Shields': { name: '無敵の錬金術', desc: '敵の10%が特定の属性バリア(アンフォールでのみ破壊可)を持つ。(バリア持ちは対応属性のオーラとマークが表示される)' },
   'Eximus Amphors': { name: 'エクシマスアンフォール', desc: 'アンフォールはエクシマスからのみドロップする。(バグでエクシマスが湧かなくなった場合、ホスト移行か未使用アンフォールの処分を推奨)' },
   'Eroding Senses': { name: '感覚麻痺', desc: 'オリクルとビトリウムが時間経過と共にダメージを受ける。必要なボスフェングリフを集めることでダメージが止まり微量の回復を行う。' },
   'Glyph Inflation': { name: 'グリフインフレーション', desc: 'セキュリティシステムの起動には2倍のボスフェングリフが必要。' },
@@ -384,8 +382,8 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Barbed Glyphs': { name: 'バーブグリフ', desc: 'グリフ回収時に少量の火炎ダメージと状態異常を受ける。' },
   'Troop Deployment': { name: '戦力配備', desc: 'エクシマスの敵がフラグメント・タイドと最終形態を支援する。' },
   'Relentless Tide': { name: '容赦ない潮流', desc: 'フラグメント・タイドが攻撃を止めなくなる。' },
-  'Angelic Company': { name: '天使の仲間', desc: 'Voidの天使がフラグメントの最終形態と共に戦う。' },
-  'Fragment Two': { name: 'フラグメント・ツー', desc: '最終決戦で2体のフラグメント体と対峙する。' },
+  'Angelic Company': { name: '天使の仲間', desc: 'Void天使がフラグメントの最終形態と共に戦う。' },
+  'Fragment Two': { name: 'フラグメント・ツー', desc: '最終決戦で2体のフラグメントと対峙する。' },
   'Engorged Gruzzling': { name: '充血グラズリング', desc: '全グラズリングがエクシマスになる。' },
   'Unified Purpose': { name: '統一目的', desc: '敵が起動済みコンジットを標的にし、破壊可能になる。(コンジットには防衛対象としてヘルスが設定される)' },
   'Double Trouble': { name: 'ダブルデモリッシャー', desc: '2体のネクロメカデモリッシャーがコンジットを攻撃するが、ヘルスは低め。' }, // Wiki: Double Demolisher
@@ -393,8 +391,8 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   // --- 次元アルキメデア (Temporal Archimedea) 偏差 (Deviations) ---
   'Cache Crash': { name: 'キャッシュクラッシュ', desc: '補給品貯蔵庫の自爆タイマー(3分)がミッション開始と同時に作動する。(解錠失敗時、クリアに必要なキル数が2倍に増加)' },
   // Sealed Armor は共通で定義
-  'Breathless': { name: '息を止めて', desc: 'エリア全体が毒に覆われ、時間経過でダメージが増加する。(敵がドロップするフィルター(半径5m/10秒)か、ヘルスクラバー付近(半径20m)のみ安全)' },
-  'Pile-On': { name: '積み重ね', desc: 'テックロットはヘルスクラバーを近接攻撃し、接触時爆発を起こしヘルスクラバーの汚染率を25％上昇させる。' },
+  'Breathless': { name: '息を止めて', desc: 'エリア全体が毒に覆われ、時間経過でダメージが増加する。敵がドロップするフィルター(半径5m/10秒)か、ヘルスクラバー付近(半径20m)ではダメージを受けない。' },
+  'Pile-On': { name: '積み重ね', desc: 'テックロットはヘルスクラバーを近接攻撃し、接触時爆発を起こしヘルスクラバーの汚染率を25%上昇させる。' },
   'Sporogenesis': { name: '胞子形成', desc: 'ヘルスクラバー付近にテックロット腫瘤が発生し、生命維持減少を加速させる。(ヘルスクラバー消費で発生停止。腫瘤から生命維持ドロップあり)' },
   'Timer Shortened': { name: 'タイマー短縮', desc: '定期的に出現するババウを倒すと、生命維持回復の代わりにミッションタイマーを短縮する装置が出現する。' },
   'Mitosis': { name: '有糸分裂', desc: '各ラウンドで2体のレガサイトが出現し、成功するには2倍の捕獲数が必要となる。' },
@@ -419,8 +417,8 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Postmortal Surges': { name: '死後の呪い', desc: '倒した敵がVoidエネルギーで爆発する。' },
   'Elemental Enhancement': { name: '属性強化', desc: '敵は+100%の属性ダメージを与え、属性ダメージに対する+85%の耐性を持つ。' },
   'Eximus Reinforcement': { name: 'エクシマスの増援', desc: '追加のエクシマスユニットが出現する。' },
-  'Bold Venture': { name: '乾坤一擲(けんこんいってき)', desc: '敵の与ダメージ-15%・被ダメージ+15%。代わりに移動・攻撃・発射速度が+15%上昇する。' }, // 仮
-  'Devil\'s Bargain': { name: '悪魔の取引', desc: '倒された敵の4m内にいる分隊メンバーは発射速度が25％上昇するが、弾薬効率が50％減少する。' },
+  'Bold Venture': { name: '乾坤一擲(けんこんいってき)', desc: '敵の与ダメージ-15%・被ダメージ+15%。代わりに敵の移動・攻撃・発射速度が+15%上昇する。' }, // 仮
+  'Devil\'s Bargain': { name: '悪魔の取引', desc: '倒された敵の4m内にいる分隊メンバーは発射速度が25%上昇するが、弾薬効率が50%減少する。' },
   'Entanglement': { name: '絡み合い', desc: '倒された敵の4m内にいる分隊メンバーの移動速度とパルクール速度を減少する。' },
   'Commanding Calvarin': { name: '指揮機カルヴァリン', desc: 'ローグ・カルヴァリンが強化され、着弾時に爆発する弾丸を使用する。(オーバーガードとネクロメカに対して5倍のダメージ)' },
   'Explosive Potential': { name: '爆発的可能性', desc: 'シャフリング・フラグメントが、爆発するラプチャリング・フラグメントに置き換わる。' },
@@ -472,10 +470,10 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Vampiric Syndrome': { name: '吸血鬼症候群', desc: '毎秒ヘルスを失う。敵を倒すとヘルスが回復する。' },
   // Conductive Current は上で定義済み
   'Void Energy Overload': { name: 'アビリティ オーバーロード', desc: 'アビリティ使用時に近くでVoidの裂け目が開く。' },
-  'Undersupplied': { name: '供給不足', desc: 'すべての武器の最大弾薬数が75％減少する。' },
-  'Constriction': { name: '狭窄', desc: '最大エネルギーが75％減少。' },
+  'Undersupplied': { name: '供給不足', desc: 'すべての武器の最大弾薬数が75%減少する。' },
+  'Energy Starved': { name: '狭窄', desc: '最大エネルギーが75%減少。' },
   'Hypersensitive': { name: '過敏症', desc: 'ステータス低下効果の持続時間が3倍になる。' },
-  'Dull Blade': { name: 'なまくら', desc: '-50％近接コンボ確率。' },
+  'Dull Blade': { name: 'なまくら', desc: '-50%近接コンボ確率。' },
   'Permanent Injury': { name: '後遺症', desc: '被ダメージ毎に最大ヘルスが減少(×0.985)。(12秒間ダメージを受けなければ最大ヘルスの3%ずつ回復)' },
   'Anti Guard': { name: '油断', desc: '自身と仲間のオーバーガード獲得量が75%減少。' },
 
