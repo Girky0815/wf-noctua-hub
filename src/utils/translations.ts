@@ -474,7 +474,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Energy Starved': { name: '狭窄', desc: '最大エネルギーが75%減少。' },
   'Hypersensitive': { name: '過敏症', desc: 'ステータス低下効果の持続時間が3倍になる。' },
   'Dull Blade': { name: 'なまくら', desc: '-50%近接コンボ確率。' },
-  'Permanent Injury': { name: '後遺症', desc: '被ダメージ毎に最大ヘルスが減少(×0.985)。(12秒間ダメージを受けなければ最大ヘルスの3%ずつ回復)' },
+  'Permanent Injury': { name: '後遺症', desc: '被ダメージ毎に最大ヘルスが減少(ランク0基礎値×0.985)。(12秒間ダメージを受けなければ最大ヘルスの3%が回復)' },
   'Anti Guard': { name: '油断', desc: '自身と仲間のオーバーガード獲得量が75%減少。' },
 
   // Wikiやその他ソースからの補完 (MD未記載のためコメントアウト)
