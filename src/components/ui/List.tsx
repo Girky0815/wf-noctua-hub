@@ -21,7 +21,7 @@ export const ListItem: React.FC<ListItemProps> = ({ children, className = '', on
     onClick={onClick}
     className={`
       bg-surface-bright transition-colors
-      rounded-[4px] first:rounded-t-3xl last:rounded-b-3xl
+      rounded-[4px] first:rounded-t-[20px] last:rounded-b-[20px]
       ${onClick ? 'cursor-pointer hover:bg-surface-container-high' : ''}
       ${className}
     `}
