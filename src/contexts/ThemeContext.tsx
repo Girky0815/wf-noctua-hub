@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-export type Theme = 'light' | 'dark' | 'black';
+import { THEME_KEY } from '../utils/constants';
+import type { Theme } from '../types/theme';
+export type { Theme };
 
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
 }
 
-const THEME_KEY = 'noctua-hub-theme';
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 

@@ -51,7 +51,6 @@ export const getEffectiveCycle = (cycle: Cycle | undefined, type: CycleType, off
       period2Duration = 50 * 60 * 1000;  // Vome
       break;
   }
-  totalDuration = period1Duration + period2Duration;
 
   // 2. 補正適用後に、activation が未来になってしまった場合の処理 (巻き戻し)
   // 例: APIで「開始直後(残りFull)」のときに、offset=+10分 をすると activation が未来になる
@@ -93,7 +92,6 @@ export const getEffectiveCycle = (cycle: Cycle | undefined, type: CycleType, off
   if (expiryTime <= now) {
     while (expiryTime <= now) {
       // 次のサイクルへ進める
-      let nextDuration = 0;
       // 単純に totalDuration 単位で進めるのではなく、State1 -> State2 の切り替えを考慮する必要があるが、
       // ここも「時刻」ベースで考える。
       // 現在の activation ~ expiry の期間は何の状態か？
@@ -116,14 +114,8 @@ export const getEffectiveCycle = (cycle: Cycle | undefined, type: CycleType, off
   // now - activationTime = 経過時間 (elapsed)
   // StateX が State1 なのか State2 なのかは cycle.state から分かる。
 
-  // 初期状態(APIデータのstate)がState1かState2か
-  let isApiState1 = false;
-  if (type === 'cetus') isApiState1 = cycle.isDay;
-  else if (type === 'vallis') isApiState1 = cycle.state === 'cold';
-  else if (type === 'cambion') isApiState1 = cycle.state === 'fass';
 
   // 経過時間
-  let elapsed = now - activationTime;
 
   // もし巻き戻しロジックで activationTime をいじった場合、Stateも反転している可能性があるため、
   // 上記のwhileループアプローチとアンカー方式を混ぜると危険。

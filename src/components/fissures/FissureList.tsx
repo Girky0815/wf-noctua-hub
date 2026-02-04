@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Fissure } from '../../types/warframe';
 import { translateMissionType, translateFaction, translateNode, translateTier } from '../../utils/translations';
-import { formatTime } from '../../utils/time';
 import { useCountdown } from '../../hooks/useCountdown';
 import { SectionTitle } from '../ui/SectionTitle';
 import { ListGroup, ListItem, ListTile } from '../ui/List';

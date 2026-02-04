@@ -9,12 +9,21 @@ export const FissuresPage: React.FC = () => {
   const [filterMode, setFilterMode] = React.useState<'normal' | 'hard' | 'storm'>('normal');
   const [isScrolled, setIsScrolled] = React.useState(false);
 
+  // Calculate 'now' safely for rendering and filtering
+  const [now, setNow] = React.useState(() => Date.now());
+
   React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
+    // Scroll listener
+    const handleScroll = () => setIsScrolled(window.scrollY > 0);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Timer for updating 'now' (every minute to refresh status)
+    const timer = setInterval(() => setNow(Date.now()), 60000);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(timer);
+    };
   }, []);
 
   if (isError) {
@@ -30,8 +39,8 @@ export const FissuresPage: React.FC = () => {
   const filteredFissures = React.useMemo(() => {
     if (!worldState?.fissures) return [];
 
-    // 現在時刻
-    const now = Date.now();
+
+    // Use state-based 'now'
 
     return worldState.fissures.filter(f => {
       // 期限切れを除外
@@ -45,9 +54,9 @@ export const FissuresPage: React.FC = () => {
 
   const isStale = React.useMemo(() => {
     if (!worldState?.timestamp) return false;
-    const diff = Date.now() - new Date(worldState.timestamp).getTime();
+    const diff = now - new Date(worldState.timestamp).getTime();
     return diff > 30 * 60 * 1000;
-  }, [worldState?.timestamp]);
+  }, [worldState?.timestamp, now]);
 
   const toggleFilter = (mode: 'hard' | 'storm') => {
     setFilterMode(current => current === mode ? 'normal' : mode);

@@ -8,20 +8,11 @@ interface UpdateNotificationModalProps {
 }
 
 export const UpdateNotificationModal: React.FC<UpdateNotificationModalProps> = ({ onClose }) => {
-  const [content, setContent] = useState<string>('');
   const { markUpdateSeen } = useSettings();
   const currentVersion = packageJson.version;
 
-  useEffect(() => {
-    // Find update log for current version
-    const updateLog = updates.find(u => u.version === currentVersion);
-    if (updateLog) {
-      setContent(updateLog.content);
-    } else {
-      // Fallback or default message if no log found for this version
-      setContent('更新情報が見つかりませんでした。');
-    }
-  }, [currentVersion]);
+  const updateLog = updates.find(u => u.version === currentVersion);
+  const content = updateLog ? updateLog.content : '更新情報が見つかりませんでした。';
 
   const handleClose = () => {
     markUpdateSeen(currentVersion);
@@ -74,8 +65,8 @@ export const UpdateNotificationModal: React.FC<UpdateNotificationModalProps> = (
 
   return (
     <>
-      <div className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm transition-opacity" />
-      <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-60 bg-black/30 backdrop-blur-sm transition-opacity" />
+      <div className="fixed inset-0 z-70 flex items-center justify-center p-4">
         <div className="bg-surface-container-high w-full max-w-md rounded-3xl shadow-xl overflow-hidden flex flex-col max-h-[80vh]">
           {/* Header */}
           <div className="p-6 pb-2">

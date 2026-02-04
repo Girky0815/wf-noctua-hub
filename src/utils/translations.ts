@@ -168,7 +168,7 @@ export const translateNode = (node: string): string => {
   // "NodeName (Planet)" の形式を想定
   const match = node.match(/^(.+)\s\((.+)\)$/);
   if (match) {
-    const [_, name, planet] = match;
+    const [, name, planet] = match;
     const translatedPlanet = planetNames[planet] || planet;
     return `${name} (${translatedPlanet})`;
   }

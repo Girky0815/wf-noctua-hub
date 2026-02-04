@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SectionTitle } from '../ui/SectionTitle';
 import { ListGroup, ListTile } from '../ui/List';
@@ -10,7 +10,7 @@ interface SideMenuProps {
 
 export const SideMenu: React.FC<SideMenuProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
+  // アニメーション制御: isOpenが変わったら少し送らせてDOMの表示/非表示を切り替える...
 
   // アニメーション制御: isOpenが変わったら少し送らせてDOMの表示/非表示を切り替える...
   // いや、Tailwindのtransitionを使うなら常にレンダリングしておいて、opacity/translateを切り替えるのが楽。

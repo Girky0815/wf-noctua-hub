@@ -9,10 +9,23 @@ import { ListGroup, ListTile, ListItem } from '../components/ui/List';
 
 export const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
-  const { resetSettings, resetUpdateSeen } = useSettings();
-  const [showCredits, setShowCredits] = useState(false);
+  const { resetSettings } = useSettings();
+  const [showCredits] = useState(false); // Used in render (conditional check), but if setter is unused, maybe it's meant to be static or toggled? Wait, earlier code had setShowCredits.
+  // Actually, showCredits is used in JSX: {showCredits && (...)}. But setShowCredits was unused.
+  // If the user wants to toggle it, they need the setter.
+  // Looking at the code: "credits" link navigates to '/credits'. The in-page credits block was seemingly abandoned or hidden?
+  // The lint says "setShowCredits is assigned but never used".
+  // I will check if there is a button to toggle it.
+  // The code has: onClick={() => navigate('/credits')}. So the inline block is likely dead code or for debugging.
+  // I will keep showCredits state as false (const) or just remove the block if I'm confident.
+  // But safest is to remove the unused setter.
   const [showRawData, setShowRawData] = useState(false);
   const { worldState, isLoading, isError } = useWarframeData();
+
+  // Time tracking for stale data check
+  const [now] = useState(() => Date.now()); // Initial check is enough for settings page, or update?
+  // Settings page usually doesn't need real-time update of "minutes ago" unless user stares at it.
+  // I'll keep it simple: just one-time check on mount is fine to fix purity.
 
   const handleReset = () => {
     if (window.confirm('すべての設定をリセットして初期状態に戻しますか？')) {
@@ -23,7 +36,7 @@ export const SettingsPage: React.FC = () => {
 
   // APIステータスの判定
   const timeDiff = worldState?.timestamp
-    ? Math.floor((Date.now() - new Date(worldState.timestamp).getTime()) / 60000)
+    ? Math.floor((now - new Date(worldState.timestamp).getTime()) / 60000)
     : 0; // 分単位の差分
 
   const isStale = timeDiff > 30; // 30分以上で遅延とみなす

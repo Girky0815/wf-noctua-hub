@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Sortie } from '../../types/warframe';
-import { translateMissionType, translateNode, translateFaction, translateSortieModifier, translateSortieDescription } from '../../utils/translations';
+import { translateMissionType, translateNode, translateSortieModifier, translateSortieDescription } from '../../utils/translations';
 import { ListGroup, ListItem } from '../ui/List';
 import { Tooltip } from '../ui/Tooltip';
 
@@ -11,24 +11,22 @@ interface SortieCardProps {
 const STAGE_NUMBERS = ['1', '2', '3'];
 
 export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
-  if (!sortie) return <div className="h-40 animate-pulse rounded-3xl bg-surface-container-high" />;
+  const isArchon = sortie?.boss?.includes('Archon') ?? false;
 
-  const isArchon = sortie.boss.includes('Archon');
-  const title = isArchon ? 'アルコン討伐戦' : '今日のソーティ';
-
-  // データ正規化: variantsがある場合はそれを使用、なければmissionsを使用（アルコン討伐戦）
-  const hasVariants = sortie.variants && sortie.variants.length > 0;
-  const hasMissions = sortie.missions && sortie.missions.length > 0;
+  // データ正規化
+  const hasVariants = sortie?.variants && sortie.variants.length > 0;
+  const hasMissions = sortie?.missions && sortie.missions.length > 0;
 
   // 表示用データの構築
   const items = React.useMemo(() => {
-    if (hasVariants) {
+    if (!sortie) return [];
+
+    if (hasVariants && sortie.variants) {
       return sortie.variants.map(v => ({
         missionType: v.missionType,
         node: v.node,
-        // descriptionも翻訳する (Modifierを渡して特定の翻訳を上書き可能にする)
         description: translateSortieDescription(v.modifier),
-        badge: translateSortieModifier(v.modifier), // 赤字で表示する短いテキスト
+        badge: translateSortieModifier(v.modifier),
         isTranslated: false
       }));
     }
@@ -36,17 +34,15 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
       const levels = ['130-135', '135-140', '145-150'];
       return sortie.missions.map((m, i) => {
         let typeName = translateMissionType(m.type);
-        // アルコン討伐戦の3ステージ目(Assassination)は「決戦」
         if (isArchon && i === 2 && m.type === 'Assassination') {
-          // "Archon Amar" -> "Amar アルコン"
           const bossName = sortie.boss.replace('Archon ', '');
           typeName = `決戦 (${bossName} アルコン)`;
         }
         return {
-          missionType: typeName, // 既に翻訳/置換済みとして扱う
+          missionType: typeName,
           node: m.node,
-          description: `ナルメル ${levels[i]}`, // descriptionエリアにレベルを表示
-          badge: `Lv.${levels[i]}`, // badgeエリアにもレベルを表示
+          description: `ナルメル ${levels[i]}`,
+          badge: `Lv.${levels[i]}`,
           isTranslated: true
         };
       });
@@ -54,6 +50,9 @@ export const SortieCard: React.FC<SortieCardProps> = ({ sortie }) => {
     return [];
   }, [sortie, hasVariants, hasMissions, isArchon]);
 
+  if (!sortie) return <div className="h-40 animate-pulse rounded-3xl bg-surface-container-high" />;
+
+  // title was unused, removed.
 
   // レンダリング
   return (

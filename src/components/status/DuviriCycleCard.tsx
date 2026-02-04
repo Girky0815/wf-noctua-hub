@@ -23,33 +23,27 @@ export const DuviriCycleCard: React.FC<DuviriCycleCardProps> = ({ cycle, isPredi
 
   let stateLabel = cycle.state;
   let iconSrc = IconVoid;
-  let colorClass = 'text-primary';
 
   switch (stateKey) {
     case 'joy':
       stateLabel = '幸福';
       iconSrc = IconVoid;
-      colorClass = 'text-purple-300'; // Void color
       break;
     case 'anger':
       stateLabel = '激怒';
       iconSrc = IconHeat;
-      colorClass = 'text-red-500';
       break;
     case 'envy':
       stateLabel = '嫉妬';
       iconSrc = IconToxin;
-      colorClass = 'text-green-600';
       break;
     case 'sorrow':
       stateLabel = '悲哀';
       iconSrc = IconCold;
-      colorClass = 'text-blue-400';
       break;
     case 'fear':
       stateLabel = '恐怖';
       iconSrc = IconElectricity;
-      colorClass = 'text-purple-400';
       break;
   }
 

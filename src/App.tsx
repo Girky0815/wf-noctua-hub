@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import { SettingsProvider, useSettings } from './contexts/SettingsContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 
@@ -119,14 +119,8 @@ const AppContent = () => {
   const { isFirstVisit, lastSeenVersion } = useSettings();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { worldState } = useWarframeData(); // Fetch worldState
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-
-  useEffect(() => {
-    // Check for update
-    if (!isFirstVisit && lastSeenVersion !== packageJson.version) {
-      setShowUpdateModal(true);
-    }
-  }, [lastSeenVersion, isFirstVisit]);
+  // Lazy initialize showUpdateModal based on current settings
+  const [showUpdateModal, setShowUpdateModal] = useState(() => !isFirstVisit && lastSeenVersion !== packageJson.version);
 
   if (isFirstVisit) {
     return (

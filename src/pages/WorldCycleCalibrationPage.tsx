@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSettings, DEFAULT_CYCLE_CALIBRATION } from '../contexts/SettingsContext';
+import { useSettings } from '../contexts/SettingsContext';
+import { DEFAULT_CYCLE_CALIBRATION } from '../utils/constants';
 import { useWarframeData } from '../hooks/useWarframeData';
 import { SectionTitle } from '../components/ui/SectionTitle';
 import { CycleCard } from '../components/status/CycleCard';
@@ -11,7 +12,7 @@ export const WorldCycleCalibrationPage: React.FC = () => {
   const navigate = useNavigate();
   const { cycleCalibration, updateCycleCalibration } = useSettings();
   const { worldState } = useWarframeData();
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(() => Date.now());
 
   // 自動更新: 1秒ごとに現在時刻(now)を更新し、プレビュー表示を再計算させる
   // これにより、補正後の時間が「終了」を迎えた瞬間に自動で表示が切り替わる

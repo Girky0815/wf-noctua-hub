@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { DEFAULT_CYCLE_CALIBRATION, SETTINGS_KEY } from '../utils/constants';
 
 export interface DashboardWidget {
   id: string;
@@ -28,10 +29,6 @@ const defaultDashboardConfig: DashboardWidget[] = [
   { id: 'voidTrader', visible: true, order: 8 },
 ];
 
-export const DEFAULT_CYCLE_CALIBRATION = {
-  cetus: 31,
-  vallis: 801,
-};
 
 const defaultSettings: Settings = {
   isFirstVisit: true,
@@ -49,7 +46,6 @@ interface SettingsContextType extends Settings {
   updateCycleCalibration: (location: 'cetus' | 'vallis', offset: number) => void;
 }
 
-const SETTINGS_KEY = 'noctua-hub-settings';
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 

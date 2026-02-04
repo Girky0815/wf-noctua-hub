@@ -1,4 +1,4 @@
-import type { RelicItem, RelicRefinement, RelicState, RelicDrop, VaultTrader, VaultTraderInventoryItem, RelicReward } from '../types/warframe';
+import type { RelicItem, RelicRefinement, RelicState, VaultTrader, VaultTraderInventoryItem, RelicReward } from '../types/warframe';
 
 // 各精錬度におけるレアリティごとのドロップ確率 (%)
 // Intact: Common 76%, Uncommon 22%, Rare 2%

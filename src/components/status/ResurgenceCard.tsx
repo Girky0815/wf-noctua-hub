@@ -24,10 +24,9 @@ const getCategoryIcon = (category: ResurgenceCategory): string => {
 
 
 export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
-  if (!trader) return null;
-
   // 1. Filter & Map items
   const processedItems = React.useMemo(() => {
+    if (!trader?.inventory) return [];
     return trader.inventory
       .filter(r => {
         const type = (r.attributes?.itemType || r.type || '').toLowerCase();
@@ -71,7 +70,7 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
           wikiUrl
         };
       });
-  }, [trader.inventory]);
+  }, [trader?.inventory]);
 
   // 2. Deduplicate
   const uniqueItems = React.useMemo(() => {
@@ -88,6 +87,8 @@ export const ResurgenceCard: React.FC<ResurgenceCardProps> = ({ trader }) => {
       return a.displayName.localeCompare(b.displayName);
     });
   }, [processedItems]);
+
+  if (!trader) return null;
 
 
   return (
