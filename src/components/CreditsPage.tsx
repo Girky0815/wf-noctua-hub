@@ -35,23 +35,23 @@ export const CreditsPage: React.FC = () => {
           <ListTile
             icon="dns"
             title="Warframe Status API"
-            subtitle="Warframeのリアルタイム情報"
-            onClick={() => window.open('https://warframestat.us/', '_blank')}
-            trailing={<span className="material-symbols-rounded text-on-surface-variant font-display text-xs">api.warframestat.us/pc</span>}
+            subtitle="ゲーム内のライブデータ"
+            onClick={() => window.open('https://github.com/wfcd/warframe-status', '_blank')}
+            trailing={<span className="text-on-surface-variant font-display text-[10px] opacity-80">wfcd/warframe-status</span>}
           />
           <ListTile
             icon="database"
             title="Warframe Items API"
             subtitle="レリック、MOD、武器などの静的アイテムデータ"
-            onClick={() => window.open('https://docs.warframestat.us/', '_blank')}
-            trailing={<span className="material-symbols-rounded text-on-surface-variant font-display text-xs">api.warframestat.us/items</span>}
+            onClick={() => window.open('https://github.com/wfcd/warframe-items', '_blank')}
+            trailing={<span className="text-on-surface-variant font-display text-[10px] opacity-80">wfcd/warframe-items</span>}
           />
           <ListTile
             icon="opacity"
             title="Warframe Drops API"
             subtitle="ミッション報酬、レリックの中身、ドロップ率データ"
-            onClick={() => window.open('https://warframestat.us/', '_blank')}
-            trailing={<span className="material-symbols-rounded text-on-surface-variant font-display text-xs">api.warframestat.us/drops</span>}
+            onClick={() => window.open('https://github.com/wfcd/warframe-drop-data', '_blank')}
+            trailing={<span className="text-on-surface-variant font-display text-[10px] opacity-80">wfcd/warframe-drop-data</span>}
           />
         </ListGroup>
       </div>
@@ -127,7 +127,26 @@ export const CreditsPage: React.FC = () => {
           <ListTile
             icon="style"
             title="Tailwind CSS"
-            subtitle="Utility-first な CSS フレームワーク"
+            subtitle="Utility-first CSS Framework"
+            trailing={<span className="text-xs text-on-surface-variant">MIT</span>}
+          />
+          <ListTile
+            icon="palette"
+            title="Material Color Utilities"
+            subtitle="Material Color を生成するライブラリ"
+            trailing={<span className="text-xs text-on-surface-variant">Apache 2.0</span>}
+          />
+          <ListTile
+            icon="brush"
+            title="react-colorful"
+            subtitle="カラーピッカーのコンポーネント"
+            trailing={<span className="text-xs text-on-surface-variant">MIT</span>}
+          />
+          <ListTile
+            icon="design_services"
+            title="Material 3 Expressive"
+            subtitle="本アプリで使用しているデザインシステム"
+            onClick={() => window.open('https://m3.material.io/', '_blank')}
             trailing={<span className="text-xs text-on-surface-variant">MIT</span>}
           />
           <ListTile
