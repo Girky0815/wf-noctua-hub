@@ -87,8 +87,8 @@ export const SettingsPage: React.FC = () => {
       {/* 外観設定 */}
       <div className="mb-6">
         <SectionTitle title="外観設定" />
-        <div className="overflow-hidden rounded-[20 px] bg-surface-bright border border-outline/10 ">
-          <div className="bg-surface-bright px-6 py-4  border-outline/10">
+        <div className="overflow-hidden rounded-[20px] bg-surface-bright">
+          <div className="bg-surface-bright px-6 py-4">
             <div className="flex items-center gap-3 mb-1">
               <span className="material-symbols-rounded text-primary text-xl">palette</span>
               <span className="font-bold text-lg font-display">テーマ</span>
