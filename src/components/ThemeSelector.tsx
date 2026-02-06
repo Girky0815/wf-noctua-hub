@@ -2,12 +2,15 @@ import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import type { ThemeMode, ThemeColorMode } from '../types/theme';
 
+import { ColorPicker } from './ui/ColorPicker';
+
 interface ThemeSelectorProps {
   className?: string;
 }
 
 export const ThemeSelector: React.FC<ThemeSelectorProps> = ({ className = '' }) => {
   const { mode, setMode, colorMode, setColorMode, customColor, setCustomColor } = useTheme();
+  const [showPicker, setShowPicker] = React.useState(false);
 
   const handleModeChange = (newMode: ThemeMode) => {
     setMode(newMode);
@@ -15,10 +18,6 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({ className = '' }) 
 
   const handleColorModeChange = (newColorMode: ThemeColorMode) => {
     setColorMode(newColorMode);
-  };
-
-  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomColor(e.target.value);
   };
 
   // Helper buttons
@@ -91,28 +90,35 @@ export const ThemeSelector: React.FC<ThemeSelectorProps> = ({ className = '' }) 
           {colorMode === 'custom' && (
             <div className="flex items-center gap-4 rounded-2xl bg-surface-container-high p-4 animate-in fade-in slide-in-from-top-2 duration-300">
               <div
-                className="h-10 w-10 rounded-full border border-outline/20 shadow-sm shrink-0"
+                className="h-10 w-10 rounded-full border border-outline/20 shadow-sm shrink-0 cursor-pointer hover:scale-105 transition-transform"
                 style={{ backgroundColor: customColor }}
+                onClick={() => setShowPicker(true)}
               />
               <div className="flex flex-col flex-1">
-                <label htmlFor="custom-color-picker" className="text-xs font-bold text-on-surface-variant mb-1">
-                  シードカラーを選択
+                <label className="text-xs font-bold text-on-surface-variant mb-1">
+                  シードカラー(元にする色)を設定
                 </label>
                 <div className="flex items-center gap-3">
-                  <div className="relative flex-1 h-10 w-full">
-                    <input
-                      id="custom-color-picker"
-                      type="color"
-                      value={customColor}
-                      onChange={handleColorChange}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                    />
-                    <div className="absolute inset-0 bg-surface-container-highest rounded-lg border border-outline-variant flex items-center px-3">
-                      <span className="text-sm font-mono opacity-80 uppercase tracking-widest">{customColor}</span>
-                    </div>
-                  </div>
+                  <button
+                    onClick={() => setShowPicker(true)}
+                    className="relative flex-1 h-10 w-full rounded-lg bg-surface-container-highest border border-outline-variant flex items-center px-3 hover:bg-surface-variant transition-colors group"
+                  >
+                    <span className="text-sm font-mono opacity-80 uppercase tracking-widest">{customColor}</span>
+                    <span className="material-symbols-rounded absolute right-3 opacity-50 group-hover:opacity-100 text-lg">palette</span>
+                  </button>
                 </div>
               </div>
+
+              {/* Custom Color Picker Modal */}
+              {showPicker && (
+                <ColorPicker
+                  color={customColor}
+                  onChange={(c) => {
+                    setCustomColor(c);
+                  }}
+                  onClose={() => setShowPicker(false)}
+                />
+              )}
             </div>
           )}
         </div>

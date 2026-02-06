@@ -89,7 +89,7 @@ export const SettingsPage: React.FC = () => {
           <div className="bg-surface-container-low px-6 py-4 border-b border-outline/10">
             <div className="flex items-center gap-3 mb-1">
               <span className="material-symbols-rounded text-primary text-xl">palette</span>
-              <span className="font-bold text-lg font-display">テーマとか</span>
+              <span className="font-bold text-lg font-display">テーマ</span>
             </div>
             <p className="text-sm text-on-surface-variant opacity-80 pl-8">
               アプリ全体の配色やモードを設定します
