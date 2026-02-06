@@ -20,7 +20,7 @@ export const CircuitPage: React.FC = () => {
     <div className="flex flex-col gap-6 pb-20 pt-4">
       <SectionTitle title="サーキット報酬" />
 
-      <div className="px-4 text-sm text-on-surface-variant opacity-80">
+      <div className="text-sm text-on-surface-variant opacity-80">
         <p>
           デュヴィリのサーキットでは、毎週異なるWarframeやIncarnon Genesisが報酬として提供されます。
           <br />
@@ -28,7 +28,7 @@ export const CircuitPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-surface-container rounded-xl p-2 mx-2">
+      <div className="bg-surface-container rounded-xl p-2">
         {duviriCycle ? (
           <CircuitCard cycle={duviriCycle} />
         ) : (
