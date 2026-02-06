@@ -86,6 +86,7 @@ jobs:
   deploy:
     name: GitHub Pages への反映
     needs: build
+    if: needs.build.result == 'success'
     runs-on: ubuntu-latest
     environment:
       name: "github-pages"
