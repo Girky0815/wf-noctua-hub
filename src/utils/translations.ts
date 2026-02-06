@@ -370,26 +370,27 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Damage Link': { name: '損傷リンク', desc: '10メートル以内の敵同士でダメージリンクグループが形成される。一体に与えられたダメージは、繋がっているグループ全体に均等に分配される。' },
   // Sealed Armor は共通で定義
   'Unpowered Capsules': { name: '寄生タワー', desc: '生命維持装置から半径15m内の敵を20体倒すまで装置を発動できない。' },
+  'Parasitic Towers': { name: '寄生タワー', desc: '生命維持装置から半径15m内の敵を20体倒すまで装置を発動できない。' },
   'Hostile Support': { name: '敵対的支援', desc: '生命維持装置は無効化される。ネクロメカが90秒ごとに出現し、倒すと6個の生命維持モジュールをドロップする。' },
   'Hazardous Area': { name: '危険エリア', desc: '生命維持装置を起動すると危険エリアを排除できる。' },
   'Hazardous Wares': { name: '危険物資', desc: 'アンフォールは運搬中に関連する属性ダメージを与える。' },
-  'Alchemical Shields': { name: '無敵の錬金術', desc: '敵の10%が特定の属性バリア(アンフォールでのみ破壊可)を持つ。(バリア持ちは対応属性のオーラとマークが表示される)' },
+  'Alchemical Shields': { name: '無敵の錬金術', desc: '敵の10%が特定の属性バリア(無敵、アンフォールでのみ破壊可)を持つ。(バリア持ちは対応する属性色のオーラとマークが表示される)' },
   'Eximus Amphors': { name: 'エクシマスアンフォール', desc: 'アンフォールはエクシマスからのみドロップする。(バグでエクシマスが湧かなくなった場合、ホスト移行か未使用アンフォールの処分を推奨)' },
   'Eroding Senses': { name: '感覚麻痺', desc: 'オリクルとビトリウムが時間経過と共にダメージを受ける。必要なボスフェングリフを集めることでダメージが止まり微量の回復を行う。' },
-  'Glyph Inflation': { name: 'グリフインフレーション', desc: 'セキュリティシステムの起動には2倍のボスフェングリフが必要。' },
+  'Glyph Inflation': { name: 'グリフインフレーション', desc: 'セキュリティシステムの起動には2倍(=100個)のボスフェングリフが必要。' },
   'Glyph Trap': { name: 'グリフトラップ', desc: '一部のボスフェングリフが触れた者を250m先へテレポートさせる罠となる。ポータルは見つかった後45秒間残る。' },
-  'Radioactive Decay': { name: '放射性衰弱', desc: '全ての敵が無敵化し、放射線状態異常が付与されている場合のみダメージを受ける。ミッション中Chyrinka Pillarがランダムに出現し放射線状態異常を付与する。' },
+  'Radioactive Decay': { name: '放射性衰弱', desc: '全ての敵が無敵化し、放射線状態異常が付与されている場合のみダメージを受ける。ミッション中 Chyrinka Pillar がランダムに出現し放射線状態異常を付与する。' },
   'Barbed Glyphs': { name: 'バーブグリフ', desc: 'グリフ回収時に少量の火炎ダメージと状態異常を受ける。' },
-  'Troop Deployment': { name: '戦力配備', desc: 'エクシマスの敵がフラグメント・タイドと最終形態を支援する。' },
+  'Coordinated Front': { name: '戦力配備', desc: 'エクシマスの敵がフラグメント・タイドと最終形態を支援する。' },
   'Relentless Tide': { name: '容赦ない潮流', desc: 'フラグメント・タイドが攻撃を止めなくなる。' },
   'Angelic Company': { name: '天使の仲間', desc: 'Void天使がフラグメントの最終形態と共に戦う。' },
   'Fragment Two': { name: 'フラグメント・ツー', desc: '最終決戦で2体のフラグメントと対峙する。' },
-  'Engorged Gruzzling': { name: '充血グラズリング', desc: '全グラズリングがエクシマスになる。' },
+  'Engorged Gruzzlings': { name: '充血グラズリング', desc: '全グラズリングがエクシマスになる。' },
   'Unified Purpose': { name: '統一目的', desc: '敵が起動済みコンジットを標的にし、破壊可能になる。(コンジットには防衛対象としてヘルスが設定される)' },
   'Double Trouble': { name: 'ダブルデモリッシャー', desc: '2体のネクロメカデモリッシャーがコンジットを攻撃するが、ヘルスは低め。' }, // Wiki: Double Demolisher
 
   // --- 次元アルキメデア (Temporal Archimedea) 偏差 (Deviations) ---
-  'Cache Crash': { name: 'キャッシュクラッシュ', desc: '補給品貯蔵庫の自爆タイマー(3分)がミッション開始と同時に作動する。(解錠失敗時、クリアに必要なキル数が2倍に増加)' },
+  'Cache Crash': { name: 'キャッシュクラッシュ', desc: '補給品貯蔵庫の自爆タイマー(3分)がミッション開始と同時に作動する。(解錠失敗時、ミッションクリアに必要なキル数が2倍に増加)' },
   // Sealed Armor は共通で定義
   'Breathless': { name: '息を止めて', desc: 'エリア全体が毒に覆われ、時間経過でダメージが増加する。敵がドロップするフィルター(半径5m/10秒)か、ヘルスクラバー付近(半径20m)ではダメージを受けない。' },
   'Pile-On': { name: '積み重ね', desc: 'テックロットはヘルスクラバーを近接攻撃し、接触時爆発を起こしヘルスクラバーの汚染率を25%上昇させる。' },
@@ -399,14 +400,14 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Growth Hormone': { name: '成長ホルモン', desc: 'レガサイトは世代ごとにより強力になる代わり、逃走が遅くなる。' },
   'Parallel Evolution': { name: '並行進化', desc: 'レガサイトが進化すると、マップ上の他の敵も新しいアビリティを得る。' },
   'Reinforcements': { name: '援軍', desc: '戦闘中、最初はスカルドラ、次にテックロットの援軍が登場する。' },
-  'Tank Super Toxic': { name: '毒タンク', desc: '戦車は毒のオーラをまとい、毒の軌跡を残し、攻撃は毒ダメージを与える。' },
+  'Toxic Tank': { name: '毒タンク', desc: '戦車は毒のオーラをまとい、毒の軌跡を残し、攻撃は毒ダメージを与える。' },
   'Thermian Plating': { name: 'サーミアンメッキ', desc: '戦車がサーミアンメッキを持ち、専用武器(Thermian RPG)でのみダメージを与えられる(第2形態も同様。敵からRPGを奪って攻撃する必要がある)。' },
   'Noise Suppression': { name: 'ノイズ抑制', desc: 'Flareの上空にドローンが飛び、エフェルボンガスをまき散らす。' },
   'Miasmite Mash': { name: 'ミアズマイト・マッシュ', desc: '敵は倒されるとミアズマイトをドロップし、即座にFlareに襲い掛かる。' },
   'Vampire Rock': { name: 'ヴァンプロック', desc: 'Flareの周囲(10m)にフィールド発生。内部にテンノがいるとアビリティ阻害・エネルギー減少と引き換えにFlareを回復する(テンノ不在時はFlareのヘルスが減少)。' },
 
   // --- リスクレベル (Risks: Common & Deep/Temporal) ---
-  'Hostile Regeneration': { name: '敵性再生', desc: '敵ヘルスが徐々に回復する。(5秒間ダメージを受けないと、毎秒最大ヘルスの10%を回復)' },
+  'Hostile Regeneration': { name: '敵性再生', desc: '敵ヘルスが徐々に回復する。(敵は5秒間ダメージを受けないと、毎秒最大ヘルスの10%を回復)' },
   'Vampyric Liminus': { name: 'バンパイヤ・リミナス', desc: '不死身のデュヴィリ・リミナスが出現し、近くの味方からヘルス(150/s, オーバーガード5倍)とエネルギー(25/s)を吸収する。(無敵化でもEN減少は防げないが、CCは有効)' },
   'Adaptive Resistance': { name: '適応抵抗', desc: '敵は与えられた属性ダメージに対する耐性を獲得する。5秒間その属性からダメージを受けなかった場合、耐性は失われる。' }, // API Key要確認
   'Bolstered Belligerents': { name: '戦闘員の増強', desc: 'すべての敵は最大ヘルスの50%分のオーバーガードを持つ。' },
@@ -420,7 +421,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Bold Venture': { name: '乾坤一擲(けんこんいってき)', desc: '敵の与ダメージ-15%・被ダメージ+15%。代わりに敵の移動・攻撃・発射速度が+15%上昇する。' }, // 仮
   'Devil\'s Bargain': { name: '悪魔の取引', desc: '倒された敵の4m内にいる分隊メンバーは発射速度が25%上昇するが、弾薬効率が50%減少する。' },
   'Entanglement': { name: '絡み合い', desc: '倒された敵の4m内にいる分隊メンバーの移動速度とパルクール速度を減少する。' },
-  'Commanding Calvarin': { name: '指揮機カルヴァリン', desc: 'ローグ・カルヴァリンが強化され、着弾時に爆発する弾丸を使用する。(オーバーガードとネクロメカに対して5倍のダメージ)' },
+  'Commanding Culverins': { name: '指揮機カルヴァリン', desc: 'ローグ・カルヴァリンが強化され、着弾時に爆発する弾丸を使用する。(オーバーガードとネクロメカに対して5倍のダメージ)' },
   'Explosive Potential': { name: '爆発的可能性', desc: 'シャフリング・フラグメントが、爆発するラプチャリング・フラグメントに置き換わる。' },
   'Alluring Arcocanids': { name: 'いざなうアルコカニド', desc: 'ローグ・アルコカニドが突進攻撃を行うと、WARFRAMEを前方へ引き寄せる' },
 
@@ -452,28 +453,28 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
 
   // --- パーソナルモディファイア (Personal Modifiers) ---
   'Gear Embargo': { name: 'ギア制限', desc: 'ギアアイテムが使用不可。' },
-  'Powerless': { name: 'アビリティ封印', desc: '50体の敵を倒すまでアビリティ封印。(分隊員・スペクターのキルも加算。転移やスペクターのアビリティは使用可)' },
+  'Powerless': { name: 'アビリティ封印', desc: '50体の敵を倒すまでアビリティ封印。(分隊員・スペクターによるキルも加算される。転移やスペクターのアビリティは常に使用可)' },
   'Secondary Wounds': { name: '二次創傷', desc: 'ダメージを受けるたびに、貫通状態異常を1スタック受ける。' }, // Wiki: 二次的創傷
-  'Lethargic Shields': { name: '不活性シールド', desc: 'シールドリチャージ遅延が500%増加。(通常6秒、完全枯渇時は24秒まで遅延)' },
+  'Lethargic Shields': { name: '不活性シールド', desc: 'シールドリチャージ遅延が500%増加。(通常6秒、シールドブレイク時は24秒まで遅延)' },
   'Ammo Deficit': { name: '弾薬不足(Deficit)', desc: '弾薬回復量が75%減少。(バッテリー武器やアビリティ武器には影響しない)' },
   'Fractured Armor': { name: 'ひび割れ', desc: 'アビリティを使用すると装甲値が10秒間10%減少する。' },
-  'Untreatable': { name: '治療不能', desc: 'ヘルスオーブ取得不可、ピックアップによる回復も無効。(Equilibrium等のMOD効果も含め、オーブによるヘルス回復は一切不可)' },
+  'Untreatable': { name: '治療不能', desc: 'ヘルスオーブ取得不可、ピックアップによる回復も無効。(Equilibrium等MODや紫紺アルコンの欠片の効果も含め、各種オーブによるヘルス回復は一切不可。)' },
   'Abbreviated Abilities': { name: 'アビリティ短縮', desc: 'アビリティ持続時間が50%減少。(MOD等で計算した最終値に乗算)' },
   'Swooning': { name: '失神消耗', desc: 'ヘルスダメージを受けると、ヒット毎に最大エネルギーの5%が消費される。' },
-  'Transference Distortion': { name: '転移障害', desc: 'オペレーター/漂流者への転移不可。(Last Gaspやネクロメカ搭乗も不可。転移不要なフォーカス受動効果は有効)' },
+  'Transference Distortion': { name: '転移障害', desc: 'オペレーター/漂流者への転移不可。(Last Gasp 発動やネクロメカ搭乗も不可。転移不要な Warframe 対象の受動フォーカス効果は有効)' },
   'Framecurse syndrome': { name: 'フレームカース・シンドローム', desc: 'アビリティ発動時にヘルス/オーバーガードへ直接50ダメージを受ける。(シールド無視)' },
   'Knifestep Syndrome': { name: 'ナイフステップ・シンドローム', desc: '移動中、速度に比例してヘルス/オーバーガードが減少する。(ジャンプ中は減少停止)' },
   'Exhaustion': { name: 'エネルギー枯渇', desc: '10メートル以内の敵一体につき、毎秒2エネルギーを失う。' },
+  'Energy Exhaustion': { name: 'エネルギー枯渇', desc: '10メートル以内の敵一体につき、毎秒2エネルギーを失う。' },
   'Ammo Scarcity': { name: '弾薬不足(Scarcity)', desc: '所持弾薬が毎秒約5%消失する。(バッテリー武器はリチャージ速度低下)' },
-  'Exposure Curse': { name: '摘発の呪い', desc: 'シールドが破壊されると、無限に持続するステータス効果を受ける。' }, // Wiki: 露出の呪い (内容要確認: シールド消失?) -> "摘発"の方がニュアンス近いか? 原文Exposure
+  'Exposure Curse': { name: '摘発の呪い', desc: 'シールドが0になる。' },
   'Hematic Syndrome': { name: '血紅症候群', desc: 'ダメージを受けるたびに切断状態異常が発生する。' },
   'Vampiric Syndrome': { name: '吸血鬼症候群', desc: '毎秒ヘルスを失う。敵を倒すとヘルスが回復する。' },
-  // Conductive Current は上で定義済み
   'Void Energy Overload': { name: 'アビリティ オーバーロード', desc: 'アビリティ使用時に近くでVoidの裂け目が開く。' },
   'Undersupplied': { name: '供給不足', desc: 'すべての武器の最大弾薬数が75%減少する。' },
   'Energy Starved': { name: '狭窄', desc: '最大エネルギーが75%減少。' },
   'Hypersensitive': { name: '過敏症', desc: 'ステータス低下効果の持続時間が3倍になる。' },
-  'Dull Blade': { name: 'なまくら', desc: '-50%近接コンボ確率。' },
+  'Dull Blades': { name: 'なまくら', desc: '-50%近接コンボ確率。' },
   'Permanent Injury': { name: '後遺症', desc: '被ダメージ毎に最大ヘルスが減少(ランク0基礎値×0.985)。(12秒間ダメージを受けなければ最大ヘルスの3%が回復)' },
   'Anti Guard': { name: '油断', desc: '自身と仲間のオーバーガード獲得量が75%減少。' },
 
@@ -488,6 +489,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   // 'Void Energy Overload': { name: 'Voidエネルギー過負荷', desc: 'Voidエネルギーが蓄積し、一定量を超えると爆発してダメージを受ける。' },
 };
 
+// 深淵と次元で同じAPI値だが，名前と効果が異なるものをここに設定
 export const translateArchimedeaModifier = (name: string, desc: string, typeKey?: string): { name: string; desc: string } => {
   // Deep (CT_LAB) vs Dimensional (CT_HEX) naming differences
   if (name === 'Sealed Armor') {
