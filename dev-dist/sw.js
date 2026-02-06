@@ -82,7 +82,7 @@ define(['./workbox-5a5d9309'], (function (workbox) { 'use strict';
     "revision": "5c3b121e1f2543ff3d78ef32372a9fdf"
   }, {
     "url": "/wf-noctua-hub/index.html",
-    "revision": "0.r7q8j95qg0k"
+    "revision": "0.m3887e46rg8"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/wf-noctua-hub/index.html"), {

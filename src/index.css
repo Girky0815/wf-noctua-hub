@@ -209,6 +209,7 @@
 @layer base {
   html {
     scrollbar-gutter: stable;
+    scrollbar-color: var(--color-secondary) var(--color-surface-dim);
   }
 
   body {
@@ -217,7 +218,6 @@
     font-family: theme('fontFamily.sans');
     font-variant-ligatures: none;
     -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Apply ROND 100 and GenJyuuGothicX for bold text/headings */
@@ -247,8 +247,7 @@
   user-select: none;
   
   /* Rendering opts */
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'liga';
+  -webkit-font-smoothing: subpixel-antialiased;
+  /* text-rendering: optimizeLegibility; */
+  /* font-feature-settings: ''; */
 }
