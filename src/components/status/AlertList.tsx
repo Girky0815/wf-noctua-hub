@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Alert } from '../../types/warframe';
-import { translateMissionType, translateResource, translateFaction } from '../../utils/translations';
+import { translateMissionType, translateResource, translateFaction, translateNode } from '../../utils/translations';
 import { formatTime } from '../../utils/time';
 import { useCountdown } from '../../hooks/useCountdown';
 import { ListGroup, ListItem } from '../ui/List';
@@ -51,7 +51,7 @@ const AlertItem: React.FC<{ alert: Alert }> = ({ alert }) => {
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="font-bold text-on-surface">{translateMissionType(alert.mission.type)}</span>
-          <span className="text-xs text-on-surface-variant font-display">{alert.mission.node}</span>
+          <span className="text-xs text-on-surface-variant font-display">{translateNode(alert.mission.node)}</span>
         </div>
       </div>
 

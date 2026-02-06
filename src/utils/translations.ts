@@ -47,7 +47,7 @@ export const missionTypes: Record<string, string> = {
   'Void Armageddon': 'アルマゲドン',
 };
 
-// リソースアイテムの日本語訳
+// リソースアイテムの日本語訳 (アラートなど)
 export const resourceTypes: Record<string, string> = {
   'Marks of Valiance': '剛勇の証',
   'Nitain Extract': 'ニタン抽出物',
@@ -65,6 +65,10 @@ export const resourceTypes: Record<string, string> = {
   'Kuva': 'クバ',
   'Endo': 'Endo',
   'Credits': 'クレジット',
+  'Neuroptics': 'ニューロティック',
+  'Chassis': 'シャーシ',
+  'Blueprint': '設計図',
+  'Systems Component': 'システム',
   // 必要に応じて追加
 };
 
@@ -105,6 +109,7 @@ export const planetNames: Record<string, string> = {
   'Kuva Fortress': 'クバ要塞', // または "Kuva 要塞"
   'Deimos': 'ダイモス', // 旧 Derelict
   'Zariman': 'Zariman',
+  'Veil': 'ヴェール',
 };
 
 // ボス名の日本語訳
@@ -143,7 +148,15 @@ export const translateMissionType = (type: string): string => {
 };
 
 export const translateResource = (type: string): string => {
-  return resourceTypes[type] || type;
+  if (resourceTypes[type]) return resourceTypes[type];
+
+  let translated = type;
+  translated = translated.replace(/ Blueprint$/, ' 設計図');
+  translated = translated.replace(/ Chassis$/, ' シャーシ');
+  translated = translated.replace(/ Neuroptics$/, ' ニューロティック');
+  translated = translated.replace(/ Systems Component$/, ' システム');
+
+  return translated;
 };
 
 export const translateFaction = (faction: string, node?: string): string => {
