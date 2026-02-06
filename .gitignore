@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # PWA Dev
-dev-dist
+dev-dist/
