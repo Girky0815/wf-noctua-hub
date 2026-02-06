@@ -82,32 +82,23 @@ export const SettingsPage: React.FC = () => {
         </ListGroup>
       </div>
 
-      {/* 外観 */}
+      {/* 外観設定 */}
       <div className="mb-6">
-        <SectionTitle title="外観" />
-        <ListGroup>
-          <ListItem>
-            <div className="flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-4">
-                <span className="material-symbols-rounded text-2xl text-on-surface-variant">palette</span>
-                <div className="flex flex-col">
-                  <span
-                    className="font-medium text-base font-display"
-                    style={{ fontVariationSettings: "'ROND' 100" }}
-                  >
-                    テーマ
-                  </span>
-                  <span className="text-xs text-on-surface-variant opacity-80 leading-snug">
-                    アプリの配色を変更します
-                  </span>
-                </div>
-              </div>
-              <div className="flex justify-end">
-                <ThemeSelector />
-              </div>
+        <SectionTitle title="外観設定" />
+        <div className="overflow-hidden rounded-3xl bg-surface-bright border border-outline/10 shadow-sm">
+          <div className="bg-surface-container-low px-6 py-4 border-b border-outline/10">
+            <div className="flex items-center gap-3 mb-1">
+              <span className="material-symbols-rounded text-primary text-xl">palette</span>
+              <span className="font-bold text-lg font-display">テーマとか</span>
             </div>
-          </ListItem>
-        </ListGroup>
+            <p className="text-sm text-on-surface-variant opacity-80 pl-8">
+              アプリ全体の配色やモードを設定します
+            </p>
+          </div>
+          <div className="p-6">
+            <ThemeSelector />
+          </div>
+        </div>
       </div>
 
       {/* API情報 */}
