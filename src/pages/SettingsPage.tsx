@@ -5,6 +5,7 @@ import { useWarframeData } from '../hooks/useWarframeData';
 import { ThemeSelector } from '../components/ThemeSelector';
 import { SectionTitle } from '../components/ui/SectionTitle';
 import { ListGroup, ListTile, ListItem } from '../components/ui/List';
+import { SettingsImportExport } from '../components/settings/SettingsImportExport';
 
 
 export const SettingsPage: React.FC = () => {
@@ -20,6 +21,7 @@ export const SettingsPage: React.FC = () => {
   // I will keep showCredits state as false (const) or just remove the block if I'm confident.
   // But safest is to remove the unused setter.
   const [showRawData, setShowRawData] = useState(false);
+  const [showImportExport, setShowImportExport] = useState(false);
   const { worldState, isLoading, isError } = useWarframeData();
 
   // Time tracking for stale data check
@@ -28,7 +30,7 @@ export const SettingsPage: React.FC = () => {
   // I'll keep it simple: just one-time check on mount is fine to fix purity.
 
   const handleReset = () => {
-    if (window.confirm('すべての設定をリセットして初期状態に戻しますか？')) {
+    if (window.confirm('すべての設定をリセットして初期状態に戻します。\nこの操作は取り消せません。\nこうかいしませんね?')) {
       resetSettings();
       window.location.reload();
     }
@@ -85,14 +87,14 @@ export const SettingsPage: React.FC = () => {
       {/* 外観設定 */}
       <div className="mb-6">
         <SectionTitle title="外観設定" />
-        <div className="overflow-hidden rounded-3xl bg-surface-bright border border-outline/10 shadow-sm">
-          <div className="bg-surface-container-low px-6 py-4 border-b border-outline/10">
+        <div className="overflow-hidden rounded-[20 px] bg-surface-bright border border-outline/10 ">
+          <div className="bg-surface-bright px-6 py-4  border-outline/10">
             <div className="flex items-center gap-3 mb-1">
               <span className="material-symbols-rounded text-primary text-xl">palette</span>
               <span className="font-bold text-lg font-display">テーマ</span>
             </div>
             <p className="text-sm text-on-surface-variant opacity-80 pl-8">
-              アプリ全体の配色やモードを設定します
+              アプリ全体の配色やモードを設定
             </p>
           </div>
           <div className="p-6">
@@ -181,6 +183,13 @@ export const SettingsPage: React.FC = () => {
         <SectionTitle title="データ管理" />
         <ListGroup>
           <ListTile
+            icon="save"
+            title="バックアップと復元"
+            subtitle="設定の保存(エクスポート)・読み込み(インポート)"
+            trailing={<span className="material-symbols-rounded text-on-surface-variant">open_in_browser</span>}
+            onClick={() => setShowImportExport(true)}
+          />
+          <ListTile
             icon="delete_forever"
             title="設定をリセット"
             subtitle="テーマ設定や初回完了状態を初期化します"
@@ -189,6 +198,32 @@ export const SettingsPage: React.FC = () => {
           />
         </ListGroup>
       </div>
+
+      {/* Import/Export Modal */}
+      {showImportExport && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-fade-in">
+          <div className="flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-secondary-container shadow-xl animate-in zoom-in-95 duration-200">
+            <div className="bg-secondary-container px-6 py-4 border-b border-outline-variant/50 flex items-center justify-between">
+              <div>
+                <h3 className="font-display text-lg font-bold text-on-surface">バックアップと復元</h3>
+                <p className="text-xs text-on-surface-variant opacity-80 mt-1">
+                  JSON形式で設定を管理します
+                </p>
+              </div>
+              <button
+                onClick={() => setShowImportExport(false)}
+                className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-on-surface/10 transition-colors"
+              >
+                <span className="material-symbols-rounded">close</span>
+              </button>
+            </div>
+
+            <div className="p-6 overflow-y-auto bg-surface-container">
+              <SettingsImportExport />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 概要 */}
       <div className="mb-6">
