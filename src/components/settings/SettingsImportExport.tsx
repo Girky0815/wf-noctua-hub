@@ -55,7 +55,7 @@ export const SettingsImportExport: React.FC = () => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(jsonText);
-      setSuccess('クリップボードにコピーしました。メモ帳等に貼り付けて保存してください。');
+      setSuccess('クリップボードにコピーしました。');
       setTimeout(() => setSuccess(null), 3000);
     } catch (e) {
       setError('コピーに失敗しました');
