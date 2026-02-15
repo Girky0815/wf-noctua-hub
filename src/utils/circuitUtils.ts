@@ -36,7 +36,8 @@ export const normalizeCircuitItemName = (rawName: string): string => {
 
   // 特例対応
   // "Dual Toxocyst" などは上記でうまくいくはず
-  // "Ack & Brunt" -> "Ack & Brunt"
+  // User reported "Ack And Brunt" appearing, likely from API returning "AckAndBrunt"
+  name = name.replace(/Ack And Brunt/i, 'Ack & Brunt');
 
   return name;
 };
@@ -63,20 +64,17 @@ export const getCircuitItemCategory = (normalizedName: string, isSteelPath: bool
  * Wiki URLを生成する
  */
 export const getCircuitWikiUrl = (normalizedName: string, category: CircuitItemCategory): string => {
-  const upperName = normalizedName.toUpperCase();
+  let upperName = normalizedName.toUpperCase();
+
+  // Warframe Wiki: &(%26)ではなく、全角の＆を使う必要がある
+  upperName = upperName.replace(/&/g, '＆');
 
   if (category === 'Warframe') {
     // https://wikiwiki.jp/warframe/<NAME>
-    // URLエンコードは必要だが、Wikiwikiは基本そのまま解釈してくれることが多い。
-    // ただしスペースは %20 にしたほうが安全か、Wikiwikiの仕様ではスペースは許容される場合も。
-    // User request: "スペースを%20に変換" (for Weapons), Warframe example is just "ASH".
-    // ほとんどのWarframeは1単語だが、"Excalibur Umbra"等はスペースあり。
-    // WikiのURL仕様に合わせてエンコードする。
     return `https://wikiwiki.jp/warframe/${encodeURIComponent(upperName)}`;
   } else {
     // Weapon (Incarnon)
     // https://wikiwiki.jp/warframe/Incarnon/<NAME>
-    // User request: "スペースを%20に変換"
     return `https://wikiwiki.jp/warframe/Incarnon/${encodeURIComponent(upperName)}`;
   }
 };

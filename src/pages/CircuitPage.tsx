@@ -22,7 +22,7 @@ export const CircuitPage: React.FC = () => {
 
       <div className="text-sm text-on-surface-variant opacity-80">
         <p>
-          デュヴィリのサーキットでは、毎週異なるWarframeやIncarnon Genesisが報酬として提供されます。
+          デュヴィリのサーキットでは、毎週異なるWarframeやインカーノン・ジェネシスアダプターが報酬として提供されます。
           <br />
           通常版ではWarframeの設計図一式、鋼の道のりでは既存の武器を強化するアダプターを獲得できます。
         </p>

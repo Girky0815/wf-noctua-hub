@@ -191,7 +191,7 @@ export const StatusPage: React.FC = () => {
         return archimedeas && archimedeas.length > 0 ? (
           <div key={id}>
             {archimedeas.map(a => (
-              <div key={a.id} className="mb-6">
+              <div key={a.id} className="mb-6 last:mb-0">
                 {/* ArchimedeaCard internally handles title/header because of the switch. 
                      However, if we want consistency, we might want a SectionTitle here.
                      But ArchimedeaCard has a title inside.
