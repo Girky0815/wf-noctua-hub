@@ -24,7 +24,7 @@ export const missionTypes: Record<string, string> = {
   'Archwing': 'アークウイング',
   'Arena': 'アリーナ',
 
-  'Skirmish': '小戦', // Railjack
+  'Skirmish': '小戦',
   'Volatile': '揮発',
   'Orphix': 'オルフィクス',
 
@@ -69,6 +69,7 @@ export const resourceTypes: Record<string, string> = {
   'Chassis': 'シャーシ',
   'Blueprint': '設計図',
   'Systems Component': 'システム',
+  'Systems': 'システム',
   // 必要に応じて追加
 };
 
@@ -151,10 +152,19 @@ export const translateResource = (type: string): string => {
   if (resourceTypes[type]) return resourceTypes[type];
 
   let translated = type;
+
+  // 正規表現 (RegExp) の解説:
+  // / Pattern$/ : 末尾($)が Pattern で終わる場合にマッチ (例: "Hoge Glyph" の " Glyph")
+  // /^Pattern / : 先頭(^)が Pattern で始まる場合にマッチ (例: "Avatar Image Hoge" の "Avatar Image ")
+  // /Pattern/   : 場所を問わず Pattern が含まれる場合にマッチ
   translated = translated.replace(/ Blueprint$/, ' 設計図');
   translated = translated.replace(/ Chassis$/, ' シャーシ');
   translated = translated.replace(/ Neuroptics$/, ' ニューロティック');
   translated = translated.replace(/ Systems Component$/, ' システム');
+  translated = translated.replace(/ Systems$/, ' システム');
+  translated = translated.replace(/Star Days/, '星の日');
+  translated = translated.replace(/ Glyph$/, ' グリフ');
+  translated = translated.replace(/^Avatar Image /, '');
 
   return translated;
 };
@@ -379,7 +389,7 @@ export const translateArchimedeaMission = (missionType: string, archimedeaType: 
 export const archimedeaModifiers: Record<string, { name: string; desc?: string }> = {
   // --- 深淵アルキメデア (Deep Archimedea) 偏差 (Deviations) ---
   'Necramech Influx': { name: 'ネクロメカ流入', desc: 'ネクロメカの出現頻度が増加する。(カルヴァリンによる召喚以外でも出現する可能性あり)' },
-  'Fissure Cascade': { name: '亀裂連鎖', desc: 'ミッション中に亀裂が生じ、敵のレベルが10秒ごとに1ずつ上昇する。破壊することでレベル上昇が止まる。' },
+  'Fissure Cascade': { name: '亀裂連鎖', desc: 'ミッション中に亀裂が生じ、敵のレベルが10秒ごとに1ずつ上昇する。亀裂を攻撃して破壊することでレベル上昇が止まる。' },
   'Damage Link': { name: '損傷リンク', desc: '10メートル以内の敵同士でダメージリンクグループが形成される。一体に与えられたダメージは、繋がっているグループ全体に均等に分配される。' },
   // Sealed Armor は共通で定義
   'Unpowered Capsules': { name: '寄生タワー', desc: '生命維持装置から半径15m内の敵を20体倒すまで装置を発動できない。' },
@@ -388,7 +398,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Hazardous Area': { name: '危険エリア', desc: '生命維持装置を起動すると危険エリアを排除できる。' },
   'Hazardous Wares': { name: '危険物資', desc: 'アンフォールは運搬中に関連する属性ダメージを与える。' },
   'Alchemical Shields': { name: '無敵の錬金術', desc: '敵の10%が特定の属性バリア(無敵、アンフォールでのみ破壊可)を持つ。(バリア持ちは対応する属性色のオーラとマークが表示される)' },
-  'Eximus Amphors': { name: 'エクシマスアンフォール', desc: 'アンフォールはエクシマスからのみドロップする。(バグでエクシマスが湧かなくなった場合、ホスト移行か未使用アンフォールの処分を推奨)' },
+  'Eximus Grenadiers': { name: 'エクシマスアンフォール', desc: 'アンフォールはエクシマスからのみドロップする。(バグでエクシマスが湧かなくなった場合、ホスト移行か未使用アンフォールの処分を推奨)' },
   'Eroding Senses': { name: '感覚麻痺', desc: 'オリクルとビトリウムが時間経過と共にダメージを受ける。必要なボスフェングリフを集めることでダメージが止まり微量の回復を行う。' },
   'Glyph Inflation': { name: 'グリフインフレーション', desc: 'セキュリティシステムの起動には2倍(=100個)のボスフェングリフが必要。' },
   'Glyph Trap': { name: 'グリフトラップ', desc: '一部のボスフェングリフが触れた者を250m先へテレポートさせる罠となる。ポータルは見つかった後45秒間残る。' },
@@ -405,10 +415,11 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   // --- 次元アルキメデア (Temporal Archimedea) 偏差 (Deviations) ---
   'Cache Crash': { name: 'キャッシュクラッシュ', desc: '補給品貯蔵庫の自爆タイマー(3分)がミッション開始と同時に作動する。(解錠失敗時、ミッションクリアに必要なキル数が2倍に増加)' },
   // Sealed Armor は共通で定義
-  'Contamination Zone': { name: '息を止めて', desc: 'エリア全体が毒に覆われ、時間経過でダメージが増加する。敵がドロップするフィルター(半径5m/10秒)か、ヘルスクラバー付近(半径20m)ではダメージを受けない。' },
+  'Contamination Zone': { name: '息を止めて', desc: 'エリア全体が毒に覆われ、時間経過でダメージが増加する。<br>敵がドロップするフィルター(半径5m、10秒間有効)か、ヘルスクラバー付近(半径20m、使用または破壊で消失する)ではダメージを受けない。' },
+  'Hold Your Breath': { name: '息を止めて', desc: 'エリア全体が毒に覆われ、時間経過でダメージが増加する。<br>敵がドロップするフィルター(半径5m、10秒間有効)か、ヘルスクラバー付近(半径20m、使用または破壊で消失する)ではダメージを受けない。' },
   'Pile-On': { name: '積み重ね', desc: 'テックロットはヘルスクラバーを近接攻撃し、接触時爆発を起こしヘルスクラバーの汚染率を25%上昇させる。' },
-  'Sporogenesis': { name: '胞子形成', desc: 'ヘルスクラバー付近にテックロット腫瘤が発生し、生命維持減少を加速させる。(ヘルスクラバー消費で発生停止。腫瘤から生命維持ドロップあり)' },
-  'Timer Shortened': { name: 'タイマー短縮', desc: '定期的に出現するババウを倒すと、生命維持回復の代わりにミッションタイマーを短縮する装置が出現する。' },
+  'Sporogenesis': { name: '胞子形成', desc: 'ヘルスクラバー付近にテックロット腫瘤が発生し、腫瘤ごとに生存率(生命維持システム)の減少速度が上昇する(ヘルスクラバー消費で発生停止。腫瘤から生命維持ドロップチャンスあり)。<br>腫瘤の発生場所はヘルスクラバーを中心とした一定範囲となる。' },
+  'Timer Shortened': { name: 'タイマー短縮', desc: '定期的に出現するババウを倒すと、ヘルスクラバーを破壊する代わりにミッションタイマーを短縮するスカルドラ装置が出現する。<br>これにより、生命維持回復ができなくなる代わりにミッションタイマーを短縮できる。' },
   'Mitosis': { name: '有糸分裂', desc: '各ラウンドで2体のレガサイトが出現し、成功するには2倍の捕獲数が必要となる。' },
   'Growth Hormone': { name: '成長ホルモン', desc: 'レガサイトは世代ごとにより強力になる代わり、逃走が遅くなる。' },
   'Parallel Evolution': { name: '並行進化', desc: 'レガサイトが進化すると、マップ上の他の敵も新しいアビリティを得る。' },
@@ -421,7 +432,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
 
   // --- リスクレベル (Risks: Common & Deep/Temporal) ---
   'Hostile Regeneration': { name: '敵性再生', desc: '敵ヘルスが徐々に回復する。(敵は5秒間ダメージを受けないと、毎秒最大ヘルスの10%を回復)' },
-  'Vampyric Liminus': { name: 'バンパイヤ・リミナス', desc: '不死身のデュヴィリ・リミナスが出現し、近くの味方からヘルス(150/s, オーバーガード5倍)とエネルギー(25/s)を吸収する。(無敵化でもEN減少は防げないが、CCは有効)' },
+  'Vampyric Liminus': { name: 'バンパイヤ・リミナス', desc: '不死身のデュヴィリ・リミナスが出現し、近くの味方からヘルス(150/s, 装甲値等による軽減無効。ローリングによるダメージ軽減は有効。オーバーガードにはダメージ5倍)とエネルギー(25/s, オーバーガードがあれば減少なし)を吸収する。<br>また，リミナスにはCCが有効(リミナスは攻撃を行わないため Gara 4番で閉じ込め可能)。' },
   'Adaptive Resistance': { name: '適応抵抗', desc: '敵は与えられた属性ダメージに対する耐性を獲得する。5秒間その属性からダメージを受けなかった場合、耐性は失われる。' }, // API Key要確認
   'Bolstered Belligerents': { name: '戦闘員の増強', desc: 'すべての敵は最大ヘルスの50%分のオーバーガードを持つ。' },
   'Shootout': { name: '射撃戦', desc: '遠距離攻撃を行う敵にのみ遭遇する。' },
@@ -435,20 +446,21 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Devil\'s Bargain': { name: '悪魔の取引', desc: '倒された敵の4m内にいる分隊メンバーは発射速度が25%上昇するが、弾薬効率が50%減少する。' },
   'Entanglement': { name: '絡み合い', desc: '倒された敵の4m内にいる分隊メンバーの移動速度とパルクール速度を減少する。' },
   'Commanding Culverins': { name: '指揮機カルヴァリン', desc: 'ローグ・カルヴァリンが強化され、着弾時に爆発する弾丸を使用する。(オーバーガードとネクロメカに対して5倍のダメージ)' },
-  'Explosive Potential': { name: '爆発的可能性', desc: 'シャフリング・フラグメントが、爆発するラプチャリング・フラグメントに置き換わる。' },
-  'Alluring Arcocanids': { name: 'いざなうアルコカニド', desc: 'ローグ・アルコカニドが突進攻撃を行うと、WARFRAMEを前方へ引き寄せる' },
+  'Explosive Potential': { name: '爆発的可能性', desc: 'シャフリング・フラグメントがラプチャリング・フラグメントに置き換わる。ラプチャリング・フラグメントは近づくと自爆し、爆発範囲内に大ダメージを与える。' },
+  'Alluring Arcocanids': { name: 'いざなうアルコカニド', desc: 'ローグ・アルコカニドが突進攻撃を行うと、Warframeを前方へ引き寄せる' },
 
   // --- 次元アルキメデア 独自リスク ---
   'Ballonfest': { name: 'バルーンフェスト', desc: 'スカルドラ・ハービンガーの数が増え、攻撃と移動速度が上昇する。' },
   'Artillery Beacon': { name: '砲兵ビーコン', desc: 'スカルドラ兵を倒すと砲兵ビーコンをドロップし、辺りに砲撃を降らせる。' },
   'Infected Techrot': { name: '腐敗した肉体', desc: 'テックロットはエフェルボンに浸されており、時間経過によりダメージを受ける。スカルドラ含む全ての敵は死亡時に爆発しガスダメージを与えるダメージエリア(0.25秒ごとにダメージを受ける)を残す。' },
-  'Competitiveness': { name: '競争心', desc: 'フェイスオフミッションのペナルティが25秒ごとにランダム発生する(あらゆる手法でのエネルギー回復が60秒間禁止される「エネルギーオーブ無効化」に注意)。' },
+  'Competitive Streak': { name: '競争心', desc: 'フェイスオフミッションのペナルティが25秒ごとにランダム発生する(あらゆる手法でのエネルギー回復が60秒間禁止される「エネルギーオーブ無効化」に注意)。' },
   'Miasmite Swarm': { name: 'ミアズマイト・スウォーム', desc: 'テックロット ミアズマイトがミッション中湧き出る。' },
   'Dense Fog': { name: '濃霧', desc: 'エフェルボンガスがマップを覆う。敵からドロップするフィルターで一時的救済を得られる。' },
   'It\'s Alive': { name: 'イッツアライブ', desc: '地下エリアでプレイヤーが動きを止めると増殖物たちが襲い掛かる。' },
   'Faction Swarm_ Techrot': { name: 'テックロット・スピードラン', desc: '全ての敵がテックロットに入れ替わり、移動速度が上昇する。' },
+  'Techrot Speed Run': { name: 'テックロット・スピードラン', desc: '全ての敵がテックロットに入れ替わり、移動速度が上昇する。' },
   'Scaldra Speed Run': { name: 'スカルドラ・スピードラン', desc: '全ての敵がスカルドラに入れ替わり、移動速度が上昇する。' },
-  'Heavy Weaponry': { name: '重兵器', desc: '敵はヘビー武器(=AW銃)以外から受けるダメージが95%減少する。敵はヘビー弾薬パックをドロップし、ヘビー武器再展開時間が5秒に短縮する。' },
+  'Heavy Warfare': { name: '重兵器', desc: '敵はアークウィングガン以外から受けるダメージが95%減少する。敵はヘビー弾薬パックをドロップし、ヘビー武器再展開時間が5秒に短縮する。' },
   'Arcade Automate': { name: 'アーケード・オートマタ', desc: '敵の射撃が低速の大きな球体に変化する(出現勢力がスカルドラに置換または優先される)。' },
   'Murmur Incursion': { name: '壁の向こう側', desc: 'スカルドラとテックロットにササヤキたちが加勢する。' },
   'Thick Ice': { name: '厚い氷', desc: 'アークティック エクシマスのバブルの耐久度が30倍になる。' }, // 冬
@@ -484,6 +496,7 @@ export const archimedeaModifiers: Record<string, { name: string; desc?: string }
   'Hematic Syndrome': { name: '血紅症候群', desc: 'ダメージを受けるたびに切断状態異常が発生する。' },
   'Vampiric Syndrome': { name: '吸血鬼症候群', desc: '毎秒ヘルスを失う。敵を倒すとヘルスが回復する。' },
   'Void Energy Overload': { name: 'アビリティ オーバーロード', desc: 'アビリティ使用時に近くでVoidの裂け目が開く。' },
+  'Ability Overload': { name: 'アビリティ オーバーロード', desc: 'アビリティ使用時に近くでVoidの裂け目が開く。' },
   'Undersupplied': { name: '供給不足', desc: 'すべての武器の最大弾薬数が75%減少する。' },
   'Energy Starved': { name: '狭窄', desc: '最大エネルギーが75%減少。' },
   'Hypersensitive': { name: '過敏症', desc: 'ステータス低下効果の持続時間が3倍になる。' },
