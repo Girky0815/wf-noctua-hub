@@ -2,6 +2,7 @@ name: 更新作業
 
 on:
   push:
+    workflow_dispatch:
     branches:
       - main
     tags:
